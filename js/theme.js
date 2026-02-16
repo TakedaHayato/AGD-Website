@@ -9,56 +9,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let isEnglish = false;
     let isPCMode = false;
 
-    const translations = {
-        de: {
-            'card-weather': 'WETTER: BAYERN', 'pc-toggle-btn': '🖥️ PC MODUS',
-            'link-dash': '● DASHBOARD', 'link-upd': '● UPDATES', 'link-cont': '● KONTAKT',
-            'btn-add-text': 'HAYATO ADDEN', 'btn-server-text': 'SERVER JOINEN',
-            'logs': ['UI: PC/Mobile Switcher implementiert.', 'GEO: Bayern Standard-Uplink.', 'FIX: Button-Farben korrigiert.']
-        },
-        en: {
-            'card-weather': 'WEATHER: BAVARIA', 'pc-toggle-btn': '🖥️ PC MODE',
-            'link-dash': '● DASHBOARD', 'link-upd': '● UPDATES', 'link-cont': '● CONTACT',
-            'btn-add-text': 'ADD HAYATO', 'btn-server-text': 'JOIN SERVER',
-            'logs': ['UI: PC/Mobile switcher implemented.', 'GEO: Bavaria default uplink.', 'FIX: Button colors corrected.']
-        }
-    };
-
     function updateUI() {
-        const set = isEnglish ? translations.en : translations.de;
-        for (let id in set) {
-            const el = document.getElementById(id);
-            if (el && id !== 'logs') el.innerText = set[id];
-        }
-        document.getElementById('log-content').innerHTML = set.logs.map(l => `<li>● ${l}</li>`).join('');
+        const logs = isEnglish ? ["UI: Header alignment fixed.", "MODE: PC/Mobile switch ready."] : ["UI: Header-Ausrichtung fixiert.", "MODE: PC/Handy-Switch bereit."];
+        document.getElementById('log-content').innerHTML = logs.map(l => `<li style="margin:5px 0;">● ${l}</li>`).join('');
         langBtn.innerText = isEnglish ? 'DE' : 'EN';
+        pcBtn.innerText = isPCMode ? (isEnglish ? '📱 MOBILE' : '📱 HANDY') : (isEnglish ? '🖥️ PC MODE' : '🖥️ PC MODUS');
     }
 
-    // PC/Mobile Switcher Logik
     pcBtn.onclick = () => {
         isPCMode = !isPCMode;
-        if (isPCMode) {
-            document.body.classList.remove('mobile-mode');
-            pcBtn.innerText = isEnglish ? "📱 MOBILE MODE" : "📱 MOBILE MODUS";
-        } else {
-            document.body.classList.add('mobile-mode');
-            pcBtn.innerText = isEnglish ? "🖥️ PC MODE" : "🖥️ PC MODUS";
-        }
+        document.body.classList.toggle('mobile-mode', !isPCMode);
+        updateUI();
+        updateWeather(); // Radar anpassen
     };
 
     async function updateWeather() {
-        let lat = 48.8, lon = 11.5, city = "BAVARIA";
+        let lat = 48.8, lon = 11.5;
         try {
             const res = await fetch('https://ipapi.co/json/');
             const geo = await res.json();
-            if(geo.latitude) { lat = geo.latitude; lon = geo.longitude; city = geo.city || "LOCAL"; }
+            if(geo.latitude) { lat = geo.latitude; lon = geo.longitude; }
         } catch (e) {}
-
-        const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-        const w = await wRes.json();
-        document.getElementById('w-temp').innerText = Math.round(w.current_weather.temperature);
-        document.getElementById('w-wind').innerText = w.current_weather.windspeed;
-        document.getElementById('card-weather').innerText = (isEnglish ? "WEATHER: " : "WETTER: ") + city.toUpperCase();
         
         document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&level=surface&overlay=rain&product=ecmwf&message=false`;
     }
@@ -67,10 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('welcome-screen').style.display = 'none';
         document.getElementById('main-interface').style.display = 'block';
         updateUI(); updateWeather();
-        setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     };
 
-    langBtn.onclick = () => { isEnglish = !isEnglish; updateUI(); updateWeather(); };
     themeBtn.onclick = () => document.body.classList.toggle('light-theme');
     menuBtn.onclick = (e) => { e.stopPropagation(); navMenu.classList.toggle('active'); };
     

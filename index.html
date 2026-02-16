@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme mobile-mode"> <div id="welcome-screen">
-        <img src="assets/AGDlogo.gif" alt="AGD Logo" class="welcome-logo">
-        <h1 class="welcome-title">AEGIS GLOBAL DEFENSE</h1>
-        <p style="font-size: 0.6rem; opacity: 0.6; font-family: 'Orbitron';">v2.3.9 // UPLINK READY</p>
+<body class="dark-theme mobile-mode">
+    <div id="welcome-screen">
+        <img src="assets/AGDlogo.gif" alt="AGD" style="width:60px;margin-bottom:15px;">
+        <h1 style="font-family:'Orbitron';font-size:1.2rem;color:var(--accent);">AGD OPERATIONS</h1>
         <button id="enter-btn" class="main-start-btn">INITIALIZE</button>
     </div>
 
@@ -24,7 +24,7 @@
                 <button id="lang-toggle" class="control-btn-pro">EN</button>
                 <button id="theme-toggle" class="control-btn-pro">🌓</button>
                 <button id="menu-toggle" class="burger-btn">
-                    <span></span><span></span>
+                    <span></span><span></span><span></span>
                 </button>
                 <div id="nav-menu" class="nav-dropdown">
                     <a href="#home" class="nav-link-item" id="link-dash">● DASHBOARD</a>
@@ -38,36 +38,32 @@
             <section id="home" class="page active">
                 <div class="dashboard-grid">
                     <div class="card glass wide">
-                        <h3 id="card-weather">WEATHER: BAVARIA</h3>
-                        <div class="weather-stats">
-                            <div class="w-main"><span id="w-temp">--</span>°C</div>
-                            <div class="w-info">
-                                <p>WIND: <span id="w-wind">--</span> km/h</p>
-                                <p id="w-status" class="accent-text">SCANNING...</p>
-                            </div>
+                        <h3 id="card-weather" style="font-family:'Orbitron';font-size:0.8rem;color:var(--accent);">WETTER: BAYERN</h3>
+                        <div class="weather-stats" style="display:flex; gap:15px; margin:10px 0;">
+                            <div style="font-size:1.5rem; font-weight:bold;"><span id="w-temp">--</span>°C</div>
+                            <div style="font-size:0.7rem; opacity:0.7;">WIND: <span id="w-wind">--</span> km/h</div>
                         </div>
                         <div class="radar-box">
                             <iframe id="radar-iframe" width="100%" height="100%" src="" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="card glass">
-                        <h3 id="card-discord">DISCORD FEED</h3>
-                        <iframe id="discord-iframe" src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="350" allowtransparency="true" frameborder="0"></iframe>
+                        <h3 style="font-family:'Orbitron';font-size:0.8rem;color:var(--accent);">DISCORD</h3>
+                        <iframe id="discord-iframe" src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0"></iframe>
                     </div>
                 </div>
             </section>
-
+            
             <section id="updates" class="page">
                 <div class="card glass">
-                    <h3 id="head-logs">// SYSTEM LOGS</h3>
-                    <ul class="log-list" id="log-content"></ul>
+                    <h3 id="head-logs" style="font-family:'Orbitron';font-size:0.8rem;color:var(--accent);">// SYSTEM LOGS</h3>
+                    <ul id="log-content" style="list-style:none;padding:0;font-size:0.8rem;"></ul>
                 </div>
             </section>
 
             <section id="contact" class="page">
-                <div class="contact-area">
-                    <a href="https://discord.com/users/1129433598253084826" target="_blank" class="contact-btn">👤 <span id="btn-add-text">ADD HAYATO</span></a>
-                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank" class="contact-btn server-btn">🌐 <span id="btn-server-text">JOIN SERVER</span></a>
+                <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank" class="control-btn-pro" style="width:200px;text-decoration:none;">JOIN SERVER</a>
                 </div>
             </section>
         </main>
