@@ -1,0 +1,70 @@
+:root {
+    --bg: #05070a; --text: #ffffff; --accent: #00f0ff; --border: rgba(0, 240, 255, 0.2); --card-bg: rgba(255, 255, 255, 0.05);
+}
+body.light-theme {
+    --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7; --border: #cbd5e1; --card-bg: #ffffff;
+}
+
+body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; width: 100%; }
+
+/* BUTTON FIX: Keine weißen Tasten mehr */
+.control-btn-pro, .main-start-btn, .contact-btn, .pc-mode-btn {
+    background-color: rgba(0, 240, 255, 0.1) !important;
+    color: var(--accent) !important;
+    border: 1px solid var(--accent) !important;
+    transition: 0.3s;
+}
+
+.main-start-btn { 
+    background-color: var(--accent) !important; 
+    color: #000 !important; 
+    padding: 12px 25px; 
+    font-family: 'Orbitron'; 
+    font-weight: bold; 
+    box-shadow: 0 0 15px var(--accent);
+}
+
+/* NAVIGATION */
+.glass-nav { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 0 15px; height: 60px; background: var(--bg); border-bottom: 1px solid var(--border); 
+    position: sticky; top: 0; z-index: 9999; 
+}
+.brand-text { font-family: 'Orbitron'; font-weight: 700; color: var(--accent); font-size: 1rem; }
+.mini-logo { height: 25px; }
+
+/* LAYOUT */
+.page { display: none; padding: 15px; }
+.page.active { display: block; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 4px; }
+.card.wide { grid-column: span 2; }
+.radar-box { height: 350px; background: #000; border-radius: 4px; overflow: hidden; }
+
+/* PC MODE BUTTON (Unten Rechts) */
+.pc-mode-btn {
+    position: fixed; bottom: 15px; right: 15px;
+    padding: 8px 12px; font-size: 0.7rem; font-family: 'Orbitron';
+    z-index: 10001; cursor: pointer; border-radius: 4px;
+}
+
+/* MOBILE MODE OVERRIDES (Aktiv wenn body class 'mobile-mode') */
+body.mobile-mode .dashboard-grid { grid-template-columns: 1fr; }
+body.mobile-mode .card.wide { grid-column: span 1; }
+body.mobile-mode .radar-box { height: 200px; }
+body.mobile-mode .brand-text { font-size: 0.8rem; }
+body.mobile-mode #discord-iframe { height: 300px !important; }
+
+/* BURGER MENU */
+.burger-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+.burger-btn span { width: 20px; height: 2px; background: var(--accent); display: block; }
+.nav-dropdown { display: none; position: absolute; top: 60px; right: 15px; background: var(--bg); border: 1px solid var(--border); width: 160px; flex-direction: column; }
+.nav-dropdown.active { display: flex; }
+.nav-link-item { padding: 15px; text-decoration: none; color: var(--text); border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+
+/* LOGS */
+.log-list { list-style: none; padding: 0; }
+.log-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: rgba(255,255,255,0.8); }
+
+#welcome-screen { position: fixed; inset: 0; z-index: 10000; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.welcome-logo { width: 60px; margin-bottom: 15px; }
