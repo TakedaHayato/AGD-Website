@@ -36,7 +36,6 @@
                 <div id="nav-menu" class="nav-dropdown">
                     <a href="#home" class="nav-link-item">● DASHBOARD</a>
                     <a href="#mission" class="nav-link-item">● MISSION</a>
-                    <a href="#members" class="nav-link-item">● MEMBERS</a>
                     <a href="#gallery" class="nav-link-item">● ARCHIVE</a>
                     <a href="#updates" class="nav-link-item">● UPDATES</a>
                     <a href="#contact" class="nav-link-item">● CONTACT</a>
@@ -62,47 +61,67 @@
                         <h3 class="card-head">// OP-PARAMETERS</h3>
                         <ul class="tactical-list">
                             <li><span>UNIT:</span> <span id="display-id">---</span></li>
-                            <li><span>STATUS:</span> <span style="color:#00f0ff;">ONLINE</span></li>
+                            <li><span>STATUS:</span> <span style="color:#00f0ff;">ACTIVE</span></li>
                             <li><span>SEC-LEVEL:</span> ALPHA-1</li>
+                            <li><span>UPLINK:</span> STABLE</li>
                         </ul>
                     </div>
+                    <div class="card glass">
+                        <h3 class="card-head">// GLOBAL THREAT LEVEL</h3>
+                        <div style="text-align:center; padding: 20px;">
+                            <div style="font-size: 2rem; color: #ffcc00; font-family:'Orbitron';">GUARDED</div>
+                            <p style="font-size:0.7rem; opacity:0.6;">Current Alert State: Yellow</p>
+                        </div>
+                    </div>
+                    <div class="card glass wide">
+                        <h3 class="card-head">// COMMS TERMINAL</h3>
+                        <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="200" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
                 </div>
-            </section>
-
-            <section id="mission" class="page">
-                <h2 class="section-title">// STRATEGIC MISSION</h2>
-                <div class="card glass"><p>Sicherung und Überwachung der globalen AGD-Sektoren sowie Schutz der digitalen Infrastruktur.</p></div>
-            </section>
-
-            <section id="members" class="page">
-                <h2 class="section-title">// UNIT MEMBERS</h2>
-                <div class="card glass"><p>Liste wird nach Freigabe synchronisiert...</p></div>
             </section>
 
             <section id="gallery" class="page">
                 <h2 class="section-title">// DATA ARCHIVE</h2>
-                <div class="card glass"><p>Keine Medienfunde in diesem Sektor.</p></div>
+                <div class="archive-container">
+                    <h3 class="archive-year">/ 2026</h3>
+                    <div class="dashboard-grid">
+                        <div class="card glass placeholder-img">DATA SCAN PENDING...</div>
+                        <div class="card glass placeholder-img">DATA SCAN PENDING...</div>
+                    </div>
+                    <h3 class="archive-year" style="margin-top:40px;">/ 2025</h3>
+                    <div class="dashboard-grid">
+                        <div class="card glass placeholder-img">ARCHIVED DATA</div>
+                        <div class="card glass placeholder-img">ARCHIVED DATA</div>
+                    </div>
+                </div>
             </section>
 
             <section id="updates" class="page">
                 <h2 class="section-title">// SYSTEM LOGS</h2>
-                <div class="card glass"><ul><li>[OK] UI V5.2 DEPLOYED</li><li>[OK] DISCORD AUTH ACTIVE</li></ul></div>
-            </section>
-
-            <section id="contact" class="page">
-                <h2 class="section-title">// UPLINK</h2>
-                <div class="dashboard-grid">
-                    <div class="card glass" style="text-align: center; border-color: #5865F2;">
-                        <h4 style="color:#5865F2;">DISCORD SERVER</h4>
-                        <a href="https://discord.gg/agd" target="_blank" class="main-start-btn" style="background:#5865F2!important; text-decoration:none;">JOIN SERVER</a>
-                    </div>
-                    <div class="card glass" style="text-align: center; border-color: #5865F2;">
-                        <h4 style="color:#5865F2;">LEADERSHIP</h4>
-                        <a href="https://discord.com/users/1129433598253084826" target="_blank" class="main-start-btn" style="background:#5865F2!important; text-decoration:none;">HAYATO</a>
-                    </div>
+                <div class="card glass">
+                    <ul class="tactical-list log-list">
+                        <li><span>[2026-02-17]</span> UI V5.5: Dashboard expanded, Archive structured.</li>
+                        <li><span>[2026-02-17]</span> Auth: Login enforcement active.</li>
+                        <li><span>[2026-02-16]</span> Core: Weather satellite uplink established.</li>
+                        <li><span>[2026-02-15]</span> Security: Member-only gateway test completed.</li>
+                        <li><span>[2026-01-10]</span> Initial Boot: AGD Operations Center online.</li>
+                    </ul>
                 </div>
             </section>
+
+            <section id="mission" class="page"><h2 class="section-title">// MISSION</h2><div class="card glass"><p>Sicherung globaler Datenströme und Überwachung kritischer Infrastruktur.</p></div></section>
+            <section id="contact" class="page"><h2 class="section-title">// CONTACT</h2><div class="dashboard-grid"><div class="card glass" style="text-align:center;"><a href="https://discord.gg/agd" target="_blank" class="main-start-btn" style="background:#5865F2!important; text-decoration:none;">JOIN SERVER</a></div></div></section>
+            <section id="legal" class="page"><h2 class="section-title">// LEGAL NOTICE</h2><div class="card glass"><p>Privates Projekt der AGD. Alle Logos © AGD 2026.</p></div></section>
+            <section id="credits" class="page"><h2 class="section-title">// CREDITS</h2><div class="card glass"><p>Developed by AGD Intelligence Division.<br>Support: Hayato</p></div></section>
+            <section id="privacy" class="page"><h2 class="section-title">// PRIVACY POLICY</h2><div class="card glass"><p>Es werden keine persönlichen Daten gespeichert. Login erfolgt via Discord OAuth2.</p></div></section>
         </main>
+
+        <footer class="bottom-bar">
+            <a href="#credits" class="footer-link">CREDITS</a>
+            <a href="#legal" class="footer-link">LEGAL</a>
+            <a href="#privacy" class="footer-link">PRIVACY</a>
+            <span class="footer-copy">© 2026 AGD OPERATIONS CENTER</span>
+        </footer>
     </div>
     <script src="js/theme.js"></script>
 </body>
