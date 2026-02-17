@@ -65,18 +65,50 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('light-theme');
     document.getElementById('home-quick-btn').onclick = () => switchPage('home');
 
-    async function updateWeather() {
-        try {
-            const res = await fetch('https://ipapi.co/json/').catch(() => ({json: () => ({latitude: 52.5, longitude: 13.4})}));
-            const geo = await res.json();
-            const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${geo.latitude}&longitude=${geo.longitude}&current_weather=true&hourly=relative_humidity_2m`);
-            const w = await wRes.json();
-            document.getElementById('w-temp').innerText = Math.round(w.current_weather.temperature);
-            document.getElementById('w-wind').innerText = Math.round(w.current_weather.windspeed);
-            document.getElementById('w-hum').innerText = w.hourly.relative_humidity_2m[0];
-            document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=${geo.latitude}&lon=${geo.longitude}&zoom=6&level=surface&overlay=rain&product=ecmwf&message=false`;
-        } catch(e) {}
+async function updateWeather() {
+    // Standard-Koordinaten (Berlin), falls die Ortung fehlschlägt
+    let lat = 52.52;
+    let lon = 13.40;
+
+    try {
+        // 1. Versuche die Koordinaten vom Browser zu kriegen (Optional)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                lat = pos.coords.latitude;
+                lon = pos.coords.longitude;
+                await fetchWeatherData(lat, lon);
+            }, async () => {
+                // Falls User ablehnt: Nutze Standard
+                await fetchWeatherData(lat, lon);
+            });
+        } else {
+            await fetchWeatherData(lat, lon);
+        }
+    } catch(e) {
+        console.log("Weather Uplink Error", e);
     }
+}
+
+async function fetchWeatherData(lat, lon) {
+    try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relative_humidity_2m`);
+        const data = await response.json();
+        
+        if (data.current_weather) {
+            document.getElementById('w-temp').innerText = Math.round(data.current_weather.temperature);
+            // Wir nutzen die Feuchtigkeit aus dem ersten Slot der Stunden-Daten
+            document.getElementById('w-hum').innerText = data.hourly.relative_humidity_2m[0];
+            
+            // Radar Update mit den korrekten Koordinaten
+            const radar = document.getElementById('radar-iframe');
+            if(radar) {
+                radar.src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&level=surface&overlay=rain&product=ecmwf&message=false`;
+            }
+        }
+    } catch (err) {
+        console.error("Fetch failed", err);
+    }
+}
 
     handleAuth();
 });
