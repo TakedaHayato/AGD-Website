@@ -19,7 +19,7 @@
     <div id="main-interface" style="display: none;">
         <nav class="glass-nav">
             <div class="nav-left">
-                <button id="home-quick-btn" class="control-btn-pro">🏠</button>
+                <button id="home-quick-btn" class="control-btn-pro" title="Home">🏠</button>
                 <img src="assets/AGDlogo.gif" alt="AGD" class="mini-logo">
                 <span class="brand-text">AGD OPS</span>
             </div>
@@ -30,7 +30,7 @@
                     <span id="user-name" style="font-family:'Orbitron'; font-size: 0.7rem; color: var(--accent);"></span>
                 </div>
                 <button id="theme-toggle" class="control-btn-pro">🌓</button>
-                <button id="menu-toggle" class="control-btn-pro">☰</button>
+                <button id="menu-toggle" class="control-btn-pro">MENU ☰</button>
                 <div id="nav-menu" class="nav-dropdown">
                     <a href="#home" class="nav-link-item">● DASHBOARD</a>
                     <a href="#mission" class="nav-link-item">● MISSION</a>
@@ -46,7 +46,7 @@
             <section id="home" class="page active">
                 <div class="dashboard-grid">
                     <div class="card glass wide">
-                        <h3 id="card-weather" class="card-head">// SATELLITE RADAR</h3>
+                        <h3 class="card-head">// SATELLITE RADAR</h3>
                         <div class="weather-row">
                             <div class="temp-big"><span id="w-temp">--</span>°C</div>
                             <div class="weather-meta">WIND: <span id="w-wind">--</span> km/h | HUM: <span id="w-hum">--</span>%</div>
@@ -63,16 +63,90 @@
                             <li><span>LEVEL:</span> ALPHA-7</li>
                         </ul>
                     </div>
+                    <div class="card glass wide">
+                        <h3 class="card-head">// COMMS CHANNEL</h3>
+                        <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="250" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
                 </div>
             </section>
-            
-            </main>
+
+            <section id="mission" class="page">
+                <h2 class="section-title">// MISSION OBJECTIVES</h2>
+                <div class="card glass">
+                    <p>Die Aegis Global Defense (AGD) ist eine spezialisierte Einheit zur Überwachung und Sicherung digitaler Grenzräume. Unsere Ziele umfassen:</p>
+                    <ul class="tactical-list" style="margin-top: 15px;">
+                        <li><span>01.</span> PREVENTIVE CYBER DEFENSE</li>
+                        <li><span>02.</span> GLOBAL INTELLIGENCE GATHERING</li>
+                        <li><span>03.</span> NETWORK STABILITY OPERATIONS</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="members" class="page">
+                <h2 class="section-title">// UNIT STRUCTURE</h2>
+                <div class="dashboard-grid">
+                    <div class="card glass">
+                        <h4 class="card-head">// COMMAND</h4>
+                        <p>High Command (HC) - Strategische Leitung</p>
+                    </div>
+                    <div class="card glass">
+                        <h4 class="card-head">// INTEL</h4>
+                        <p>Intelligence Division - Datenauswertung</p>
+                    </div>
+                    <div class="card glass">
+                        <h4 class="card-head">// FIELD</h4>
+                        <p>Field Operators - Aktive Einsätze</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gallery" class="page">
+                <h2 class="section-title">// DATA ARCHIVE</h2>
+                <div class="card glass">
+                    <p class="placeholder-text">Verschlüsselte Bilddaten werden geladen...</p>
+                    <div class="img-grid" id="archive-grid">
+                        </div>
+                </div>
+            </section>
+
+            <section id="updates" class="page">
+                <h2 class="section-title">// SYSTEM LOGS</h2>
+                <div class="card glass">
+                    <ul class="tactical-list">
+                        <li><span>[2026-02-17]</span> V3.5 CORE DEPLOYED</li>
+                        <li><span>[2026-02-17]</span> DISCORD OAUTH INTEGRATED</li>
+                        <li><span>[2026-02-16]</span> DARK/LIGHT MODE SYNCED</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="contact" class="page">
+                <div class="card glass" style="max-width: 400px; margin: 0 auto; text-align: center;">
+                    <h3 class="card-head" style="border:none; padding:0;">// TARGET: HAYATO</h3>
+                    <p style="margin-bottom: 20px;">Direkte Verbindung zum Intelligence Lead.</p>
+                    <a href="https://discord.com/users/1129433598253084826" target="_blank" class="main-start-btn" style="text-decoration:none; display:block;">OPEN DISCORD PROFILE</a>
+                </div>
+            </section>
+
+            <section id="legal" class="page">
+                <h2 class="section-title">// LEGAL NOTICE</h2>
+                <div class="card glass"><p>Dies ist eine private, nicht-kommerzielle Webseite eines Gaming-Netzwerks. Alle Rechte an genutzten Logos liegen bei den jeweiligen Eigentümern.</p></div>
+            </section>
+            <section id="credits" class="page">
+                <h2 class="section-title">// CREDITS</h2>
+                <div class="card glass"><p>Entwickelt von der AGD Intelligence Division.<br>Powered by Open-Meteo & Discord API.</p></div>
+            </section>
+            <section id="privacy" class="page">
+                <h2 class="section-title">// PRIVACY POLICY</h2>
+                <div class="card glass"><p>Wir speichern keine persönlichen Daten auf unseren Servern. Die Discord-Anmeldung erfolgt direkt über die Discord API. Tokens werden nur lokal in deinem Browser gespeichert.</p></div>
+            </section>
+        </main>
 
         <footer class="bottom-bar">
             <a href="#credits" class="footer-link">CREDITS</a>
             <a href="#legal" class="footer-link">LEGAL</a>
             <a href="#privacy" class="footer-link">PRIVACY</a>
-            <span class="footer-copy">© 2026 AGD</span>
+            <span class="footer-copy">© 2026 AGD OPERATIONS CENTER</span>
         </footer>
     </div>
     <script src="js/theme.js"></script>
