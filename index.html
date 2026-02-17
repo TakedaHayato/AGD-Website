@@ -6,43 +6,113 @@
     <title>AGD OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --text: #ffffff; --accent: #00f0ff; --border: rgba(0, 240, 255, 0.2); --card-bg: rgba(255, 255, 255, 0.05); }
-        body.light-theme { --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7; --border: #cbd5e1; --card-bg: #ffffff; }
-        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
+        :root { 
+            --bg: #05070a; 
+            --text: #ffffff; 
+            --accent: #00f0ff; 
+            --border: rgba(0, 240, 255, 0.2); 
+            --card-bg: rgba(255, 255, 255, 0.05); 
+            --discord: #5865F2;
+        }
+        body.light-theme { 
+            --bg: #f0f4f8; 
+            --text: #1a202c; 
+            --accent: #0284c7; 
+            --border: #cbd5e1; 
+            --card-bg: #ffffff; 
+        }
 
-        /* LOGIN SCREEN */
-        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .welcome-logo { width: 150px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent)); }
-        .welcome-title { font-family: 'Orbitron'; color: var(--accent); }
-        .main-start-btn { background: var(--accent); color: #000; padding: 12px 25px; border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        body, html { 
+            margin: 0; padding: 0; 
+            font-family: 'Rajdhani', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            height: 100%; 
+            overflow-x: hidden; 
+        }
 
-        /* NAV */
-        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; height: 60px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9000; }
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 10px; }
+        /* --- LOGIN SCREEN --- */
+        #welcome-screen { 
+            position: fixed; inset: 0; 
+            background: #000; 
+            z-index: 10000; 
+            display: flex; align-items: center; justify-content: center; 
+            text-align: center; 
+            padding: 20px;
+        }
+        .welcome-logo { width: clamp(100px, 20vw, 150px); margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .welcome-title { font-family: 'Orbitron'; color: var(--accent); font-size: clamp(1.2rem, 5vw, 2rem); }
+        .main-start-btn { 
+            background: var(--accent); color: #000; 
+            padding: 12px 25px; border: none; 
+            font-family: 'Orbitron'; font-weight: bold; 
+            cursor: pointer; border-radius: 4px; 
+            transition: 0.3s;
+        }
+        .main-start-btn:hover { opacity: 0.8; transform: scale(1.05); }
+
+        /* --- NAVIGATION --- */
+        .glass-nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 0 15px; height: 60px; 
+            background: var(--bg); border-bottom: 1px solid var(--border); 
+            position: sticky; top: 0; z-index: 9000; 
+        }
         .mini-logo { height: 25px; }
-        .brand-text { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; }
+        .brand-text { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 0.9rem; }
+        .nav-right { display: flex; align-items: center; gap: 10px; }
         .control-btn-pro { background: none; border: 1px solid var(--border); color: var(--accent); padding: 5px 10px; cursor: pointer; border-radius: 4px; }
-        .nav-dropdown { display: none; position: absolute; top: 60px; right: 10px; background: var(--bg); border: 1px solid var(--border); min-width: 160px; flex-direction: column; }
+
+        .nav-dropdown { 
+            display: none; position: absolute; top: 60px; right: 10px; 
+            background: var(--bg); border: 1px solid var(--border); 
+            min-width: 180px; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
         .nav-dropdown.active { display: flex; }
-        .nav-link-item { padding: 12px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.8rem; }
+        .nav-link-item { padding: 15px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.8rem; transition: 0.2s; }
+        .nav-link-item:hover { background: var(--card-bg); color: var(--accent); }
 
-        /* TABS */
-        .page { display: none; padding: 20px; }
+        /* --- GRID SYSTEM (PC vs HANDY) --- */
+        .content { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .dashboard-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; /* Standard: Handy Modus (1 Spalte) */
+            gap: 15px; 
+        }
+
+        /* PC MODUS ANPASSUNG */
+        @media (min-width: 850px) {
+            .dashboard-grid { 
+                grid-template-columns: repeat(3, 1fr); /* PC: 3 Spalten */
+            }
+            .card.wide { grid-column: span 2; }
+            .card.full { grid-column: span 3; }
+        }
+
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 4px; position: relative; }
+        .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
+
+        /* --- ARCHIVE & LAYOUT --- */
+        .page { display: none; animation: fadeIn 0.3s ease; }
         .page.active { display: block; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 4px; }
-        .card.wide { grid-column: span 1; }
-        @media (min-width: 800px) { .card.wide { grid-column: span 2; } }
-        .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; margin-bottom: 10px; font-size: 0.8rem; }
-        
-        /* ARCHIVE */
-        .archive-year { font-family: 'Orbitron'; color: var(--accent); border-bottom: 1px solid var(--border); margin: 30px 0 15px; padding-bottom: 5px; }
-        .placeholder { height: 100px; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; opacity: 0.4; font-size: 0.7rem; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* FOOTER */
-        .bottom-bar { background: rgba(0,0,0,0.5); padding: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; border-top: 1px solid var(--border); margin-top: 30px; }
-        .footer-link { color: var(--accent); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; }
-        .footer-copy { width: 100%; text-align: center; font-size: 0.6rem; opacity: 0.5; margin-top: 10px; }
+        .archive-year { font-family: 'Orbitron'; color: var(--accent); border-bottom: 1px solid var(--border); margin: 30px 0 15px; padding-bottom: 5px; }
+        .placeholder { height: 120px; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; opacity: 0.4; font-size: 0.7rem; font-family: 'Orbitron'; }
+
+        /* --- FOOTER --- */
+        .bottom-bar { 
+            background: rgba(0,0,0,0.8); padding: 30px 20px; 
+            display: flex; justify-content: center; gap: 20px; 
+            flex-wrap: wrap; border-top: 1px solid var(--border); margin-top: 50px; 
+        }
+        .footer-link { color: var(--accent); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 1px; }
+        .footer-copy { 
+            width: 100%; text-align: center; 
+            font-size: 0.8rem; font-family: 'Orbitron'; 
+            color: var(--text); opacity: 0.8; margin-top: 15px; 
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +121,7 @@
         <div class="login-box">
             <img src="assets/AGDlogo.gif" alt="AGD Logo" class="welcome-logo">
             <h1 class="welcome-title">AGD OPERATIONS</h1>
-            <p>SECURE TERMINAL ACCESS</p>
+            <p style="letter-spacing: 3px; font-size: 0.8rem; opacity: 0.6;">ENCRYPTED TERMINAL</p>
             <button id="login-btn-welcome" class="main-start-btn">LOGIN WITH DISCORD</button>
         </div>
     </div>
@@ -65,7 +135,7 @@
             </div>
             <div class="nav-right">
                 <div id="user-profile" style="display:none; align-items:center; gap:8px;">
-                    <img id="user-avatar" src="" style="width:25px; border-radius:50%;">
+                    <img id="user-avatar" src="" style="width:28px; border-radius:50%; border: 1px solid var(--accent);">
                     <span id="user-name" style="font-size:0.7rem; color:var(--accent); font-family:'Orbitron';"></span>
                 </div>
                 <button id="theme-toggle" class="control-btn-pro">🌓</button>
@@ -76,7 +146,7 @@
                     <a href="#gallery" class="nav-link-item">ARCHIVE</a>
                     <a href="#updates" class="nav-link-item">UPDATES</a>
                     <a href="#contact" class="nav-link-item">CONTACT</a>
-                    <a href="#" id="logout-btn" class="nav-link-item" style="color:red;">LOGOUT</a>
+                    <a href="#" id="logout-btn" class="nav-link-item" style="color:#ff4444;">LOGOUT</a>
                 </div>
             </div>
         </nav>
@@ -85,56 +155,79 @@
             <section id="home" class="page active">
                 <div class="dashboard-grid">
                     <div class="card glass wide">
-                        <h3 class="card-head">// RADAR UPLINK</h3>
-                        <div style="display:flex; gap:20px; margin-bottom:10px;">
-                            <span style="font-size:2rem; color:var(--accent); font-weight:bold;"><span id="w-temp">--</span>°C</span>
-                            <span style="font-size:0.8rem; opacity:0.7;">WIND: <span id="w-wind">--</span> km/h<br>HUM: <span id="w-hum">--</span>%</span>
+                        <h3 class="card-head">// ENVIRONMENTAL RADAR</h3>
+                        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom:15px;">
+                            <span style="font-size:2.8rem; color:var(--accent); font-weight:bold; font-family:'Orbitron';"><span id="w-temp">--</span>°C</span>
+                            <div style="font-size:0.8rem; text-align: right; line-height: 1.4;">
+                                📡 UPLINK: <span style="color:var(--accent);">ACTIVE</span><br>
+                                💨 WIND: <span id="w-wind">--</span> km/h<br>
+                                💧 HUM: <span id="w-hum">--</span>%
+                            </div>
                         </div>
-                        <div style="height:250px; background:#000;"><iframe id="radar-iframe" width="100%" height="100%" frameborder="0"></iframe></div>
+                        <div style="height:300px; background:#000; border: 1px solid var(--border);">
+                            <iframe id="radar-iframe" width="100%" height="100%" frameborder="0"></iframe>
+                        </div>
                     </div>
+                    
                     <div class="card glass">
-                        <h3 class="card-head">// SYSTEM STATUS</h3>
-                        <p style="font-size:0.8rem;">UNIT: <span id="display-id" style="color:var(--accent);">---</span></p>
-                        <p style="font-size:0.8rem;">LEVEL: <span style="color:var(--accent);">ALPHA-1</span></p>
-                        <p style="font-size:0.8rem;">THREAT: <span style="color:#ffcc00;">GUARDED</span></p>
+                        <h3 class="card-head">// SYSTEM PARAMETERS</h3>
+                        <div style="display:flex; flex-direction:column; gap:12px; font-size:0.85rem;">
+                            <div style="display:flex; justify-content:space-between;"><span>OPERATOR:</span> <span id="display-id" style="color:var(--accent);">---</span></div>
+                            <div style="display:flex; justify-content:space-between;"><span>CLEARANCE:</span> <span style="color:var(--accent);">ALPHA-1</span></div>
+                            <div style="display:flex; justify-content:space-between;"><span>THREAT:</span> <span style="color:#ffcc00;">GUARDED</span></div>
+                            <div style="display:flex; justify-content:space-between;"><span>OS-VERSION:</span> <span>6.2.0-STABLE</span></div>
+                        </div>
                     </div>
-                    <div class="card glass wide">
-                        <h3 class="card-head">// LIVE COMMS</h3>
-                        <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="200" allowtransparency="true" frameborder="0"></iframe>
+
+                    <div class="card glass full">
+                        <h3 class="card-head">// SECURE COMMS CHANNEL</h3>
+                        <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="250" allowtransparency="true" frameborder="0"></iframe>
                     </div>
                 </div>
             </section>
 
             <section id="gallery" class="page">
-                <h2 class="section-title">// DATA ARCHIVE</h2>
+                <h2 class="section-title">// INTELLIGENCE ARCHIVE</h2>
                 <h3 class="archive-year">/ 2026</h3>
-                <div class="dashboard-grid"><div class="card glass placeholder">EMPTY SLOTS</div><div class="card glass placeholder">EMPTY SLOTS</div></div>
+                <div class="dashboard-grid">
+                    <div class="card glass placeholder">ENCRYPTED DATA SLOT</div>
+                    <div class="card glass placeholder">ENCRYPTED DATA SLOT</div>
+                </div>
                 <h3 class="archive-year">/ 2025</h3>
-                <div class="dashboard-grid"><div class="card glass placeholder">LEGACY DATA</div><div class="card glass placeholder">LEGACY DATA</div></div>
-            </section>
-
-            <section id="updates" class="page">
-                <h2 class="section-title">// LOGS</h2>
-                <div class="card glass" style="font-size:0.8rem; line-height:1.6;">
-                    • [2026-02-17] UI V6.0 Stable Release<br>
-                    • [2026-02-17] Integrated Archive structure<br>
-                    • [2026-02-16] Satellite Link operational<br>
-                    • [2026-01-10] Initial Center launch
+                <div class="dashboard-grid">
+                    <div class="card glass placeholder">LEGACY LOG A-1</div>
+                    <div class="card glass placeholder">LEGACY LOG A-2</div>
                 </div>
             </section>
 
-            <section id="mission" class="page"><h2 class="section-title">// MISSION</h2><div class="card glass">Global surveillance and digital defense.</div></section>
-            <section id="contact" class="page"><h2 class="section-title">// CONTACT</h2><div class="card glass" style="text-align:center;"><a href="https://discord.gg/agd" target="_blank" class="main-start-btn" style="background:#5865f2; text-decoration:none;">JOIN DISCORD</a></div></section>
-            <section id="legal" class="page"><h2 class="section-title">// LEGAL</h2><div class="card glass">Private AGD Project.</div></section>
-            <section id="credits" class="page"><h2 class="section-title">// CREDITS</h2><div class="card glass">Developed by AGD Tech (Hayato).</div></section>
-            <section id="privacy" class="page"><h2 class="section-title">// PRIVACY</h2><div class="card glass">No tracking. Discord Auth only.</div></section>
+            <section id="updates" class="page">
+                <h2 class="section-title">// DEPLOYMENT LOGS</h2>
+                <div class="card glass" style="font-size:0.9rem; line-height:1.8; font-family: 'Rajdhani';">
+                    <code style="color:var(--accent);">[2026-02-17]</code> Responsive Mobile/PC Engine integrated.<br>
+                    <code style="color:var(--accent);">[2026-02-17]</code> Dashboard 2.0: Radar & Comms expanded.<br>
+                    <code style="color:var(--accent);">[2026-02-16]</code> Satellite Weather Uplink established.<br>
+                    <code style="color:var(--accent);">[2026-01-10]</code> Initial system bootup.
+                </div>
+            </section>
+
+            <section id="mission" class="page"><h2 class="section-title">// MISSION</h2><div class="card glass">Aegis Global Defense ensures global sector stability and digital infrastructure protection.</div></section>
+            <section id="contact" class="page">
+                <h2 class="section-title">// UPLINK</h2>
+                <div class="card glass" style="text-align:center;">
+                    <p>OFFICIAL DISCORD HQ</p>
+                    <a href="https://discord.gg/agd" target="_blank" class="main-start-btn" style="background:var(--discord); text-decoration:none; display:inline-block;">JOIN SERVER</a>
+                </div>
+            </section>
+            <section id="legal" class="page"><h2 class="section-title">// LEGAL</h2><div class="card glass">This is a private, authorized-access-only terminal.</div></section>
+            <section id="credits" class="page"><h2 class="section-title">// CREDITS</h2><div class="card glass">Lead Tech: Hayato<br>Division: AGD Intelligence</div></section>
+            <section id="privacy" class="page"><h2 class="section-title">// PRIVACY</h2><div class="card glass">Session data is handled via Discord OAuth2. No local tracking.</div></section>
         </main>
 
         <footer class="bottom-bar">
             <a href="#credits" class="footer-link">CREDITS</a>
             <a href="#legal" class="footer-link">LEGAL</a>
             <a href="#privacy" class="footer-link">PRIVACY</a>
-            <span class="footer-copy">© 2026 AGD OPERATIONS CENTER</span>
+            <div class="footer-copy">Aegis Global Defense © 2026</div>
         </footer>
     </div>
 
@@ -143,13 +236,13 @@
             const CLIENT_ID = '1292148049358884905';
             const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-            // LOGIN
+            // --- DISCORD LOGIN ---
             document.getElementById('login-btn-welcome').onclick = () => {
                 const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
                 window.location.href = url;
             };
 
-            // AUTH
+            // --- AUTH CHECK ---
             async function checkAuth() {
                 const hash = new URLSearchParams(window.location.hash.slice(1));
                 let token = hash.get('access_token') || localStorage.getItem('agd_token');
@@ -174,7 +267,7 @@
                 }
             }
 
-            // TABS
+            // --- PAGE NAVIGATION ---
             function showPage(id) {
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                 const target = document.getElementById(id);
@@ -186,24 +279,29 @@
             document.querySelectorAll('a[href^="#"]').forEach(a => {
                 a.onclick = (e) => {
                     e.preventDefault();
+                    const targetId = a.getAttribute('href').slice(1);
                     if(a.id === 'logout-btn') { localStorage.removeItem('agd_token'); window.location.reload(); return; }
-                    showPage(a.getAttribute('href').slice(1));
+                    showPage(targetId);
                 };
             });
 
-            // UI
-            document.getElementById('menu-toggle').onclick = (e) => { e.stopPropagation(); document.getElementById('nav-menu').classList.toggle('active'); };
+            // --- UI CONTROLS ---
+            document.getElementById('menu-toggle').onclick = (e) => { 
+                e.stopPropagation(); 
+                document.getElementById('nav-menu').classList.toggle('active'); 
+            };
             document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('light-theme');
             document.getElementById('home-quick-btn').onclick = () => showPage('home');
             window.onclick = () => document.getElementById('nav-menu').classList.remove('active');
 
+            // --- WEATHER DATA ---
             async function updateWeather() {
                 try {
                     const w = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.5&longitude=13.4&current_weather=true&hourly=relative_humidity_2m`)).json();
                     document.getElementById('w-temp').innerText = Math.round(w.current_weather.temperature);
                     document.getElementById('w-wind').innerText = Math.round(w.current_weather.windspeed);
                     document.getElementById('w-hum').innerText = w.hourly.relative_humidity_2m[0];
-                    document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=52.5&lon=13.4&zoom=6&level=surface&overlay=rain&product=ecmwf&message=false`;
+                    document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=52.5&lon=13.4&zoom=5&level=surface&overlay=rain&product=ecmwf&message=false`;
                 } catch(e) {}
             }
 
