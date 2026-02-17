@@ -4,16 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AGD OPERATIONS CENTER</title>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #05070a; --text: #ffffff; --accent: #00f0ff; --border: rgba(0, 240, 255, 0.2); --card-bg: rgba(255, 255, 255, 0.05); }
+        body.light-theme { --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7; --border: #cbd5e1; --card-bg: #ffffff; }
+        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
+
+        /* LOGIN SCREEN */
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .welcome-logo { width: 150px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .welcome-title { font-family: 'Orbitron'; color: var(--accent); }
+        .main-start-btn { background: var(--accent); color: #000; padding: 12px 25px; border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
+
+        /* NAV */
+        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; height: 60px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9000; }
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 10px; }
+        .mini-logo { height: 25px; }
+        .brand-text { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; }
+        .control-btn-pro { background: none; border: 1px solid var(--border); color: var(--accent); padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+        .nav-dropdown { display: none; position: absolute; top: 60px; right: 10px; background: var(--bg); border: 1px solid var(--border); min-width: 160px; flex-direction: column; }
+        .nav-dropdown.active { display: flex; }
+        .nav-link-item { padding: 12px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.8rem; }
+
+        /* TABS */
+        .page { display: none; padding: 20px; }
+        .page.active { display: block; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 4px; }
+        .card.wide { grid-column: span 1; }
+        @media (min-width: 800px) { .card.wide { grid-column: span 2; } }
+        .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; margin-bottom: 10px; font-size: 0.8rem; }
+        
+        /* ARCHIVE */
+        .archive-year { font-family: 'Orbitron'; color: var(--accent); border-bottom: 1px solid var(--border); margin: 30px 0 15px; padding-bottom: 5px; }
+        .placeholder { height: 100px; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; opacity: 0.4; font-size: 0.7rem; }
+
+        /* FOOTER */
+        .bottom-bar { background: rgba(0,0,0,0.5); padding: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; border-top: 1px solid var(--border); margin-top: 30px; }
+        .footer-link { color: var(--accent); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; }
+        .footer-copy { width: 100%; text-align: center; font-size: 0.6rem; opacity: 0.5; margin-top: 10px; }
+    </style>
 </head>
-<body class="dark-theme">
+<body>
 
     <div id="welcome-screen">
         <div class="login-box">
             <img src="assets/AGDlogo.gif" alt="AGD Logo" class="welcome-logo">
-            <h1 class="welcome-title">AEGIS GLOBAL DEFENSE</h1>
-            <p class="welcome-status">AUTHENTICATION REQUIRED</p>
+            <h1 class="welcome-title">AGD OPERATIONS</h1>
+            <p>SECURE TERMINAL ACCESS</p>
             <button id="login-btn-welcome" class="main-start-btn">LOGIN WITH DISCORD</button>
         </div>
     </div>
@@ -22,24 +60,23 @@
         <nav class="glass-nav">
             <div class="nav-left">
                 <button id="home-quick-btn" class="control-btn-pro">🏠</button>
-                <img src="assets/AGDlogo.gif" alt="AGD" class="mini-logo">
+                <img src="assets/AGDlogo.gif" class="mini-logo">
                 <span class="brand-text">AGD OPS</span>
             </div>
-            
             <div class="nav-right">
-                <div id="user-profile" style="display: none; align-items: center; gap: 8px;">
-                    <img id="user-avatar" src="" style="width: 25px; border-radius: 50%; border: 1px solid var(--accent);">
-                    <span id="user-name" style="font-family:'Orbitron'; font-size: 0.7rem; color: var(--accent);"></span>
+                <div id="user-profile" style="display:none; align-items:center; gap:8px;">
+                    <img id="user-avatar" src="" style="width:25px; border-radius:50%;">
+                    <span id="user-name" style="font-size:0.7rem; color:var(--accent); font-family:'Orbitron';"></span>
                 </div>
                 <button id="theme-toggle" class="control-btn-pro">🌓</button>
-                <button id="menu-toggle" class="control-btn-pro">MENU ☰</button>
+                <button id="menu-toggle" class="control-btn-pro">MENU</button>
                 <div id="nav-menu" class="nav-dropdown">
-                    <a href="#home" class="nav-link-item">● DASHBOARD</a>
-                    <a href="#mission" class="nav-link-item">● MISSION</a>
-                    <a href="#gallery" class="nav-link-item">● ARCHIVE</a>
-                    <a href="#updates" class="nav-link-item">● UPDATES</a>
-                    <a href="#contact" class="nav-link-item">● CONTACT</a>
-                    <a href="#" id="logout-btn" class="nav-link-item" style="color: #ff4444;">● LOGOUT</a>
+                    <a href="#home" class="nav-link-item">DASHBOARD</a>
+                    <a href="#mission" class="nav-link-item">MISSION</a>
+                    <a href="#gallery" class="nav-link-item">ARCHIVE</a>
+                    <a href="#updates" class="nav-link-item">UPDATES</a>
+                    <a href="#contact" class="nav-link-item">CONTACT</a>
+                    <a href="#" id="logout-btn" class="nav-link-item" style="color:red;">LOGOUT</a>
                 </div>
             </div>
         </nav>
@@ -48,33 +85,21 @@
             <section id="home" class="page active">
                 <div class="dashboard-grid">
                     <div class="card glass wide">
-                        <h3 class="card-head">// SATELLITE RADAR</h3>
-                        <div class="weather-row">
-                            <div class="temp-big"><span id="w-temp">--</span>°C</div>
-                            <div class="weather-meta">WIND: <span id="w-wind">--</span> km/h | HUM: <span id="w-hum">--</span>%</div>
+                        <h3 class="card-head">// RADAR UPLINK</h3>
+                        <div style="display:flex; gap:20px; margin-bottom:10px;">
+                            <span style="font-size:2rem; color:var(--accent); font-weight:bold;"><span id="w-temp">--</span>°C</span>
+                            <span style="font-size:0.8rem; opacity:0.7;">WIND: <span id="w-wind">--</span> km/h<br>HUM: <span id="w-hum">--</span>%</span>
                         </div>
-                        <div class="radar-box">
-                            <iframe id="radar-iframe" width="100%" height="100%" src="" frameborder="0"></iframe>
-                        </div>
+                        <div style="height:250px; background:#000;"><iframe id="radar-iframe" width="100%" height="100%" frameborder="0"></iframe></div>
                     </div>
                     <div class="card glass">
-                        <h3 class="card-head">// OP-PARAMETERS</h3>
-                        <ul class="tactical-list">
-                            <li><span>UNIT:</span> <span id="display-id">---</span></li>
-                            <li><span>STATUS:</span> <span style="color:#00f0ff;">ACTIVE</span></li>
-                            <li><span>SEC-LEVEL:</span> ALPHA-1</li>
-                            <li><span>UPLINK:</span> STABLE</li>
-                        </ul>
-                    </div>
-                    <div class="card glass">
-                        <h3 class="card-head">// GLOBAL THREAT LEVEL</h3>
-                        <div style="text-align:center; padding: 20px;">
-                            <div style="font-size: 2rem; color: #ffcc00; font-family:'Orbitron';">GUARDED</div>
-                            <p style="font-size:0.7rem; opacity:0.6;">Current Alert State: Yellow</p>
-                        </div>
+                        <h3 class="card-head">// SYSTEM STATUS</h3>
+                        <p style="font-size:0.8rem;">UNIT: <span id="display-id" style="color:var(--accent);">---</span></p>
+                        <p style="font-size:0.8rem;">LEVEL: <span style="color:var(--accent);">ALPHA-1</span></p>
+                        <p style="font-size:0.8rem;">THREAT: <span style="color:#ffcc00;">GUARDED</span></p>
                     </div>
                     <div class="card glass wide">
-                        <h3 class="card-head">// COMMS TERMINAL</h3>
+                        <h3 class="card-head">// LIVE COMMS</h3>
                         <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="200" allowtransparency="true" frameborder="0"></iframe>
                     </div>
                 </div>
@@ -82,38 +107,27 @@
 
             <section id="gallery" class="page">
                 <h2 class="section-title">// DATA ARCHIVE</h2>
-                <div class="archive-container">
-                    <h3 class="archive-year">/ 2026</h3>
-                    <div class="dashboard-grid">
-                        <div class="card glass placeholder-img">DATA SCAN PENDING...</div>
-                        <div class="card glass placeholder-img">DATA SCAN PENDING...</div>
-                    </div>
-                    <h3 class="archive-year" style="margin-top:40px;">/ 2025</h3>
-                    <div class="dashboard-grid">
-                        <div class="card glass placeholder-img">ARCHIVED DATA</div>
-                        <div class="card glass placeholder-img">ARCHIVED DATA</div>
-                    </div>
-                </div>
+                <h3 class="archive-year">/ 2026</h3>
+                <div class="dashboard-grid"><div class="card glass placeholder">EMPTY SLOTS</div><div class="card glass placeholder">EMPTY SLOTS</div></div>
+                <h3 class="archive-year">/ 2025</h3>
+                <div class="dashboard-grid"><div class="card glass placeholder">LEGACY DATA</div><div class="card glass placeholder">LEGACY DATA</div></div>
             </section>
 
             <section id="updates" class="page">
-                <h2 class="section-title">// SYSTEM LOGS</h2>
-                <div class="card glass">
-                    <ul class="tactical-list log-list">
-                        <li><span>[2026-02-17]</span> UI V5.5: Dashboard expanded, Archive structured.</li>
-                        <li><span>[2026-02-17]</span> Auth: Login enforcement active.</li>
-                        <li><span>[2026-02-16]</span> Core: Weather satellite uplink established.</li>
-                        <li><span>[2026-02-15]</span> Security: Member-only gateway test completed.</li>
-                        <li><span>[2026-01-10]</span> Initial Boot: AGD Operations Center online.</li>
-                    </ul>
+                <h2 class="section-title">// LOGS</h2>
+                <div class="card glass" style="font-size:0.8rem; line-height:1.6;">
+                    • [2026-02-17] UI V6.0 Stable Release<br>
+                    • [2026-02-17] Integrated Archive structure<br>
+                    • [2026-02-16] Satellite Link operational<br>
+                    • [2026-01-10] Initial Center launch
                 </div>
             </section>
 
-            <section id="mission" class="page"><h2 class="section-title">// MISSION</h2><div class="card glass"><p>Sicherung globaler Datenströme und Überwachung kritischer Infrastruktur.</p></div></section>
-            <section id="contact" class="page"><h2 class="section-title">// CONTACT</h2><div class="dashboard-grid"><div class="card glass" style="text-align:center;"><a href="https://discord.gg/agd" target="_blank" class="main-start-btn" style="background:#5865F2!important; text-decoration:none;">JOIN SERVER</a></div></div></section>
-            <section id="legal" class="page"><h2 class="section-title">// LEGAL NOTICE</h2><div class="card glass"><p>Privates Projekt der AGD. Alle Logos © AGD 2026.</p></div></section>
-            <section id="credits" class="page"><h2 class="section-title">// CREDITS</h2><div class="card glass"><p>Developed by AGD Intelligence Division.<br>Support: Hayato</p></div></section>
-            <section id="privacy" class="page"><h2 class="section-title">// PRIVACY POLICY</h2><div class="card glass"><p>Es werden keine persönlichen Daten gespeichert. Login erfolgt via Discord OAuth2.</p></div></section>
+            <section id="mission" class="page"><h2 class="section-title">// MISSION</h2><div class="card glass">Global surveillance and digital defense.</div></section>
+            <section id="contact" class="page"><h2 class="section-title">// CONTACT</h2><div class="card glass" style="text-align:center;"><a href="https://discord.gg/agd" target="_blank" class="main-start-btn" style="background:#5865f2; text-decoration:none;">JOIN DISCORD</a></div></section>
+            <section id="legal" class="page"><h2 class="section-title">// LEGAL</h2><div class="card glass">Private AGD Project.</div></section>
+            <section id="credits" class="page"><h2 class="section-title">// CREDITS</h2><div class="card glass">Developed by AGD Tech (Hayato).</div></section>
+            <section id="privacy" class="page"><h2 class="section-title">// PRIVACY</h2><div class="card glass">No tracking. Discord Auth only.</div></section>
         </main>
 
         <footer class="bottom-bar">
@@ -123,6 +137,78 @@
             <span class="footer-copy">© 2026 AGD OPERATIONS CENTER</span>
         </footer>
     </div>
-    <script src="js/theme.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const CLIENT_ID = '1292148049358884905';
+            const REDIRECT_URI = window.location.origin + window.location.pathname;
+
+            // LOGIN
+            document.getElementById('login-btn-welcome').onclick = () => {
+                const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+                window.location.href = url;
+            };
+
+            // AUTH
+            async function checkAuth() {
+                const hash = new URLSearchParams(window.location.hash.slice(1));
+                let token = hash.get('access_token') || localStorage.getItem('agd_token');
+
+                if (token) {
+                    try {
+                        const res = await fetch('https://discord.com/api/users/@me', { headers: { authorization: `Bearer ${token}` } });
+                        if (!res.ok) throw new Error();
+                        const data = await res.json();
+                        localStorage.setItem('agd_token', token);
+                        
+                        document.getElementById('welcome-screen').style.display = 'none';
+                        document.getElementById('main-interface').style.display = 'block';
+                        document.getElementById('user-profile').style.display = 'flex';
+                        document.getElementById('user-name').innerText = data.username.toUpperCase();
+                        document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
+                        document.getElementById('display-id').innerText = data.username.toUpperCase();
+                        
+                        updateWeather();
+                    } catch (e) { localStorage.removeItem('agd_token'); }
+                    window.history.replaceState({}, document.title, REDIRECT_URI);
+                }
+            }
+
+            // TABS
+            function showPage(id) {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(id);
+                if(target) target.classList.add('active');
+                document.getElementById('nav-menu').classList.remove('active');
+                window.scrollTo(0,0);
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.onclick = (e) => {
+                    e.preventDefault();
+                    if(a.id === 'logout-btn') { localStorage.removeItem('agd_token'); window.location.reload(); return; }
+                    showPage(a.getAttribute('href').slice(1));
+                };
+            });
+
+            // UI
+            document.getElementById('menu-toggle').onclick = (e) => { e.stopPropagation(); document.getElementById('nav-menu').classList.toggle('active'); };
+            document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('light-theme');
+            document.getElementById('home-quick-btn').onclick = () => showPage('home');
+            window.onclick = () => document.getElementById('nav-menu').classList.remove('active');
+
+            async function updateWeather() {
+                try {
+                    const w = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.5&longitude=13.4&current_weather=true&hourly=relative_humidity_2m`)).json();
+                    document.getElementById('w-temp').innerText = Math.round(w.current_weather.temperature);
+                    document.getElementById('w-wind').innerText = Math.round(w.current_weather.windspeed);
+                    document.getElementById('w-hum').innerText = w.hourly.relative_humidity_2m[0];
+                    document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=52.5&lon=13.4&zoom=6&level=surface&overlay=rain&product=ecmwf&message=false`;
+                } catch(e) {}
+            }
+
+            checkAuth();
+        });
+    </script>
 </body>
 </html>
