@@ -8,28 +8,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="dark-theme mobile-mode">
+
     <div id="welcome-screen">
-        <img src="assets/AGDlogo.gif" alt="AGD" style="width:60px;margin-bottom:15px;">
-        <h1 style="font-family:'Orbitron';font-size:1.2rem;color:var(--accent);">AGD OPERATIONS</h1>
-        <button id="enter-btn" class="main-start-btn">INITIALIZE</button>
+        <img src="assets/AGDlogo.gif" alt="AGD Logo" class="welcome-logo">
+        <h1 class="welcome-title">AEGIS GLOBAL DEFENSE</h1>
+        <p class="welcome-status">AUTHENTICATION REQUIRED</p>
+        <button id="login-btn-welcome" class="main-start-btn">LOGIN WITH DISCORD</button>
     </div>
 
     <div id="main-interface" style="display: none;">
         <nav class="glass-nav">
             <div class="nav-left">
+                <button id="home-quick-btn" class="control-btn-pro">🏠</button>
                 <img src="assets/AGDlogo.gif" alt="AGD" class="mini-logo">
-                <span class="brand-text">AGD</span>
+                <span class="brand-text">AGD OPS</span>
             </div>
+            
             <div class="nav-right">
-                <button id="lang-toggle" class="control-btn-pro">EN</button>
+                <div id="user-profile" style="display: none; align-items: center; gap: 8px;">
+                    <img id="user-avatar" src="" style="width: 25px; border-radius: 50%; border: 1px solid var(--accent);">
+                    <span id="user-name" style="font-family:'Orbitron'; font-size: 0.7rem; color: var(--accent);"></span>
+                </div>
                 <button id="theme-toggle" class="control-btn-pro">🌓</button>
-                <button id="menu-toggle" class="burger-btn">
-                    <span></span><span></span><span></span>
-                </button>
+                <button id="menu-toggle" class="control-btn-pro">☰</button>
                 <div id="nav-menu" class="nav-dropdown">
-                    <a href="#home" class="nav-link-item" id="link-dash">● DASHBOARD</a>
-                    <a href="#updates" class="nav-link-item" id="link-upd">● UPDATES</a>
-                    <a href="#contact" class="nav-link-item" id="link-cont">● CONTACT</a>
+                    <a href="#home" class="nav-link-item">● DASHBOARD</a>
+                    <a href="#mission" class="nav-link-item">● MISSION</a>
+                    <a href="#members" class="nav-link-item">● MEMBERS</a>
+                    <a href="#gallery" class="nav-link-item">● ARCHIVE</a>
+                    <a href="#updates" class="nav-link-item">● UPDATES</a>
+                    <a href="#contact" class="nav-link-item">● CONTACT</a>
                 </div>
             </div>
         </nav>
@@ -38,37 +46,34 @@
             <section id="home" class="page active">
                 <div class="dashboard-grid">
                     <div class="card glass wide">
-                        <h3 id="card-weather" style="font-family:'Orbitron';font-size:0.8rem;color:var(--accent);">WETTER: BAYERN</h3>
-                        <div class="weather-stats" style="display:flex; gap:15px; margin:10px 0;">
-                            <div style="font-size:1.5rem; font-weight:bold;"><span id="w-temp">--</span>°C</div>
-                            <div style="font-size:0.7rem; opacity:0.7;">WIND: <span id="w-wind">--</span> km/h</div>
+                        <h3 id="card-weather" class="card-head">// SATELLITE RADAR</h3>
+                        <div class="weather-row">
+                            <div class="temp-big"><span id="w-temp">--</span>°C</div>
+                            <div class="weather-meta">WIND: <span id="w-wind">--</span> km/h | HUM: <span id="w-hum">--</span>%</div>
                         </div>
                         <div class="radar-box">
                             <iframe id="radar-iframe" width="100%" height="100%" src="" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="card glass">
-                        <h3 style="font-family:'Orbitron';font-size:0.8rem;color:var(--accent);">DISCORD</h3>
-                        <iframe id="discord-iframe" src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0"></iframe>
+                        <h3 class="card-head">// OP-PARAMETERS</h3>
+                        <ul class="tactical-list">
+                            <li><span>UNIT:</span> <span id="display-id">GUEST-01</span></li>
+                            <li><span>STATUS:</span> <span style="color:#00ff00;">AUTHORIZED</span></li>
+                            <li><span>LEVEL:</span> ALPHA-7</li>
+                        </ul>
                     </div>
                 </div>
             </section>
             
-            <section id="updates" class="page">
-                <div class="card glass">
-                    <h3 id="head-logs" style="font-family:'Orbitron';font-size:0.8rem;color:var(--accent);">// SYSTEM LOGS</h3>
-                    <ul id="log-content" style="list-style:none;padding:0;font-size:0.8rem;"></ul>
-                </div>
-            </section>
+            </main>
 
-            <section id="contact" class="page">
-                <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
-                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank" class="control-btn-pro" style="width:200px;text-decoration:none;">JOIN SERVER</a>
-                </div>
-            </section>
-        </main>
-
-        <button id="pc-toggle-btn" class="pc-mode-btn">🖥️ PC MODE</button>
+        <footer class="bottom-bar">
+            <a href="#credits" class="footer-link">CREDITS</a>
+            <a href="#legal" class="footer-link">LEGAL</a>
+            <a href="#privacy" class="footer-link">PRIVACY</a>
+            <span class="footer-copy">© 2026 AGD</span>
+        </footer>
     </div>
     <script src="js/theme.js"></script>
 </body>
