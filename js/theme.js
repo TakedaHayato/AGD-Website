@@ -1,98 +1,150 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const CLIENT_ID = '1292148049358884905'; 
-    const REDIRECT_URI = window.location.origin + window.location.pathname;
+/**
+ * AGD Operations Center - Core Logic
+ * Handelt Authentifizierung, Navigation und Discord-Integration
+ */
 
-    // --- AUTHENTIFIZIERUNG ---
-    async function checkAuth() {
-        const hash = new URLSearchParams(window.location.hash.slice(1));
-        let token = hash.get('access_token') || localStorage.getItem('agd_token');
+const CLIENT_ID = '1292148049358884905';
+const GUILD_ID = '1129433598253084826';
+const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-        if (token) {
-            try {
-                const res = await fetch('https://discord.com/api/users/@me', { 
-                    headers: { authorization: `Bearer ${token}` } 
-                });
-                const data = await res.json();
-                localStorage.setItem('agd_token', token);
-                
-                document.getElementById('welcome-screen').style.display = 'none';
-                document.getElementById('main-interface').style.display = 'block';
-                document.getElementById('user-name').innerText = data.username.toUpperCase();
-                document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
-                
-                updateWeather();
-            } catch (e) { 
-                localStorage.removeItem('agd_token'); 
-            }
-            window.history.replaceState({}, document.title, REDIRECT_URI);
-        }
-    }
+// --- NAVIGATION & UI STEUERUNG ---
 
-    // --- WETTER & RADAR ---
-    async function updateWeather() {
-        navigator.geolocation.getCurrentPosition(async (p) => {
-            fetchData(p.coords.latitude, p.coords.longitude);
-        }, () => fetchData(52.52, 13.40));
-    }
-
-    async function fetchData(lat, lon) {
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relative_humidity_2m`);
-        const data = await res.json();
-        document.getElementById('w-temp').innerText = Math.round(data.current_weather.temperature);
-        document.getElementById('w-hum').innerText = data.hourly.relative_humidity_2m[0];
-        document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&overlay=rain`;
-    }
-
-    // --- UI EVENTS ---
-    document.getElementById('login-btn-welcome').onclick = () => {
-        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-    };
-
-    document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('light-theme');
-
-    document.getElementById('logout-btn').onclick = () => {
-        localStorage.removeItem('agd_token');
-        window.location.reload();
-    };
-
-    checkAuth();
-    async function loadTeam() {
-    const team = {
-        owners: [{ id: "444127208735506433", role: "Lead Programmer, Game Designer" }],
-        devs: [{ id: "1400867817951072428", role: "System Architect, UI Developer" }]
-    };
-
-    const token = localStorage.getItem('agd_token');
-    if (!token) return;
-
-    const fetchUser = async (userObj, containerId) => {
-        try {
-            // Hinweis: Direkter Abruf fremder Profile via Client-Token kann eingeschränkt sein.
-            // Als Fallback nutzen wir die Discord-Avatar-URL Struktur.
-            const container = document.getElementById(containerId);
-            
-            // Da man fremde IDs ohne Bot-Token oft nicht direkt abrufen kann, 
-            // erstellen wir hier das Template. Die Namen werden im AGD-System groß geschrieben.
-            const name = userObj.id === "444127208735506433" ? "HAYATO" : "DEVELOPER";
-            
-            container.innerHTML += `
-                <div class="team-member">
-                    <img class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profile">
-                    <div class="team-info">
-                        <span class="team-name">${name} <span class="team-tag">(@id_${userObj.id.slice(0,4)})</span></span>
-                        <span class="team-role">${userObj.role}</span>
-                    </div>
-                </div>
-            `;
-        } catch (e) { console.error("Error loading team member", e); }
-    };
-
-    document.getElementById('owner-list').innerHTML = '';
-    document.getElementById('dev-list').innerHTML = '';
-    
-    team.owners.forEach(u => fetchUser(u, 'owner-list'));
-    team.devs.forEach(u => fetchUser(u, 'dev-list'));
+/**
+ * Öffnet/Schließt das Hamburger-Menü
+ */
+function toggleMenu(e) {
+    if (e) e.stopPropagation();
+    const dropdown = document.getElementById('dropdown');
+    dropdown.classList.toggle('active');
 }
 
-// Rufe loadTeam() am Ende deiner checkAuth() oder init() Funktion auf.
-});
+/**
+ * Schließt das Menü (wird bei Klicks außerhalb aufgerufen)
+ */
+function closeMenu() {
+    const dropdown = document.getElementById('dropdown');
+    if (dropdown) dropdown.classList.remove('active');
+}
+
+/**
+ * Wechselt zwischen den verschiedenen Unterseiten (Dashboard, Credits, etc.)
+ */
+function showPage(id) {
+    // Alle Seiten ausblenden
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
+    // Zielseite einblenden
+    const targetPage = document.getElementById(id);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
+    
+    // Menü nach Klick schließen
+    closeMenu();
+    // Nach oben scrollen
+    window.scrollTo(0, 0);
+}
+
+// --- AUTHENTIFIZIERUNG & DISCORD API ---
+
+/**
+ * Startet den Login-Prozess über Discord OAuth2
+ */
+function login() {
+    // Scopes: identify (Profil) + guilds.join (Server-Beitritt)
+    const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify+guilds.join`;
+    window.location.href = url;
+}
+
+/**
+ * Meldet den Nutzer ab und bereinigt die Session
+ */
+function logout() {
+    localStorage.removeItem('agd_token');
+    window.location.href = REDIRECT_URI;
+}
+
+/**
+ * Initialisiert die Sitzung beim Laden der Seite
+ */
+async function initSession() {
+    const hash = new URLSearchParams(window.location.hash.slice(1));
+    let token = hash.get('access_token') || localStorage.getItem('agd_token');
+
+    if (token) {
+        try {
+            // Nutzerdaten von Discord abrufen
+            const res = await fetch('https://discord.com/api/users/@me', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            if (!res.ok) throw new Error("Invalid Session");
+            
+            const user = await res.json();
+
+            // 1. Token dauerhaft speichern
+            localStorage.setItem('agd_token', token);
+
+            // 2. Interface umschalten
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('main-interface').classList.remove('hidden');
+
+            // 3. UI personalisieren
+            const userNameDisplay = document.getElementById('u-name');
+            if (userNameDisplay) userNameDisplay.innerText = user.username.toUpperCase();
+
+            // 4. Team-Avatare im Credits-Bereich setzen
+            updateTeamAvatars(user, token);
+
+            // 5. Automatischer Server-Beitritt (Guild Join)
+            tryJoinServer(user.id, token);
+
+        } catch (e) {
+            console.error("Auth-Error:", e);
+            localStorage.removeItem('agd_token');
+        }
+        
+        // URL von Hash-Parametern säubern
+        window.history.replaceState({}, document.title, REDIRECT_URI);
+    }
+}
+
+/**
+ * Versucht den Nutzer automatisch dem AGD-Server hinzuzufügen
+ */
+async function tryJoinServer(userId, token) {
+    try {
+        await fetch(`https://discord.com/api/guilds/${GUILD_ID}/members/${userId}`, {
+            method: 'PUT',
+            headers: { 
+                Authorization: `Bearer ${token}`, 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ access_token: token })
+        });
+    } catch (err) {
+        console.log("Auto-Join optional oder bereits Mitglied.");
+    }
+}
+
+/**
+ * Aktualisiert die Avatare im Credits-Bereich basierend auf den IDs
+ */
+function updateTeamAvatars(currentUser, token) {
+    const ownerImg = document.getElementById('avatar-owner');
+    const devImg = document.getElementById('avatar-dev');
+
+    // Falls der eingeloggte Nutzer selbst der Owner oder Dev ist, nutzen wir sein Bild sofort
+    if (currentUser.id === "444127208735506433" && ownerImg) {
+        ownerImg.src = `https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar}.png?size=128`;
+    }
+    if (currentUser.id === "1400867817951072428" && devImg) {
+        devImg.src = `https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar}.png?size=128`;
+    }
+    
+    // Hinweis: Fremde Avatare ohne Bot-Token sind clientseitig schwer zu laden. 
+    // Hier werden die Standard-Platzhalter verwendet, falls man nicht selbst die Person ist.
+}
+
+// --- INITIALISIERUNG BEIM START ---
+document.addEventListener('DOMContentLoaded', initSession);
