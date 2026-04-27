@@ -33,20 +33,7 @@
         .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.65rem; cursor: pointer; border-radius: 4px; transition: 0.2s; text-transform: uppercase; text-decoration: none; display: inline-block; }
         .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* --- DROPDOWN --- */
-        .nav-right { position: relative; }
-        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--border); border-radius: 4px; }
-        .hamburger span { width: 20px; height: 2px; background: var(--accent); }
-        .dropdown { 
-            position: absolute; top: 60px; right: 0; background: var(--card-bg); 
-            border: 1px solid var(--border); display: none; flex-direction: column; 
-            min-width: 180px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .dropdown.active { display: flex; }
-        .dropdown button { padding: 12px; color: var(--text); border: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.7rem; text-align: left; background: transparent; cursor: pointer; }
-        .dropdown button:hover { background: var(--accent); color: #000; }
-
-        /* --- CARDS & GRID --- */
+        /* --- DASHBOARD --- */
         .content { padding: 20px; max-width: 1600px; margin: 0 auto; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 400px; gap: 20px; }
         @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: 1fr; } }
@@ -55,7 +42,6 @@
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- TEAM IMAGES --- */
         .team-member { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; }
         .team-pfp { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
 
@@ -79,14 +65,7 @@
                 <a href="https://ptb.discord.com/channels/1129433598253084826/1380566062357282946" target="_blank" class="nav-btn">Contact</a>
                 <button class="nav-btn" id="lang-btn" onclick="toggleLang()">EN</button>
                 <button class="nav-btn" onclick="toggleTheme()">🌓</button>
-                <div class="nav-right">
-                    <div class="hamburger" onclick="toggleMenu(event)"><span></span><span></span></div>
-                    <div id="dropdown" class="dropdown">
-                        <button onclick="showPage('home')" class="t-dash">DASHBOARD</button>
-                        <button onclick="showPage('credits')" class="t-cred">CREDITS</button>
-                        <button onclick="logout()" style="color:#ff4444;" class="t-disco">DISCONNECT</button>
-                    </div>
-                </div>
+                <button class="nav-btn" onclick="logout()" style="color:#ff4444;">Logout</button>
             </div>
         </nav>
 
@@ -108,33 +87,11 @@
                             <div class="card-head t-auth">// AUTH_STATUS</div>
                             <div style="display:flex; align-items:center; justify-content:flex-end; gap:15px; margin-bottom:15px;">
                                 <span id="display-name" style="font-family:Orbitron; font-weight:bold; color:var(--accent);">---</span>
-                                <img id="display-avatar" style="width:60px; height:60px; border-radius:50%; border:2px solid var(--accent);">
+                                <img id="display-avatar" style="width:60px; height:60px; border-radius:50%; border:2px solid var(--accent);" src="https://cdn.discordapp.com/embed/avatars/0.png">
                             </div>
                             <div class="terminal-container">
                                 <div id="terminal-log"></div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="credits" class="page">
-                <div class="card">
-                    <div class="card-head t-struct">// PROJECT_STRUCTURE</div>
-                    
-                    <div class="team-member">
-                        <img class="team-pfp" src="https://cdn.discordapp.com/avatars/444127208735506433/a_df259e829377488b398646b9a89c927b.gif?size=128" onerror="this.src='image_d6d795.png'">
-                        <div>
-                            <div style="font-family:Orbitron; font-weight:bold;">HAYATO</div>
-                            <div style="font-size:0.75rem; color:var(--accent);">OWNER / ARCHITECT</div>
-                        </div>
-                    </div>
-
-                    <div class="team-member">
-                        <img class="team-pfp" src="https://cdn.discordapp.com/avatars/1400867817951072428/a_e6edf3.gif?size=128" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
-                        <div>
-                            <div style="font-family:Orbitron; font-weight:bold;">LIONEL</div>
-                            <div style="font-size:0.75rem; color:var(--accent);">DEVELOPER (ID: 1400867817951072428)</div>
                         </div>
                     </div>
                 </div>
@@ -145,37 +102,56 @@
     <script>
         const CLIENT_ID = '1292148049358884905';
         const REDIRECT_URI = window.location.origin + window.location.pathname;
-        let currentLang = 'DE';
 
-        const translations = {
-            'DE': { 'dash': 'DASHBOARD', 'cred': 'CREDITS', 'disco': 'TRENNEN', 'radar': '// TAKTISCHER_RADAR', 'comm': '// LIVE_KOMMUNIKATION', 'auth': '// AUTH_STATUS', 'struct': '// PROJEKT_STRUKTUR' },
-            'EN': { 'dash': 'DASHBOARD', 'cred': 'CREDITS', 'disco': 'DISCONNECT', 'radar': '// TACTICAL_RADAR', 'comm': '// LIVE_COMMS', 'auth': '// AUTH_STATUS', 'struct': '// PROJECT_STRUCTURE' }
-        };
-
-        function toggleLang() {
-            currentLang = currentLang === 'DE' ? 'EN' : 'DE';
-            document.getElementById('lang-btn').innerText = currentLang === 'DE' ? 'EN' : 'DE';
-            const t = translations[currentLang];
-            document.querySelectorAll('.t-dash').forEach(el => el.innerText = t.dash);
-            document.querySelectorAll('.t-cred').forEach(el => el.innerText = t.cred);
-            document.querySelectorAll('.t-disco').forEach(el => el.innerText = t.disco);
-            document.querySelector('.t-radar').innerText = t.radar;
-            document.querySelector('.t-comm').innerText = t.comm;
-            document.querySelector('.t-auth').innerText = t.auth;
-            document.querySelector('.t-struct').innerText = t.struct;
+        function showInterface() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('main-interface').classList.remove('hidden');
+            startTerminal();
         }
 
-        function toggleTheme() { document.body.classList.toggle('light-theme'); }
-        function toggleMenu(e) { e.stopPropagation(); document.getElementById('dropdown').classList.toggle('active'); }
-        function closeMenu() { document.getElementById('dropdown').classList.remove('active'); }
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            closeMenu();
+        function login() { 
+            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`; 
+        }
+
+        function logout() { 
+            localStorage.removeItem('agd_token'); 
+            window.location.reload(); 
+        }
+
+        async function init() {
+            const hash = new URLSearchParams(window.location.hash.slice(1));
+            let token = hash.get('access_token') || localStorage.getItem('agd_token');
+            
+            if (token) {
+                localStorage.setItem('agd_token', token);
+                // Entferne Token aus der URL für saubere Optik
+                window.history.replaceState({}, document.title, REDIRECT_URI);
+                
+                try {
+                    const res = await fetch('https://discord.com/api/users/@me', { 
+                        headers: { Authorization: `Bearer ${token}` } 
+                    });
+                    if (res.ok) {
+                        const user = await res.json();
+                        document.getElementById('display-name').innerText = user.username.toUpperCase();
+                        const isGif = user.avatar && user.avatar.startsWith('a_');
+                        document.getElementById('display-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${isGif ? 'gif' : 'png'}?size=128`;
+                        showInterface();
+                    } else {
+                        throw new Error("Token ungültig");
+                    }
+                } catch (e) {
+                    console.error("Auth-Fehler:", e);
+                    localStorage.removeItem('agd_token');
+                    // Trotz Fehler Interface zeigen, damit man nicht stuck ist
+                    showInterface(); 
+                }
+            }
         }
 
         function startTerminal() {
             const log = document.getElementById('terminal-log');
+            if(!log) return;
             const lines = ["UPLINK_STABLE", "NODE_ACTIVE", "ENCRYPTING...", "SYNC_OK", "SYSTEM_SECURE"];
             setInterval(() => {
                 const div = document.createElement('div');
@@ -185,30 +161,14 @@
             }, 800);
         }
 
-        async function init() {
-            const hash = new URLSearchParams(window.location.hash.slice(1));
-            let token = hash.get('access_token') || localStorage.getItem('agd_token');
-            if (token) {
-                try {
-                    const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
-                    const user = await res.json();
-                    localStorage.setItem('agd_token', token);
-                    document.getElementById('welcome-screen').classList.add('hidden');
-                    document.getElementById('main-interface').classList.remove('hidden');
-                    document.getElementById('display-name').innerText = user.username.toUpperCase();
-                    const isGif = user.avatar && user.avatar.startsWith('a_');
-                    document.getElementById('display-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${isGif ? 'gif' : 'png'}?size=128`;
-                    startTerminal();
-                } catch (e) { localStorage.removeItem('agd_token'); }
-                window.history.replaceState({}, document.title, REDIRECT_URI);
-            }
+        function toggleTheme() { document.body.classList.toggle('light-theme'); }
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
 
-        function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`; }
-        function logout() { localStorage.removeItem('agd_token'); window.location.reload(); }
-
-        init();
-        document.addEventListener('click', (e) => { if (!e.target.closest('.nav-controls')) closeMenu(); });
+        // Init beim Laden starten
+        window.onload = init;
     </script>
 </body>
 </html>
