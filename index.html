@@ -9,13 +9,13 @@
 </head>
 <body>
 
+    <div class="scanline"></div>
+
     <div id="welcome-screen">
-        <div class="terminal-overlay"></div>
-        <div class="scanline"></div>
         <div class="login-box">
             <img src="assets/AGDlogo.gif" class="welcome-logo" alt="AGD Logo">
             <h1 class="glitch" data-text="AGD OPERATIONS">AGD OPERATIONS</h1>
-            <p class="status-msg">SYSTEM_STATUS: <span class="blink">AUTHORIZATION_REQUIRED</span></p>
+            <p class="status-text">SYSTEM: <span class="blink">LOCKED</span></p>
             <button id="login-btn-welcome" class="main-start-btn">ESTABLISH UPLINK</button>
         </div>
     </div>
@@ -27,7 +27,7 @@
                 <span class="brand-text">AGD // <span class="blink">OPS</span></span>
             </div>
             <div class="nav-right">
-                <button id="mode-toggle" class="control-btn-pro">⚙️ AUTO</button>
+                <button id="mode-toggle" class="control-btn-pro">🖥️ AUTO</button>
                 <button id="theme-toggle" class="control-btn-pro">🌓</button>
                 <button id="menu-toggle" class="control-btn-pro">MENU</button>
                 <div id="nav-menu" class="nav-dropdown">
@@ -44,52 +44,36 @@
                 <div class="dashboard-grid">
                     <div class="card wide">
                         <div class="card-head">// RADAR_UPLINK.exe</div>
-                        <div class="stat-info">TEMP: <span id="w-temp">--</span>°C | HUM: <span id="w-hum">--</span>%</div>
-                        <div class="iframe-container">
+                        <div class="stat-row">
+                            <span>TEMP: <span id="w-temp" class="highlight">--</span>°C</span>
+                            <span>HUM: <span id="w-hum" class="highlight">--</span>%</span>
+                        </div>
+                        <div class="radar-box">
                             <iframe id="radar-iframe" frameborder="0"></iframe>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="card-head">// OPERATOR_INFO</div>
-                        <div id="user-profile" style="display:none; align-items:center; gap:10px;">
-                            <img id="user-avatar" src="" style="width:50px; border-radius:50%; border:2px solid var(--accent);">
-                            <div class="profile-meta">
-                                <span id="user-name" style="display:block; font-weight:bold;">---</span>
-                                <span class="tag-online">ONLINE</span>
+                        <div id="user-profile" class="profile-container">
+                            <img id="user-avatar" src="" alt="">
+                            <div class="profile-text">
+                                <h2 id="user-name">---</h2>
+                                <span class="status-online">SECURE CONNECTION</span>
                             </div>
                         </div>
-                        <p style="margin-top:15px; font-size:0.8rem;">ZONE: <span style="color:#00ff00;">SECURED</span></p>
                     </div>
+
                     <div class="card full">
-                        <div class="card-head">// COMMS CHANNEL</div>
+                        <div class="card-head">// COMMS_WIDGET</div>
                         <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" frameborder="0"></iframe>
                     </div>
-                </div>
-            </section>
-
-            <section id="gallery" class="page">
-                <h2 class="section-title">// DATA ARCHIVE</h2>
-                <div class="archive-year">/ 2026</div>
-                <div class="dashboard-grid"><div class="card placeholder-img">ENCRYPTED DATASET</div></div>
-            </section>
-
-            <section id="updates" class="page">
-                <h2 class="section-title">// SYSTEM LOGS</h2>
-                <div class="card">
-                    <ul class="log-list">
-                        <li><span>2026-04-27</span> Auto-Layout Engine V6.7 initialized.</li>
-                        <li><span>2026-04-26</span> Security Uplink established via Discord.</li>
-                    </ul>
                 </div>
             </section>
         </main>
 
         <footer class="bottom-bar">
-            <div class="footer-links">
-                <a href="#credits" class="footer-link">CREDITS</a>
-                <a href="#legal" class="footer-link">LEGAL</a>
-            </div>
-            <div class="footer-copy">Aegis Global Defense © 2026</div>
+            <div class="footer-copy">AEGIS GLOBAL DEFENSE // OPS-CENTER 2026</div>
         </footer>
     </div>
 
