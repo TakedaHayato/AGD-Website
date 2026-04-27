@@ -6,47 +6,150 @@
     <title>AGD OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #05070a; --text: #ffffff; --accent: #00f0ff; 
-            --border: rgba(0, 240, 255, 0.2); --card-bg: rgba(10, 15, 20, 0.9); 
-        }
-        body.light-theme { 
-            --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7; 
-            --border: #cbd5e1; --card-bg: #ffffff; 
+        :root {
+            --bg: #05070a;
+            --text: #e0e6ed;
+            --accent: #00f0ff;
+            --accent-dim: rgba(0, 240, 255, 0.15);
+            --border: rgba(0, 240, 255, 0.2);
+            --card-bg: rgba(10, 15, 20, 0.85);
+            --error: #ff4444;
         }
 
-        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
+        body.light-theme {
+            --bg: #f4f7fa;
+            --text: #1e293b;
+            --accent: #0284c7;
+            --accent-dim: rgba(2, 132, 199, 0.1);
+            --border: rgba(2, 132, 199, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100%;
+            overflow-x: hidden;
+            transition: background 0.3s ease;
+        }
 
         /* --- LOGIN SCREEN --- */
-        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .login-box { border: 1px solid var(--border); padding: 40px; background: var(--card-bg); position: relative; }
-        .welcome-logo { width: 120px; margin-bottom: 20px; }
-        .glitch { font-family: 'Orbitron'; font-size: 1.8rem; color: var(--accent); margin-bottom: 20px; letter-spacing: 3px; }
-        .main-start-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 12px 30px; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
-        .main-start-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+        #welcome-screen {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at center, #0a121a 0%, #000 100%);
+            z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+        }
 
-        /* --- INTERFACE --- */
-        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 1000; }
-        .brand-text { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; }
-        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+        .login-box {
+            text-align: center;
+            padding: 50px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .welcome-logo { width: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent)); }
+
+        .glitch-text {
+            font-family: 'Orbitron';
+            font-size: 1.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+        }
+
+        .main-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 30px;
+            font-family: 'Orbitron';
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        .main-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* --- DASHBOARD NAVIGATION --- */
+        .glass-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            height: 65px; padding: 0 20px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .brand { font-family: 'Orbitron'; font-weight: bold; color: var(--accent); font-size: 0.9rem; }
+
+        .nav-controls button {
+            background: none; border: 1px solid var(--border);
+            color: var(--accent); padding: 6px 12px;
+            margin-left: 8px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem;
+        }
+
+        /* --- DASHBOARD CONTENT --- */
+        .content { padding: 20px; max-width: 1400px; margin: 0 auto; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
 
         @media (min-width: 1000px) {
-            .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+            .grid { grid-template-columns: repeat(3, 1fr); }
             .card.wide { grid-column: span 2; }
             .card.full { grid-column: span 3; }
         }
 
-        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; }
-        .card-head { font-family: 'Orbitron'; color: var(--accent); font-size: 0.8rem; border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; }
-        
-        .radar-box { height: 350px; background: #000; border: 1px solid var(--border); }
-        iframe { width: 100%; height: 100%; border: none; }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            position: relative;
+        }
 
-        /* Helpers */
+        .card-header {
+            font-family: 'Orbitron';
+            color: var(--accent);
+            font-size: 0.75rem;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        .radar-box {
+            height: 350px; background: #000;
+            border: 1px solid var(--border);
+        }
+
+        .profile-info { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--accent); }
+        .status-tag { color: #00ff00; font-size: 0.7rem; font-weight: bold; }
+
+        /* EFFEKTE */
         .blink { animation: blink-anim 1.5s infinite; }
         @keyframes blink-anim { 50% { opacity: 0.3; } }
-        .scanline { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(0, 240, 255, 0.05); z-index: 10001; pointer-events: none; animation: scan 4s linear infinite; }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+        .scanline {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.03) 50%);
+            background-size: 100% 4px; z-index: 10001; pointer-events: none;
+        }
+
         .hidden { display: none !important; }
     </style>
 </head>
@@ -56,44 +159,50 @@
 
     <div id="welcome-screen">
         <div class="login-box">
-            <h1 class="glitch">AGD OPS CENTER</h1>
-            <p>SYSTEM STATUS: <span class="blink">LOCKED</span></p>
-            <button id="login-btn-welcome" class="main-start-btn">ESTABLISH UPLINK</button>
+            <img src="assets/AGDlogo.gif" class="welcome-logo" alt="AGD">
+            <h1 class="glitch-text">AGD OPS CENTER</h1>
+            <p style="font-size: 0.8rem; letter-spacing: 2px;">SECURE UPLINK REQUIRED</p>
+            <button id="login-btn" class="main-btn">LOGIN VIA DISCORD</button>
         </div>
     </div>
 
-    <div id="main-interface" class="hidden">
+    <div id="app" class="hidden">
         <nav class="glass-nav">
-            <span class="brand-text">AGD // OPS</span>
-            <div>
-                <button onclick="document.body.classList.toggle('light-theme')" style="background:none; border:1px solid var(--border); color:var(--accent); cursor:pointer;">🌓</button>
-                <button id="logout-btn" style="background:none; border:1px solid #ff4444; color:#ff4444; cursor:pointer; margin-left:10px;">LOGOUT</button>
+            <div class="brand">AGD // <span class="blink">SYSTEMS</span></div>
+            <div class="nav-controls">
+                <button onclick="toggleTheme()">THEME</button>
+                <button onclick="logout()" style="border-color: var(--error); color: var(--error);">LOGOUT</button>
             </div>
         </nav>
 
-        <main class="dashboard-grid">
-            <div class="card wide">
-                <div class="card-head">// RADAR_UPLINK</div>
-                <div style="margin-bottom:10px;">TEMP: <span id="w-temp">--</span>°C | HUM: <span id="w-hum">--</span>%</div>
-                <div class="radar-box">
-                    <iframe id="radar-iframe"></iframe>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-head">// OPERATOR_INFO</div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <img id="user-avatar" src="" style="width:50px; border-radius:50%; border:2px solid var(--accent); background:#111;">
-                    <div>
-                        <strong id="user-name">---</strong><br>
-                        <span style="color:#00ff00; font-size:0.8rem;">SECURE</span>
+        <main class="content">
+            <div class="grid">
+                <div class="card wide">
+                    <div class="card-header">// RADAR_FEED.exe</div>
+                    <div style="margin-bottom: 10px; font-size: 0.9rem;">
+                        STATION: <span id="w-loc" style="color: var(--accent);">DETECTION...</span> | 
+                        TEMP: <span id="w-temp">--</span>°C
+                    </div>
+                    <div class="radar-box">
+                        <iframe id="radar-frame" src="" width="100%" height="100%" frameborder="0"></iframe>
                     </div>
                 </div>
-            </div>
 
-            <div class="card full">
-                <div class="card-head">// COMMS_WIDGET</div>
-                <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" height="300"></iframe>
+                <div class="card">
+                    <div class="card-header">// OPERATOR_PROFILE</div>
+                    <div class="profile-info">
+                        <img id="u-avatar" class="avatar" src="" alt="?">
+                        <div>
+                            <div id="u-name" style="font-weight: bold; font-size: 1.1rem;">---</div>
+                            <div class="status-tag">ACCESS GRANTED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card full">
+                    <div class="card-header">// DISCORD_COMMUNICATION</div>
+                    <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0"></iframe>
+                </div>
             </div>
         </main>
     </div>
@@ -102,62 +211,78 @@
         const CLIENT_ID = '1292148049358884905';
         const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-        async function checkAuth() {
+        // --- AUTH LOGIK ---
+        async function initAuth() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             let token = hash.get('access_token') || localStorage.getItem('agd_token');
 
             if (token) {
                 try {
-                    const res = await fetch('https://discord.com/api/users/@me', {
-                        headers: { authorization: `Bearer ${token}` }
+                    const response = await fetch('https://discord.com/api/users/@me', {
+                        headers: { Authorization: `Bearer ${token}` }
                     });
-                    if (!res.ok) throw new Error();
-                    const data = await res.json();
                     
-                    localStorage.setItem('agd_token', token);
-                    document.getElementById('welcome-screen').classList.add('hidden');
-                    document.getElementById('main-interface').classList.remove('hidden');
-                    document.getElementById('user-name').innerText = data.username.toUpperCase();
-                    if(data.avatar) {
-                        document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
-                    }
+                    if (!response.ok) throw new Error("Auth failed");
+                    const user = await response.json();
 
-                    updateWeather();
-                } catch (e) {
+                    localStorage.setItem('agd_token', token);
+                    showApp(user);
+                } catch (err) {
                     localStorage.removeItem('agd_token');
+                    console.error(err);
                 }
                 window.history.replaceState({}, document.title, REDIRECT_URI);
             }
         }
 
-        async function updateWeather() {
-            // Default Berlin
-            let lat = 52.52, lon = 13.40;
-            navigator.geolocation.getCurrentPosition(async (p) => {
-                fetchData(p.coords.latitude, p.coords.longitude);
-            }, () => fetchData(lat, lon));
+        function showApp(user) {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            document.getElementById('u-name').innerText = user.username.toUpperCase();
+            if(user.avatar) {
+                document.getElementById('u-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+            }
+            loadWeatherData();
         }
 
-        async function fetchData(lat, lon) {
+        // --- SYSTEM DATEN ---
+        function loadWeatherData() {
+            // Standardmäßig Berlin, falls Ortung abgelehnt wird
+            let lat = 52.52, lon = 13.40;
+
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                lat = pos.coords.latitude;
+                lon = pos.coords.longitude;
+                updateDisplay(lat, lon);
+            }, () => updateDisplay(lat, lon));
+        }
+
+        async function updateDisplay(lat, lon) {
             try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relative_humidity_2m`);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
                 const data = await res.json();
                 document.getElementById('w-temp').innerText = Math.round(data.current_weather.temperature);
-                document.getElementById('w-hum').innerText = data.hourly.relative_humidity_2m[0];
-                document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&overlay=rain`;
-            } catch(e) {}
+                document.getElementById('w-loc').innerText = `${lat.toFixed(2)}N ${lon.toFixed(2)}E`;
+                document.getElementById('radar-frame').src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&overlay=rain`;
+            } catch (e) {}
         }
 
-        document.getElementById('login-btn-welcome').onclick = () => {
+        // --- CONTROLS ---
+        document.getElementById('login-btn').onclick = () => {
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         };
 
-        document.getElementById('logout-btn').onclick = () => {
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+
+        function logout() {
             localStorage.removeItem('agd_token');
             window.location.reload();
-        };
+        }
 
-        checkAuth();
+        // Start
+        initAuth();
     </script>
 </body>
 </html>
