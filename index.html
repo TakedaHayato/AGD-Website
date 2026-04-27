@@ -18,140 +18,110 @@
         body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
 
         /* --- NAVIGATION --- */
-        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 75px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
+        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 65px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
         .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 0.9rem; cursor: pointer; }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
         
-        .nav-right { position: relative; display: flex; align-items: center; gap: 20px; }
-        
-        /* User Info & Code Stream in Nav */
-        .user-nav-box { display: flex; flex-direction: column; align-items: flex-end; border-right: 1px solid var(--border); padding-right: 15px; }
-        .user-meta { display: flex; align-items: center; gap: 10px; }
-        .nav-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--accent); }
-        .nav-username { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--accent); font-weight: bold; }
-        
-        .code-stream { font-family: monospace; font-size: 0.55rem; color: var(--accent); opacity: 0.5; overflow: hidden; white-space: nowrap; width: 120px; height: 12px; }
-
         .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--border); border-radius: 4px; }
         .hamburger span { width: 20px; height: 2px; background: var(--accent); }
 
-        .dropdown { position: absolute; top: 65px; right: 0; background: var(--card-bg); border: 1px solid var(--border); min-width: 180px; display: none; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .dropdown { position: absolute; top: 55px; right: 20px; background: var(--card-bg); border: 1px solid var(--border); min-width: 180px; display: none; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 10000; }
         .dropdown.active { display: flex; }
-        .dropdown a { padding: 12px 20px; color: var(--text); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; border-bottom: 1px solid var(--border); transition: 0.2s; }
+        .dropdown a { padding: 12px 20px; color: var(--text); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; border-bottom: 1px solid var(--border); }
         .dropdown a:hover { background: var(--accent); color: #000; }
 
-        /* --- PAGES --- */
-        .content { padding: 25px; max-width: 1200px; margin: 0 auto; }
+        /* --- DASHBOARD GRID --- */
+        .content { padding: 25px; max-width: 1400px; margin: 0 auto; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+        @media (max-width: 1000px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
         .page { display: none; }
         .page.active { display: block; }
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 20px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- CREDITS --- */
-        .history-title { font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 5px; }
-        .history-sub { opacity: 0.6; font-size: 0.85rem; margin-bottom: 30px; }
-        .team-section { margin-top: 30px; }
-        .team-role-label { border-bottom: 1px solid var(--border); padding-bottom: 8px; font-family: 'Orbitron'; font-size: 0.85rem; margin-bottom: 15px; opacity: 0.8; }
-        .team-member { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .team-avatar { width: 48px; height: 48px; border-radius: 4px; background: #000; border: 1px solid var(--border); }
-        .member-info { display: flex; flex-direction: column; }
-        .member-name { font-weight: bold; font-size: 0.95rem; }
-        .member-desc { font-size: 0.75rem; color: var(--accent); opacity: 0.8; margin-top: 2px; }
+        /* --- USER PROFILE WIDGET (RECHTS) --- */
+        .user-profile-widget { display: flex; flex-direction: column; align-items: flex-end; text-align: right; margin-top: 10px; }
+        .user-info-row { display: flex; align-items: center; gap: 15px; }
+        .user-name-glitch { font-family: 'Orbitron'; color: var(--accent); font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; }
+        .user-pfp { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .status-code-stream { font-family: monospace; font-size: 0.7rem; color: var(--accent); opacity: 0.8; margin-top: 8px; font-weight: bold; }
 
-        /* --- DASHBOARD --- */
+        /* --- ELEMENTS --- */
         .radar-box { height: 450px; background: #000; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+        .team-avatar { width: 48px; height: 48px; border-radius: 4px; border: 1px solid var(--border); }
 
         /* --- LOGIN --- */
-        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .login-btn { background: var(--accent); color: #000; border: none; padding: 12px 30px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
-
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .login-btn { background: var(--accent); color: #000; border: none; padding: 15px 40px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
         .hidden { display: none !important; }
     </style>
 </head>
 <body onclick="closeMenu()">
 
     <div id="welcome-screen">
-        <div class="login-box">
-            <img src="assets/AGDlogo.gif" style="width:120px; margin-bottom:20px;">
-            <h1 style="font-family:'Orbitron'; color:var(--accent);">AGD OPERATIONS</h1>
-            <button class="login-btn" onclick="login()">ESTABLISH UPLINK</button>
-        </div>
+        <button class="login-btn" onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
         <nav class="glass-nav">
-            <div class="brand" onclick="showPage('home')">AGD // OPS</div>
+            <div class="brand" onclick="showPage('home')">AGD // OPERATIONS CENTER</div>
             <div class="nav-right">
-                <div class="user-nav-box">
-                    <div class="user-meta">
-                        <span id="nav-username" class="nav-username">LOADING...</span>
-                        <img id="nav-avatar" class="nav-avatar" src="">
-                    </div>
-                    <div id="code-stream" class="code-stream"></div>
-                </div>
-
-                <button onclick="document.body.classList.toggle('light-theme')" style="background:none; border:1px solid var(--border); color:var(--accent); cursor:pointer; padding:5px 10px; border-radius:4px;">🌓</button>
-                
                 <div class="hamburger" onclick="toggleMenu(event)">
                     <span></span><span></span><span></span>
                 </div>
-                
                 <div id="dropdown" class="dropdown">
                     <a href="#" onclick="showPage('home')">DASHBOARD</a>
                     <a href="#" onclick="showPage('credits')">CREDITS</a>
-                    <a href="#" onclick="showPage('updates')">UPDATES</a>
-                    <a href="#" onclick="logout()" style="color:#ff4444;">LOGOUT</a>
+                    <a href="#" onclick="logout()" style="color:#ff4444;">DISCONNECT</a>
                 </div>
             </div>
         </nav>
 
         <main class="content">
             <section id="home" class="page active">
-                <div class="card">
-                    <div class="card-head">// TACTICAL RADAR</div>
-                    <div class="radar-box">
-                        <iframe id="radar-frame" width="100%" height="100%" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain&product=ecmwf&message=false"></iframe>
+                <div class="dashboard-grid">
+                    <div class="main-col">
+                        <div class="card">
+                            <div class="card-head">// TACTICAL RADAR</div>
+                            <div class="radar-box">
+                                <iframe id="radar-frame" width="100%" height="100%" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain&message=false"></iframe>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-head">// LIVE COMMUNICATIONS</div>
+                            <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="400" frameborder="0"></iframe>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-head">// LIVE COMMUNICATIONS</div>
-                    <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" frameborder="0"></iframe>
+
+                    <div class="side-col">
+                        <div class="card">
+                            <div class="card-head">// SESSION_DATA</div>
+                            <div class="user-profile-widget">
+                                <div class="user-info-row">
+                                    <span id="display-name" class="user-name-glitch">LOADING...</span>
+                                    <img id="display-avatar" class="user-pfp" src="">
+                                </div>
+                                <div id="code-stream" class="status-code-stream">BATT_LEVEL_OK // J2WGVU</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <section id="credits" class="page">
-                <h1 class="history-title">Our History</h1>
-                <p class="history-sub">Dokumentation der AGD Operations Entwicklung.</p>
                 <div class="card">
-                    <div class="card-head">// Overview</div>
-                    <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.9;">
-                        Das <strong>AGD Operations Center</strong> wurde als zentrale Schnittstelle für taktische Datenvisualisierung konzipiert. Seit Mai 2022 bietet das System eine nahtlose Integration von Discord-Diensten und Echtzeit-Radardaten.
-                    </p>
-                    <div class="team-section">
-                        <div class="team-role-label">Owner</div>
-                        <div class="team-member">
-                            <img id="avatar-owner" class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
-                            <div class="member-info">
-                                <span class="member-name">Hayato <span style="opacity:0.5; font-weight:normal;">(@hayato)</span></span>
-                                <span class="member-desc">Lead Programmer, Game Designer</span>
-                            </div>
+                    <div class="card-head">// CORE TEAM</div>
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                            <div><strong>Hayato</strong><br><span style="font-size: 0.8rem; color: var(--accent);">Owner / Lead Dev</span></div>
                         </div>
-                        <div class="team-role-label" style="margin-top:25px;">Developer</div>
-                        <div class="team-member">
-                            <img id="avatar-lionel" class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/1.png">
-                            <div class="member-info">
-                                <span class="member-name">Lionel <span style="opacity:0.5; font-weight:normal;">(@lionel)</span></span>
-                                <span class="member-desc">System Architect, Programmer</span>
-                            </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/1.png">
+                            <div><strong>Lionel</strong><br><span style="font-size: 0.8rem; color: var(--accent);">Developer (ID: 1400867817951072428)</span></div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <section id="updates" class="page">
-                <div class="card">
-                    <div class="card-head">// SYSTEM LOGS</div>
-                    <p>> [V7.0] Nav-Profile Integration mit Code-Stream.</p>
-                    <p>> [V7.0] Lionel ID (1400867817951072428) in Credits hinterlegt.</p>
                 </div>
             </section>
         </main>
@@ -159,21 +129,21 @@
 
     <script>
         const CLIENT_ID = '1292148049358884905';
-        const GUILD_ID = '1129433598253084826';
         const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-        // --- CODE STREAM ANIMATION ---
+        // Code Stream Animation
         function startCodeStream() {
             const stream = document.getElementById('code-stream');
-            const codes = ["UPLINK_STABLE", "AUTH_VERIFIED", "SYNCING_RADAR", "ENCRYPT_AES256", "GET_USER_METRICS", "PORT_SCAN_01", "BATT_LEVEL_OK"];
+            const statuses = ["BATT_LEVEL_OK", "UPLINK_STABLE", "ENCRYPT_ACTIVE", "DATA_SYNC_ON"];
             setInterval(() => {
-                stream.innerText = codes[Math.floor(Math.random() * codes.length)] + " // " + Math.random().toString(36).substring(7).toUpperCase();
-            }, 1500);
+                const status = statuses[Math.floor(Math.random() * statuses.length)];
+                const code = Math.random().toString(36).substring(7).toUpperCase();
+                stream.innerText = `${status} // ${code}`;
+            }, 2000);
         }
 
         function toggleMenu(e) { e.stopPropagation(); document.getElementById('dropdown').classList.toggle('active'); }
         function closeMenu() { document.getElementById('dropdown').classList.remove('active'); }
-        
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -189,43 +159,26 @@
                     const res = await fetch('https://discord.com/api/users/@me', {
                         headers: { Authorization: `Bearer ${token}` }
                     });
-                    if(!res.ok) throw new Error();
                     const user = await res.json();
-
                     localStorage.setItem('agd_token', token);
+                    
                     document.getElementById('welcome-screen').classList.add('hidden');
                     document.getElementById('main-interface').classList.remove('hidden');
                     
-                    // Nav Update
-                    document.getElementById('nav-username').innerText = user.username.toUpperCase();
-                    document.getElementById('nav-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    // Dashboard Rechts Update
+                    document.getElementById('display-name').innerText = user.username.toUpperCase();
+                    document.getElementById('display-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
                     
-                    // Credits Avatare
-                    // Hayato: 444127208735506433 | Lionel: 1400867817951072428
-                    document.getElementById('avatar-owner').src = `https://cdn.discordapp.com/avatars/444127208735506433/placeholder.png`; // Fallback da man fremde Avatare nicht einfach per ID ohne Bot-Token ziehen kann
-                    document.getElementById('avatar-lionel').src = `https://cdn.discordapp.com/avatars/1400867817951072428/placeholder.png`;
-
                     startCodeStream();
-                    loadRadar();
                 } catch (e) { localStorage.removeItem('agd_token'); }
                 window.history.replaceState({}, document.title, REDIRECT_URI);
             }
         }
 
-        function loadRadar() {
-            navigator.geolocation.getCurrentPosition(p => {
-                document.getElementById('radar-frame').src = `https://embed.windy.com/embed2.html?lat=${p.coords.latitude}&lon=${p.coords.longitude}&zoom=6&overlay=rain&message=false`;
-            });
-        }
-
         function login() {
             window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify+guilds.join`;
         }
-
-        function logout() {
-            localStorage.removeItem('agd_token');
-            window.location.href = REDIRECT_URI;
-        }
+        function logout() { localStorage.removeItem('agd_token'); window.location.reload(); }
 
         init();
     </script>
