@@ -5,7 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AGD OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root { 
+            --bg: #05070a; --text: #ffffff; --accent: #00f0ff; 
+            --border: rgba(0, 240, 255, 0.2); --card-bg: rgba(10, 15, 20, 0.9); 
+        }
+        body.light-theme { 
+            --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7; 
+            --border: #cbd5e1; --card-bg: #ffffff; 
+        }
+
+        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
+
+        /* --- LOGIN SCREEN --- */
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .login-box { border: 1px solid var(--border); padding: 40px; background: var(--card-bg); position: relative; }
+        .welcome-logo { width: 120px; margin-bottom: 20px; }
+        .glitch { font-family: 'Orbitron'; font-size: 1.8rem; color: var(--accent); margin-bottom: 20px; letter-spacing: 3px; }
+        .main-start-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 12px 30px; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+        .main-start-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+
+        /* --- INTERFACE --- */
+        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 60px; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 1000; }
+        .brand-text { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+
+        @media (min-width: 1000px) {
+            .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+            .card.wide { grid-column: span 2; }
+            .card.full { grid-column: span 3; }
+        }
+
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; }
+        .card-head { font-family: 'Orbitron'; color: var(--accent); font-size: 0.8rem; border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; }
+        
+        .radar-box { height: 350px; background: #000; border: 1px solid var(--border); }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Helpers */
+        .blink { animation: blink-anim 1.5s infinite; }
+        @keyframes blink-anim { 50% { opacity: 0.3; } }
+        .scanline { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: rgba(0, 240, 255, 0.05); z-index: 10001; pointer-events: none; animation: scan 4s linear infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
 
@@ -13,70 +56,108 @@
 
     <div id="welcome-screen">
         <div class="login-box">
-            <img src="assets/AGDlogo.gif" class="welcome-logo" alt="AGD Logo">
-            <h1 class="glitch" data-text="AGD OPERATIONS">AGD OPERATIONS</h1>
-            <p class="status-text">SYSTEM: <span class="blink">LOCKED</span></p>
+            <h1 class="glitch">AGD OPS CENTER</h1>
+            <p>SYSTEM STATUS: <span class="blink">LOCKED</span></p>
             <button id="login-btn-welcome" class="main-start-btn">ESTABLISH UPLINK</button>
         </div>
     </div>
 
-    <div id="main-interface" style="display: none;">
+    <div id="main-interface" class="hidden">
         <nav class="glass-nav">
-            <div class="nav-left">
-                <button id="home-quick-btn" class="control-btn-pro">🏠</button>
-                <span class="brand-text">AGD // <span class="blink">OPS</span></span>
-            </div>
-            <div class="nav-right">
-                <button id="mode-toggle" class="control-btn-pro">🖥️ AUTO</button>
-                <button id="theme-toggle" class="control-btn-pro">🌓</button>
-                <button id="menu-toggle" class="control-btn-pro">MENU</button>
-                <div id="nav-menu" class="nav-dropdown">
-                    <a href="#home" class="nav-link-item">DASHBOARD</a>
-                    <a href="#gallery" class="nav-link-item">ARCHIVE</a>
-                    <a href="#updates" class="nav-link-item">LOGS</a>
-                    <a href="#" id="logout-btn" class="nav-link-item logout-red">TERMINATE SESSION</a>
-                </div>
+            <span class="brand-text">AGD // OPS</span>
+            <div>
+                <button onclick="document.body.classList.toggle('light-theme')" style="background:none; border:1px solid var(--border); color:var(--accent); cursor:pointer;">🌓</button>
+                <button id="logout-btn" style="background:none; border:1px solid #ff4444; color:#ff4444; cursor:pointer; margin-left:10px;">LOGOUT</button>
             </div>
         </nav>
 
-        <main class="content">
-            <section id="home" class="page active">
-                <div class="dashboard-grid">
-                    <div class="card wide">
-                        <div class="card-head">// RADAR_UPLINK.exe</div>
-                        <div class="stat-row">
-                            <span>TEMP: <span id="w-temp" class="highlight">--</span>°C</span>
-                            <span>HUM: <span id="w-hum" class="highlight">--</span>%</span>
-                        </div>
-                        <div class="radar-box">
-                            <iframe id="radar-iframe" frameborder="0"></iframe>
-                        </div>
-                    </div>
+        <main class="dashboard-grid">
+            <div class="card wide">
+                <div class="card-head">// RADAR_UPLINK</div>
+                <div style="margin-bottom:10px;">TEMP: <span id="w-temp">--</span>°C | HUM: <span id="w-hum">--</span>%</div>
+                <div class="radar-box">
+                    <iframe id="radar-iframe"></iframe>
+                </div>
+            </div>
 
-                    <div class="card">
-                        <div class="card-head">// OPERATOR_INFO</div>
-                        <div id="user-profile" class="profile-container">
-                            <img id="user-avatar" src="" alt="">
-                            <div class="profile-text">
-                                <h2 id="user-name">---</h2>
-                                <span class="status-online">SECURE CONNECTION</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card full">
-                        <div class="card-head">// COMMS_WIDGET</div>
-                        <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" frameborder="0"></iframe>
+            <div class="card">
+                <div class="card-head">// OPERATOR_INFO</div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <img id="user-avatar" src="" style="width:50px; border-radius:50%; border:2px solid var(--accent); background:#111;">
+                    <div>
+                        <strong id="user-name">---</strong><br>
+                        <span style="color:#00ff00; font-size:0.8rem;">SECURE</span>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
 
-        <footer class="bottom-bar">
-            <div class="footer-copy">AEGIS GLOBAL DEFENSE // OPS-CENTER 2026</div>
-        </footer>
+            <div class="card full">
+                <div class="card-head">// COMMS_WIDGET</div>
+                <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" height="300"></iframe>
+            </div>
+        </main>
     </div>
 
-    <script src="theme.js"></script>
+    <script>
+        const CLIENT_ID = '1292148049358884905';
+        const REDIRECT_URI = window.location.origin + window.location.pathname;
+
+        async function checkAuth() {
+            const hash = new URLSearchParams(window.location.hash.slice(1));
+            let token = hash.get('access_token') || localStorage.getItem('agd_token');
+
+            if (token) {
+                try {
+                    const res = await fetch('https://discord.com/api/users/@me', {
+                        headers: { authorization: `Bearer ${token}` }
+                    });
+                    if (!res.ok) throw new Error();
+                    const data = await res.json();
+                    
+                    localStorage.setItem('agd_token', token);
+                    document.getElementById('welcome-screen').classList.add('hidden');
+                    document.getElementById('main-interface').classList.remove('hidden');
+                    document.getElementById('user-name').innerText = data.username.toUpperCase();
+                    if(data.avatar) {
+                        document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png`;
+                    }
+
+                    updateWeather();
+                } catch (e) {
+                    localStorage.removeItem('agd_token');
+                }
+                window.history.replaceState({}, document.title, REDIRECT_URI);
+            }
+        }
+
+        async function updateWeather() {
+            // Default Berlin
+            let lat = 52.52, lon = 13.40;
+            navigator.geolocation.getCurrentPosition(async (p) => {
+                fetchData(p.coords.latitude, p.coords.longitude);
+            }, () => fetchData(lat, lon));
+        }
+
+        async function fetchData(lat, lon) {
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relative_humidity_2m`);
+                const data = await res.json();
+                document.getElementById('w-temp').innerText = Math.round(data.current_weather.temperature);
+                document.getElementById('w-hum').innerText = data.hourly.relative_humidity_2m[0];
+                document.getElementById('radar-iframe').src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&overlay=rain`;
+            } catch(e) {}
+        }
+
+        document.getElementById('login-btn-welcome').onclick = () => {
+            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+        };
+
+        document.getElementById('logout-btn').onclick = () => {
+            localStorage.removeItem('agd_token');
+            window.location.reload();
+        };
+
+        checkAuth();
+    </script>
 </body>
 </html>
