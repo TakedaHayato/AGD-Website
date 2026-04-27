@@ -9,7 +9,6 @@
         :root {
             --bg: #0d1117; --text: #e6edf3; --accent: #00f0ff;
             --border: #30363d; --card-bg: #161b22;
-            --success-bg: rgba(46, 125, 50, 0.15); --success-border: #4caf50;
         }
         body.light-theme {
             --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7;
@@ -31,33 +30,30 @@
         .dropdown a { padding: 12px 20px; color: var(--text); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; border-bottom: 1px solid var(--border); transition: 0.2s; }
         .dropdown a:hover { background: var(--accent); color: #000; }
 
-        /* --- PAGES & CARDS --- */
+        /* --- PAGES --- */
         .content { padding: 25px; max-width: 1200px; margin: 0 auto; }
         .page { display: none; }
         .page.active { display: block; }
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 20px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- CREDITS DESIGN (LIKE SCREENSHOT) --- */
+        /* --- CREDITS --- */
         .history-title { font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 5px; }
         .history-sub { opacity: 0.6; font-size: 0.85rem; margin-bottom: 30px; }
-        
-        .success-banner { background: var(--success-bg); border-left: 4px solid var(--success-border); padding: 15px; margin: 25px 0; display: flex; align-items: center; gap: 15px; }
-        .check-circle { background: var(--success-border); color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.7rem; }
-
         .team-section { margin-top: 30px; }
         .team-role-label { border-bottom: 1px solid var(--border); padding-bottom: 8px; font-family: 'Orbitron'; font-size: 0.85rem; margin-bottom: 15px; opacity: 0.8; }
         .team-member { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
         .team-avatar { width: 48px; height: 48px; border-radius: 4px; background: #000; border: 1px solid var(--border); }
         .member-info { display: flex; flex-direction: column; }
         .member-name { font-weight: bold; font-size: 0.95rem; }
-        .member-handle { font-size: 0.75rem; opacity: 0.5; font-weight: normal; }
         .member-desc { font-size: 0.75rem; color: var(--accent); opacity: 0.8; margin-top: 2px; }
+
+        /* --- DASHBOARD --- */
+        .radar-box { height: 450px; background: #000; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
 
         /* --- LOGIN --- */
         #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .login-btn { background: var(--accent); color: #000; border: none; padding: 12px 30px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
-        .login-btn:hover { box-shadow: 0 0 20px var(--accent); transform: translateY(-2px); }
+        .login-btn { background: var(--accent); color: #000; border: none; padding: 12px 30px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
 
         .hidden { display: none !important; }
     </style>
@@ -92,50 +88,40 @@
         <main class="content">
             <section id="home" class="page active">
                 <div class="card">
-                    <div class="card-head">// SYSTEM STATUS</div>
-                    <p>OPERATOR: <span id="u-name" style="color:var(--accent);">---</span></p>
-                    <p>RADAR: <span style="color:#00ff00;">CONNECTED</span></p>
+                    <div class="card-head">// TACTICAL RADAR</div>
+                    <div class="radar-box">
+                        <iframe id="radar-frame" width="100%" height="100%" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain&product=ecmwf&message=false"></iframe>
+                    </div>
                 </div>
                 <div class="card">
-                    <div class="card-head">// LIVE COMMUNICATIONS</div>
+                    <div class="card-head">// OPERATOR: <span id="u-name" style="color:var(--accent);">---</span></div>
                     <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" frameborder="0"></iframe>
                 </div>
             </section>
 
             <section id="credits" class="page">
                 <h1 class="history-title">Our History</h1>
-                <p class="history-sub">This page provides an overview of Emergency Hamburg's history, and a list of the team behind it</p>
-
+                <p class="history-sub">Offizielle Dokumentation der AGD Operations Entwicklung.</p>
                 <div class="card">
                     <div class="card-head">// Overview</div>
-                    <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.9;">
-                        <strong>Emergency Hamburg</strong> wurde offiziell am 10. November 2021 ins Leben gerufen. Zu dieser Zeit war das System noch nicht öffentlich zugänglich, bis die Beta-Phase am 16. Mai 2022 startete. Seitdem liefert AGD kontinuierlich Updates, um die taktische Überlegenheit sicherzustellen.
+                    <p style="font-size: 0.95rem; line-height: 1.7; opacity: 0.9;">
+                        Das <strong>AGD Operations Center</strong> wurde als zentrale Schnittstelle für taktische Datenvisualisierung konzipiert. Seit dem Start im Mai 2022 bietet das System eine nahtlose Integration von Discord-Diensten und Echtzeit-Radardaten.
                     </p>
-
-                    <div class="success-banner">
-                        <div class="check-circle">✓</div>
-                        <div>
-                            <strong style="color: #4caf50; font-size: 0.9rem;">Thank you!</strong><br>
-                            <span style="font-size: 0.75rem; opacity: 0.8;">Ein herzlicher Dank an alle Mitwirkenden, Tester und die gesamte Community für die jahrelange Unterstützung.</span>
-                        </div>
-                    </div>
-
                     <div class="team-section">
                         <div class="team-role-label">Owner</div>
                         <div class="team-member">
                             <img id="avatar-owner" class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
                             <div class="member-info">
-                                <span class="member-name">Hayato <span class="member-handle">(@hayato)</span></span>
-                                <span class="member-desc">Lead Programmer, Game Designer, UI / UX Designer</span>
+                                <span class="member-name">Hayato <span style="opacity:0.5; font-weight:normal;">(@hayato)</span></span>
+                                <span class="member-desc">Lead Programmer, Game Designer</span>
                             </div>
                         </div>
-
                         <div class="team-role-label" style="margin-top:25px;">Developer</div>
                         <div class="team-member">
                             <img id="avatar-dev" class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/1.png">
                             <div class="member-info">
-                                <span class="member-name">Developer <span class="member-handle">(@dev)</span></span>
-                                <span class="member-desc">Head of Development, Programmer</span>
+                                <span class="member-name">Developer <span style="opacity:0.5; font-weight:normal;">(@dev)</span></span>
+                                <span class="member-desc">System Architect, Programmer</span>
                             </div>
                         </div>
                     </div>
@@ -144,9 +130,9 @@
 
             <section id="updates" class="page">
                 <div class="card">
-                    <div class="card-head">// SYSTEM LOGS</div>
-                    <p style="font-size:0.8rem; opacity:0.7;">> [V6.8] Hamburger Menu & Credits Redesign deployed.</p>
-                    <p style="font-size:0.8rem; opacity:0.7;">> [V6.8] Logout & Session handling fixed.</p>
+                    <div class="card-header">// SYSTEM LOGS</div>
+                    <p>> [V6.9] Radar Fail-Safe implementiert (Default: Berlin).</p>
+                    <p>> [V6.9] Credits: Tester-Sektion entfernt.</p>
                 </div>
             </section>
         </main>
@@ -157,7 +143,6 @@
         const GUILD_ID = '1129433598253084826';
         const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-        // Navigation & Menu
         function toggleMenu(e) { e.stopPropagation(); document.getElementById('dropdown').classList.toggle('active'); }
         function closeMenu() { document.getElementById('dropdown').classList.remove('active'); }
         
@@ -167,7 +152,6 @@
             closeMenu();
         }
 
-        // Auth Logic
         async function init() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             let token = hash.get('access_token') || localStorage.getItem('agd_token');
@@ -180,26 +164,29 @@
                     if(!res.ok) throw new Error();
                     const user = await res.json();
 
-                    // Auto-Join Team/Server
-                    fetch(`https://discord.com/api/guilds/${GUILD_ID}/members/${user.id}`, {
-                        method: 'PUT',
-                        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ access_token: token })
-                    }).catch(() => {});
-
-                    // UI Updates
                     localStorage.setItem('agd_token', token);
                     document.getElementById('welcome-screen').classList.add('hidden');
                     document.getElementById('main-interface').classList.remove('hidden');
                     document.getElementById('u-name').innerText = user.username.toUpperCase();
                     
-                    // Team Profile Pics (API IDs)
-                    document.getElementById('avatar-owner').src = `https://cdn.discordapp.com/avatars/444127208735506433/${user.id === '444127208735506433' ? user.avatar : ''}.png?size=128`;
-                    document.getElementById('avatar-dev').src = `https://cdn.discordapp.com/avatars/1400867817951072428/${user.id === '1400867817951072428' ? user.avatar : ''}.png?size=128`;
+                    // Avatare für das Team setzen
+                    document.getElementById('avatar-owner').src = `https://cdn.discordapp.com/avatars/444127208735506433/${user.id === '444127208735506433' ? user.avatar : 'default'}.png?size=128`;
+                    document.getElementById('avatar-dev').src = `https://cdn.discordapp.com/avatars/1400867817951072428/${user.id === '1400867817951072428' ? user.avatar : 'default'}.png?size=128`;
                     
+                    loadRadar();
                 } catch (e) { localStorage.removeItem('agd_token'); }
                 window.history.replaceState({}, document.title, REDIRECT_URI);
             }
+        }
+
+        function loadRadar() {
+            navigator.geolocation.getCurrentPosition(p => {
+                const lat = p.coords.latitude;
+                const lon = p.coords.longitude;
+                document.getElementById('radar-frame').src = `https://embed.windy.com/embed2.html?lat=${lat}&lon=${lon}&zoom=6&overlay=rain&product=ecmwf&message=false`;
+            }, () => {
+                console.log("Geolocation denied, using default radar.");
+            });
         }
 
         function login() {
