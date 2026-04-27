@@ -16,14 +16,14 @@
         }
 
         * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; transition: 0.3s; }
+        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; transition: 0.3s; overflow-x: hidden; }
 
         /* --- NAVIGATION --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
-        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; }
+        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         
         .nav-controls { display: flex; align-items: center; gap: 10px; }
-        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 15px; font-family: 'Orbitron'; font-size: 0.7rem; cursor: pointer; border-radius: 4px; transition: 0.2s; }
+        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.65rem; cursor: pointer; border-radius: 4px; transition: 0.2s; text-transform: uppercase; text-decoration: none; display: inline-block; }
         .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
 
         /* --- DROPDOWN --- */
@@ -33,13 +33,13 @@
         .dropdown { 
             position: absolute; top: 60px; right: 0; background: var(--card-bg); 
             border: 1px solid var(--border); display: none; flex-direction: column; 
-            min-width: 180px; z-index: 10001;
+            min-width: 180px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .dropdown.active { display: flex; }
         .dropdown button { padding: 12px; color: var(--text); border: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.7rem; text-align: left; background: transparent; cursor: pointer; }
         .dropdown button:hover { background: var(--accent); color: #000; }
 
-        /* --- DASHBOARD --- */
+        /* --- CONTENT --- */
         .content { padding: 20px; max-width: 1600px; margin: 0 auto; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 400px; gap: 20px; }
         @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: 1fr; } }
@@ -49,11 +49,9 @@
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- TEAM CREDITS FIX --- */
         .team-member { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; }
-        .team-pfp { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--accent); background: #000; object-fit: cover; }
+        .team-pfp { width: 75px; height: 75px; border-radius: 10px; border: 2px solid var(--accent); background: #000; object-fit: cover; }
 
-        /* --- TERMINAL --- */
         .terminal-container { background: #000 !important; border: 1px solid var(--border); height: 250px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--terminal-green); padding: 10px; overflow: hidden; position: relative; }
         #terminal-log { display: flex; flex-direction: column; position: absolute; bottom: 10px; width: 95%; }
 
@@ -71,6 +69,7 @@
             <div class="brand" onclick="showPage('home')">AGD // OPS</div>
             <div class="nav-controls">
                 <button class="nav-btn" onclick="showPage('home')">Home</button>
+                <a href="https://ptb.discord.com/channels/1129433598253084826/1380566062357282946" target="_blank" class="nav-btn">Contact</a>
                 <button class="nav-btn" id="lang-btn" onclick="toggleLang()">EN</button>
                 <button class="nav-btn" onclick="toggleTheme()">🌓</button>
                 <div class="nav-right">
@@ -115,17 +114,15 @@
             <section id="credits" class="page">
                 <div class="card">
                     <div class="card-head t-struct">// PROJECT_STRUCTURE</div>
-                    
                     <div class="team-member">
-                        <img class="team-pfp" id="img-hayato" src="https://cdn.discordapp.com/avatars/444127208735506433/a_df259e829377488b398646b9a89c927b.gif?size=128" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                        <img class="team-pfp" src="https://cdn.discordapp.com/attachments/1129433598253084826/1337446344557924372/image.png?ex=67ada66c&is=67ac54ec&hm=97561845686036846c4b2670984950346a06655c655c655c655c655c655c655c">
                         <div>
                             <div style="font-family:Orbitron; font-weight:bold;">HAYATO</div>
                             <div style="font-size:0.75rem; color:var(--accent);">OWNER / ARCHITECT</div>
                         </div>
                     </div>
-
                     <div class="team-member">
-                        <img class="team-pfp" id="img-lionel" src="https://cdn.discordapp.com/avatars/1400867817951072428/a_e6edf3.gif?size=128" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
+                        <img class="team-pfp" src="https://cdn.discordapp.com/embed/avatars/0.png">
                         <div>
                             <div style="font-family:Orbitron; font-weight:bold;">LIONEL</div>
                             <div style="font-size:0.75rem; color:var(--accent);">DEVELOPER</div>
@@ -170,7 +167,7 @@
 
         function startTerminal() {
             const log = document.getElementById('terminal-log');
-            const lines = ["UPLINK_STABLE", "NODE_ACTIVE", "ENCRYPTING...", "SYNC_OK", "NO_BREACH"];
+            const lines = ["UPLINK_STABLE", "NODE_ACTIVE", "ENCRYPTING...", "SYNC_OK", "SYSTEM_SECURE"];
             setInterval(() => {
                 const div = document.createElement('div');
                 div.innerText = `> ${lines[Math.floor(Math.random() * lines.length)]} [${Math.random().toString(16).substring(2,5).toUpperCase()}]`;
