@@ -18,6 +18,13 @@
         * { box-sizing: border-box; }
         body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; transition: 0.3s; overflow-x: hidden; }
 
+        /* --- LOGIN SCREEN --- */
+        #welcome-screen {
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
+        }
+        .login-logo { width: 300px; height: 300px; border-radius: 50%; border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+
         /* --- NAVIGATION --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
         .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; font-size: 1.1rem; }
@@ -39,29 +46,29 @@
         .dropdown button { padding: 12px; color: var(--text); border: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.7rem; text-align: left; background: transparent; cursor: pointer; }
         .dropdown button:hover { background: var(--accent); color: #000; }
 
-        /* --- CONTENT --- */
+        /* --- CARDS & GRID --- */
         .content { padding: 20px; max-width: 1600px; margin: 0 auto; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 400px; gap: 20px; }
         @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: 1fr; } }
-
         .page { display: none; }
         .page.active { display: block; }
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
 
+        /* --- TEAM IMAGES --- */
         .team-member { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; }
-        .team-pfp { width: 75px; height: 75px; border-radius: 10px; border: 2px solid var(--accent); background: #000; object-fit: cover; }
+        .team-pfp { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
 
         .terminal-container { background: #000 !important; border: 1px solid var(--border); height: 250px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--terminal-green); padding: 10px; overflow: hidden; position: relative; }
         #terminal-log { display: flex; flex-direction: column; position: absolute; bottom: 10px; width: 95%; }
-
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div id="welcome-screen" style="position:fixed; inset:0; background:#000; z-index:10000; display:flex; align-items:center; justify-content:center;">
-        <button class="nav-btn" style="padding:20px 40px; font-size:1rem;" onclick="login()">ESTABLISH UPLINK</button>
+    <div id="welcome-screen">
+        <img src="AGDlogo.gif" alt="AGD Logo" class="login-logo">
+        <button class="nav-btn" style="padding:15px 30px; font-size:0.9rem;" onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
@@ -114,18 +121,20 @@
             <section id="credits" class="page">
                 <div class="card">
                     <div class="card-head t-struct">// PROJECT_STRUCTURE</div>
+                    
                     <div class="team-member">
-                        <img class="team-pfp" src="https://cdn.discordapp.com/attachments/1129433598253084826/1337446344557924372/image.png?ex=67ada66c&is=67ac54ec&hm=97561845686036846c4b2670984950346a06655c655c655c655c655c655c655c">
+                        <img class="team-pfp" src="https://cdn.discordapp.com/avatars/444127208735506433/a_df259e829377488b398646b9a89c927b.gif?size=128" onerror="this.src='image_d6d795.png'">
                         <div>
                             <div style="font-family:Orbitron; font-weight:bold;">HAYATO</div>
                             <div style="font-size:0.75rem; color:var(--accent);">OWNER / ARCHITECT</div>
                         </div>
                     </div>
+
                     <div class="team-member">
-                        <img class="team-pfp" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                        <img class="team-pfp" src="https://cdn.discordapp.com/avatars/1400867817951072428/a_e6edf3.gif?size=128" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
                         <div>
                             <div style="font-family:Orbitron; font-weight:bold;">LIONEL</div>
-                            <div style="font-size:0.75rem; color:var(--accent);">DEVELOPER</div>
+                            <div style="font-size:0.75rem; color:var(--accent);">DEVELOPER (ID: 1400867817951072428)</div>
                         </div>
                     </div>
                 </div>
@@ -199,7 +208,7 @@
         function logout() { localStorage.removeItem('agd_token'); window.location.reload(); }
 
         init();
-        document.addEventListener('click', (e) => { if (!e.target.closest('.nav-right')) closeMenu(); });
+        document.addEventListener('click', (e) => { if (!e.target.closest('.nav-controls')) closeMenu(); });
     </script>
 </body>
 </html>
