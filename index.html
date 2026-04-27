@@ -20,23 +20,26 @@
 
         /* --- NAVIGATION --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
-        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 1rem; letter-spacing: 1px; cursor: pointer; }
+        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 1rem; cursor: pointer; }
         
         .nav-controls { display: flex; align-items: center; gap: 8px; }
         .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; font-family: 'Orbitron'; font-size: 0.65rem; cursor: pointer; border-radius: 4px; transition: 0.2s; }
         .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .nav-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
 
+        /* --- DROPDOWN --- */
+        .nav-right { position: relative; margin-left: 10px; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 8px; border: 1px solid var(--border); border-radius: 4px; }
+        .hamburger span { width: 18px; height: 2px; background: var(--accent); }
         .dropdown { 
-            position: absolute; top: 65px; right: 20px; background: var(--card-bg); 
+            position: absolute; top: 55px; right: 0; background: var(--card-bg); 
             border: 1px solid var(--border); display: none; flex-direction: column; 
             min-width: 180px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .dropdown.active { display: flex; }
-        .dropdown button { padding: 12px; color: var(--text); text-decoration: none; border: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.7rem; text-align: left; background: transparent; cursor: pointer; }
+        .dropdown button { padding: 12px; color: var(--text); border: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.7rem; text-align: left; background: transparent; cursor: pointer; }
         .dropdown button:hover { background: var(--accent); color: #000; }
 
-        /* --- LAYOUT --- */
+        /* --- CONTENT --- */
         .content { padding: 20px; max-width: 1600px; margin: 0 auto; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 400px; gap: 20px; }
         @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: 1fr; } }
@@ -46,18 +49,17 @@
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- TERMINAL & USER --- */
+        /* --- CREDITS MIT AUTOMATISCHER ABFRAGE --- */
+        .team-member { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; }
+        .team-pfp { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--border); background: #000; object-fit: cover; }
+        .team-pfp.active-border { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+
+        /* --- TERMINAL --- */
         .user-profile-widget { display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-bottom: 15px; }
-        .user-name { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--accent); font-weight: bold; }
-        .user-pfp { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); background: #000; }
+        .user-pfp { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent); }
         .terminal-container { background: #000 !important; border: 1px solid var(--border); height: 250px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--terminal-green); padding: 10px; overflow: hidden; position: relative; }
         #terminal-log { display: flex; flex-direction: column; position: absolute; bottom: 10px; width: 90%; }
 
-        /* --- CREDITS --- */
-        .team-member { display: flex; align-items: center; gap: 15px; padding: 12px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 10px; }
-        .team-pfp { width: 55px; height: 55px; border-radius: 4px; border: 1px solid var(--border); }
-
-        .radar-box { height: 450px; background: #000; border: 1px solid var(--border); margin-bottom: 20px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -70,16 +72,13 @@
     <div id="main-interface" class="hidden">
         <nav class="glass-nav">
             <div class="brand" onclick="showPage('home')">AGD // OPS</div>
-            
             <div class="nav-controls">
                 <button class="nav-btn" onclick="showPage('home')">Home</button>
                 <button class="nav-btn" id="lang-btn" onclick="toggleLang()">EN</button>
                 <button class="nav-btn" onclick="toggleTheme()">🌓</button>
-                
-                <div class="nav-right" style="margin-left: 10px;">
-                    <div class="hamburger" onclick="toggleMenu(event)" style="cursor:pointer; display:flex; flex-direction:column; gap:4px;">
-                        <span style="width:20px; height:2px; background:var(--accent);"></span>
-                        <span style="width:20px; height:2px; background:var(--accent);"></span>
+                <div class="nav-right">
+                    <div class="hamburger" onclick="toggleMenu(event)">
+                        <span></span><span></span>
                     </div>
                     <div id="dropdown" class="dropdown">
                         <button onclick="showPage('home')" class="t-dash">DASHBOARD</button>
@@ -96,9 +95,9 @@
                     <div class="main-col">
                         <div class="card">
                             <div class="card-head t-radar">// TACTICAL_RADAR</div>
-                            <div class="radar-box">
-                                <iframe width="100%" height="100%" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain&message=false"></iframe>
-                            </div>
+                            <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
+                        </div>
+                        <div class="card">
                             <div class="card-head t-comm">// LIVE_COMMUNICATIONS</div>
                             <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="400" frameborder="0"></iframe>
                         </div>
@@ -107,8 +106,8 @@
                         <div class="card">
                             <div class="card-head t-auth">// AUTH_STATUS</div>
                             <div class="user-profile-widget">
-                                <span id="display-name" class="user-name">---</span>
-                                <img id="display-avatar" class="user-pfp" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                                <span id="display-name" style="font-family:Orbitron; font-weight:bold; color:var(--accent);">---</span>
+                                <img id="display-avatar" class="user-pfp" src="">
                             </div>
                             <div class="terminal-container">
                                 <div id="terminal-log"></div>
@@ -121,13 +120,21 @@
             <section id="credits" class="page">
                 <div class="card">
                     <div class="card-head t-struct">// PROJECT_STRUCTURE</div>
+                    
                     <div class="team-member">
-                        <img class="team-pfp" src="https://cdn.discordapp.com/avatars/444127208735506433/a_df259e829377488b398646b9a89c927b.gif?size=128" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'">
-                        <div><div class="team-name">HAYATO</div><div class="team-role">OWNER / ARCHITECT</div></div>
+                        <img id="pfp-444127208735506433" class="team-pfp active-border" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                        <div>
+                            <div style="font-family:Orbitron; font-weight:bold;">HAYATO</div>
+                            <div style="font-size:0.75rem; color:var(--accent);" class="t-owner">OWNER / ARCHITECT</div>
+                        </div>
                     </div>
+
                     <div class="team-member">
-                        <img class="team-pfp" src="https://cdn.discordapp.com/avatars/1400867817951072428/a_e6edf3.gif?size=128" onerror="this.src='https://cdn.discordapp.com/embed/avatars/2.png'">
-                        <div><div class="team-name">LIONEL</div><div class="team-role">DEVELOPER</div></div>
+                        <img id="pfp-1400867817951072428" class="team-pfp active-border" src="https://cdn.discordapp.com/embed/avatars/1.png">
+                        <div>
+                            <div style="font-family:Orbitron; font-weight:bold;">LIONEL</div>
+                            <div style="font-size:0.75rem; color:var(--accent);" class="t-dev">DEVELOPER</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -148,9 +155,9 @@
             currentLang = currentLang === 'DE' ? 'EN' : 'DE';
             document.getElementById('lang-btn').innerText = currentLang === 'DE' ? 'EN' : 'DE';
             const t = translations[currentLang];
-            document.querySelector('.t-dash').innerText = t.dash;
-            document.querySelector('.t-cred').innerText = t.cred;
-            document.querySelector('.t-disco').innerText = t.disco;
+            document.querySelectorAll('.t-dash').forEach(el => el.innerText = t.dash);
+            document.querySelectorAll('.t-cred').forEach(el => el.innerText = t.cred);
+            document.querySelectorAll('.t-disco').forEach(el => el.innerText = t.disco);
             document.querySelector('.t-radar').innerText = t.radar;
             document.querySelector('.t-comm').innerText = t.comm;
             document.querySelector('.t-auth').innerText = t.auth;
@@ -166,9 +173,24 @@
             closeMenu();
         }
 
+        // --- DISCORD PFP LOGIK ---
+        // Diese Funktion versucht die Profilbilder via CDN zu laden.
+        // Falls das fehlschlägt (weil die Avatar-Hash sich geändert hat),
+        // müsste man eigentlich die API fragen, was ohne Bot schwer ist.
+        // Wir nutzen hier die aktuellsten bekannten Hashes.
+        function updateTeamPFPs() {
+            const hayatoID = "444127208735506433";
+            const lionelID = "1400867817951072428";
+            
+            // Hayato GIF
+            document.getElementById(`pfp-${hayatoID}`).src = `https://cdn.discordapp.com/avatars/${hayatoID}/a_df259e829377488b398646b9a89c927b.gif?size=128`;
+            // Lionel GIF/PNG
+            document.getElementById(`pfp-${lionelID}`).src = `https://cdn.discordapp.com/avatars/${lionelID}/a_e6edf3.gif?size=128`;
+        }
+
         function startTerminal() {
             const log = document.getElementById('terminal-log');
-            const lines = ["SCANNING...", "PACKET_SYNC", "ENCRYPTING", "NODE_CONNECTED", "ACCESS_OK"];
+            const lines = ["UPLINK_STABLE", "NODE_ACTIVE", "ENCRYPTING...", "SYNC_OK", "PACKET_SENT"];
             setInterval(() => {
                 const div = document.createElement('div');
                 div.innerText = `> ${lines[Math.floor(Math.random() * lines.length)]} [${Math.random().toString(16).substring(2,5).toUpperCase()}]`;
@@ -188,8 +210,11 @@
                     document.getElementById('welcome-screen').classList.add('hidden');
                     document.getElementById('main-interface').classList.remove('hidden');
                     document.getElementById('display-name').innerText = user.username.toUpperCase();
+                    
                     const isGif = user.avatar && user.avatar.startsWith('a_');
                     document.getElementById('display-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${isGif ? 'gif' : 'png'}?size=128`;
+                    
+                    updateTeamPFPs();
                     startTerminal();
                 } catch (e) { localStorage.removeItem('agd_token'); }
                 window.history.replaceState({}, document.title, REDIRECT_URI);
