@@ -11,55 +11,57 @@
             --border: #1f2937; --card-bg: #0d1117; --terminal-green: #00ff41;
         }
         * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow: hidden; }
+        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
 
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION FIX --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 30px; height: 70px; background: rgba(13, 17, 23, 0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
-        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 1.1rem; letter-spacing: 2px; }
+        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; }
+
+        .nav-right { position: relative; display: flex; align-items: center; gap: 15px; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 10px; border: 1px solid var(--border); background: transparent; z-index: 10002; }
+        .hamburger span { width: 20px; height: 1px; background: var(--accent); }
+
+        .dropdown { 
+            position: absolute; top: 60px; right: 0; background: var(--card-bg); 
+            border: 1px solid var(--border); display: none; flex-direction: column; 
+            min-width: 200px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .dropdown.active { display: flex; }
+        .dropdown a { padding: 15px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.75rem; transition: 0.2s; }
+        .dropdown a:hover { background: var(--accent); color: #000; }
 
         /* --- DASHBOARD GRID --- */
-        .content { padding: 25px; max-width: 1800px; margin: 0 auto; height: calc(100vh - 70px); overflow-y: auto; }
+        .content { padding: 25px; max-width: 1800px; margin: 0 auto; min-height: calc(100vh - 70px); }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 450px; gap: 25px; }
         @media (max-width: 1200px) { .dashboard-grid { grid-template-columns: 1fr; } }
 
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 20px; position: relative; }
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 20px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 12px; margin-bottom: 20px; font-size: 0.9rem; text-transform: uppercase; }
 
-        /* --- TERMINAL HACKER BOX (RECHTS) --- */
+        /* --- TERMINAL & USER --- */
         .user-profile-widget { display: flex; align-items: center; justify-content: flex-end; gap: 20px; margin-bottom: 20px; }
         .user-name-glitch { font-family: 'Orbitron'; color: var(--accent); font-size: 1.5rem; font-weight: bold; }
-        .user-pfp { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--accent); }
+        .user-pfp { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--accent); background: #000; }
 
-        .terminal-container {
-            background: #000;
-            border: 1px solid var(--border);
-            height: 350px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            color: var(--terminal-green);
-            padding: 15px;
-            overflow: hidden; /* Verhindert Scrollbars für den GIF-Effekt */
-            position: relative;
-            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-        }
-        #terminal-log {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            position: absolute;
-            bottom: 15px;
-            width: calc(100% - 30px);
-        }
-        .log-line { opacity: 0.8; animation: blink 0.1s; }
+        .terminal-container { background: #000; border: 1px solid var(--border); height: 300px; font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--terminal-green); padding: 15px; overflow: hidden; position: relative; }
+        #terminal-log { display: flex; flex-direction: column; gap: 4px; position: absolute; bottom: 15px; width: calc(100% - 30px); }
 
-        /* --- RADAR & MAPS --- */
-        .radar-box { height: 550px; background: #000; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
-        .discord-frame { height: 400px; width: 100%; border: none; }
+        /* --- CREDITS DISCORD STYLE --- */
+        .team-list { display: flex; flex-direction: column; gap: 15px; }
+        .team-member { display: flex; align-items: center; gap: 20px; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 4px; transition: 0.3s; }
+        .team-member:hover { border-color: var(--accent); background: rgba(0, 240, 255, 0.05); }
+        .team-pfp { width: 55px; height: 55px; border-radius: 8px; border: 1px solid var(--border); background: #000; object-fit: cover; }
+        .team-info { display: flex; flex-direction: column; }
+        .team-name { font-family: 'Orbitron'; font-size: 1rem; color: var(--text); }
+        .team-role { font-size: 0.75rem; color: var(--accent); opacity: 0.8; margin-top: 2px; }
 
-        @keyframes blink { from { opacity: 0; } to { opacity: 0.8; } }
-
-        .hidden { display: none !important; }
+        /* --- UI ELEMENTS --- */
+        .radar-box { height: 500px; background: #000; border: 1px solid var(--border); }
         .login-btn { background: var(--accent); color: #000; border: none; padding: 18px 45px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body onclick="closeMenu()">
@@ -70,17 +72,15 @@
 
     <div id="main-interface" class="hidden">
         <nav class="glass-nav">
-            <div class="brand">AGD // OPERATIONS CENTER</div>
-            <div style="font-family:'Orbitron'; font-size:0.6rem; opacity:0.4;">UPLINK_STABLE // NO_BREACH_DETECTED</div>
+            <div class="brand" onclick="showPage('home')">AGD // OPERATIONS CENTER</div>
             <div class="nav-right">
-                <div class="hamburger" onclick="toggleMenu(event)" style="cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:10px; border:1px solid var(--border);">
-                    <span style="width:20px; height:1px; background:var(--accent);"></span>
-                    <span style="width:20px; height:1px; background:var(--accent);"></span>
+                <div class="hamburger" onclick="toggleMenu(event)">
+                    <span></span><span></span><span></span>
                 </div>
-                <div id="dropdown" style="position:absolute; top:70px; right:30px; background:var(--card-bg); border:1px solid var(--border); display:none; flex-direction:column; min-width:200px; z-index:10001;">
-                    <a href="#" onclick="showPage('home')" style="padding:15px; color:var(--text); text-decoration:none; border-bottom:1px solid var(--border); font-size:0.8rem; font-family:'Orbitron';">DASHBOARD</a>
-                    <a href="#" onclick="showPage('credits')" style="padding:15px; color:var(--text); text-decoration:none; border-bottom:1px solid var(--border); font-size:0.8rem; font-family:'Orbitron';">CREDITS</a>
-                    <a href="#" onclick="logout()" style="padding:15px; color:#ff4444; text-decoration:none; font-size:0.8rem; font-family:'Orbitron';">DISCONNECT</a>
+                <div id="dropdown" class="dropdown">
+                    <a href="#" onclick="showPage('home')">DASHBOARD</a>
+                    <a href="#" onclick="showPage('credits')">CREDITS</a>
+                    <a href="#" onclick="logout()" style="color:#ff4444;">DISCONNECT</a>
                 </div>
             </div>
         </nav>
@@ -95,36 +95,16 @@
                                 <iframe width="100%" height="100%" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain&message=false"></iframe>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-head">// COMMS_WIDGET</div>
-                            <iframe class="discord-frame" src="https://discord.com/widget?id=1129433598253084826&theme=dark"></iframe>
-                        </div>
                     </div>
-
                     <div class="side-col">
                         <div class="card">
-                            <div class="card-head">// OPERATOR_AUTH</div>
+                            <div class="card-head">// AUTH_STATUS</div>
                             <div class="user-profile-widget">
-                                <span id="display-name" class="user-name-glitch">AUTH_REQ</span>
+                                <span id="display-name" class="user-name-glitch">---</span>
                                 <img id="display-avatar" class="user-pfp" src="">
                             </div>
-                            
                             <div class="terminal-container">
-                                <div id="terminal-log">
-                                    </div>
-                            </div>
-                            <div style="margin-top:15px; font-size:0.7rem; opacity:0.4; font-family:monospace;">
-                                [SYSTEM] STATUS: ENCRYPTED<br>
-                                [SYSTEM] LOCATION: CLASSIFIED
-                            </div>
-                        </div>
-
-                        <div class="card" style="border-color: rgba(0, 240, 255, 0.2);">
-                            <div class="card-head">// HARDWARE_METRICS</div>
-                            <div style="font-family:monospace; font-size:0.8rem; line-height:1.8;">
-                                <div>> V-RAM: <span style="color:var(--accent);">OPTIMAL</span></div>
-                                <div>> LATENCY: <span style="color:var(--accent);">14ms</span></div>
-                                <div>> PACKET_LOSS: <span style="color:var(--accent);">0.00%</span></div>
+                                <div id="terminal-log"></div>
                             </div>
                         </div>
                     </div>
@@ -134,14 +114,20 @@
             <section id="credits" class="page">
                 <div class="card">
                     <div class="card-head">// PROJECT_STRUCTURE</div>
-                    <div style="display:flex; flex-direction:column; gap:20px;">
-                        <div style="display:flex; align-items:center; gap:15px;">
-                            <img style="width:50px; height:50px; border:1px solid var(--accent);" src="https://cdn.discordapp.com/embed/avatars/0.png">
-                            <div><strong>HAYATO</strong><br><span style="font-size:0.8rem; color:var(--accent);">OWNER / ARCHITECT</span></div>
+                    <div class="team-list">
+                        <div class="team-member">
+                            <img id="credit-hayato" class="team-pfp" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                            <div class="team-info">
+                                <span class="team-name">HAYATO</span>
+                                <span class="team-role">OWNER / ARCHITECT</span>
+                            </div>
                         </div>
-                        <div style="display:flex; align-items:center; gap:15px;">
-                            <img style="width:50px; height:50px; border:1px solid var(--accent);" src="https://cdn.discordapp.com/embed/avatars/1.png">
-                            <div><strong>LIONEL</strong><br><span style="font-size:0.8rem; color:var(--accent);">DEVELOPER (ID: 1400867817951072428)</span></div>
+                        <div class="team-member">
+                            <img id="credit-lionel" class="team-pfp" src="https://cdn.discordapp.com/embed/avatars/1.png">
+                            <div class="team-info">
+                                <span class="team-name">LIONEL</span>
+                                <span class="team-role">DEVELOPER (ID: 1400867817951072428)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,47 +139,35 @@
         const CLIENT_ID = '1292148049358884905';
         const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-        // --- UNENDLICHER HACKER-CODE STREAM ---
-        function startTerminal() {
-            const log = document.getElementById('terminal-log');
-            const lines = [
-                "GET /api/v2/uplink/status 200 OK",
-                "SSH_CONNECTION_ESTABLISHED: 192.168.1.104",
-                "DECRYPTING_SECTOR_7... DONE",
-                "PACKET_INSPECTION_MODE: ON",
-                "OVERRIDING_CORE_PROTOCOL...",
-                "WARN: UNKNOWN_NODE_DETECTED",
-                "RE-ROUTING_TRAFFIC_VIA_PROXY",
-                "HEX_DUMP: 0x4A 0xFF 0x12 0xBC",
-                "KERNEL_SYNC_COMPLETE",
-                "AUTHENTICATING_TOKEN_VALIDATION",
-                "ACCESS_GRANTED_BY_OPERATOR",
-                "DOWNLOADING_RADAR_METADATA...",
-                "HEARTBEAT_PULSE: 1.2s",
-                "ERASING_FOOTPRINTS... [SUCCESS]"
-            ];
-
-            setInterval(() => {
-                const div = document.createElement('div');
-                div.className = 'log-line';
-                div.innerText = `> ${lines[Math.floor(Math.random() * lines.length)]}`;
-                log.appendChild(div);
-
-                // Behalte nur die letzten 15 Zeilen, um Performance zu sparen
-                if (log.children.length > 15) {
-                    log.removeChild(log.firstChild);
-                }
-            }, 300);
+        // Navigation Logik
+        function toggleMenu(e) { 
+            e.stopPropagation(); 
+            document.getElementById('dropdown').classList.toggle('active'); 
+        }
+        
+        function closeMenu() { 
+            document.getElementById('dropdown').classList.remove('active'); 
         }
 
-        function toggleMenu(e) { e.stopPropagation(); const d = document.getElementById('dropdown'); d.style.display = d.style.display === 'flex' ? 'none' : 'flex'; }
-        function closeMenu() { document.getElementById('dropdown').style.display = 'none'; }
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             closeMenu();
         }
 
+        // Hacker Terminal Logik
+        function startTerminal() {
+            const log = document.getElementById('terminal-log');
+            const lines = ["INIT_UPLINK...", "FETCHING_ASSETS", "DECRYPTING_COMM_CHANNELS", "PING: 14ms", "ACCESS_GRANTED", "SYNCING_RADAR_DATA"];
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.innerText = `> ${lines[Math.floor(Math.random() * lines.length)]} [${Math.random().toString(16).substring(2,6).toUpperCase()}]`;
+                log.appendChild(div);
+                if (log.children.length > 12) log.removeChild(log.firstChild);
+            }, 500);
+        }
+
+        // Discord Login & Profilbilder
         async function init() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             let token = hash.get('access_token') || localStorage.getItem('agd_token');
@@ -205,10 +179,27 @@
                     });
                     const user = await res.json();
                     localStorage.setItem('agd_token', token);
+                    
                     document.getElementById('welcome-screen').classList.add('hidden');
                     document.getElementById('main-interface').classList.remove('hidden');
+                    
+                    // User Profil
+                    const pfpUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
                     document.getElementById('display-name').innerText = user.username.toUpperCase();
-                    document.getElementById('display-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    document.getElementById('display-avatar').src = pfpUrl;
+
+                    // Credits Bilder (Laden per ID)
+                    // Da man ohne Bot-Token keine fremden User-Daten per ID ziehen kann, 
+                    // laden wir das Bild von Lionel/Hayato nur korrekt, wenn die ID bekannt ist oder sie selbst eingeloggt sind.
+                    // Falls Hayato eingeloggt ist:
+                    if(user.id === "444127208735506433") document.getElementById('credit-hayato').src = pfpUrl;
+                    if(user.id === "1400867817951072428") document.getElementById('credit-lionel').src = pfpUrl;
+                    
+                    // Statische Links für die Avatare (Falls vorhanden, sonst Default)
+                    // Ersetze diese URLs durch echte Bild-Links oder GIFs
+                    document.getElementById('credit-hayato').src = `https://cdn.discordapp.com/avatars/444127208735506433/a_df259e829377488b398646b9a89c927b.gif?size=128`; // Beispiel für GIF
+                    document.getElementById('credit-lionel').src = `https://cdn.discordapp.com/avatars/1400867817951072428/a_e6edf3.gif?size=128`; 
+
                     startTerminal();
                 } catch (e) { localStorage.removeItem('agd_token'); }
                 window.history.replaceState({}, document.title, REDIRECT_URI);
@@ -217,6 +208,7 @@
 
         function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify+guilds.join`; }
         function logout() { localStorage.removeItem('agd_token'); window.location.reload(); }
+
         init();
     </script>
 </body>
