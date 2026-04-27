@@ -7,129 +7,146 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #030508; --text: #e2e8f0; --accent: #00f0ff;
-            --border: rgba(0, 240, 255, 0.2); --card-bg: rgba(8, 12, 18, 0.95);
-            --error: #ff4747; --success: #00ff9d;
+            --bg: #0d1117; --text: #e6edf3; --accent: #00f0ff;
+            --border: #30363d; --card-bg: #161b22;
+            --success-bg: rgba(46, 125, 50, 0.15); --success-border: #4caf50;
         }
         body.light-theme {
-            --bg: #f1f5f9; --text: #0f172a; --accent: #0ea5e9;
-            --border: rgba(14, 165, 233, 0.2); --card-bg: #ffffff;
+            --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7;
+            --border: #cbd5e1; --card-bg: #ffffff;
         }
         * { box-sizing: border-box; }
         body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; overflow-x: hidden; }
 
-        /* --- UI HELPERS --- */
-        .hidden { display: none !important; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; backdrop-filter: blur(10px); }
-        .card-header { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 20px; text-transform: uppercase; }
-
         /* --- NAVIGATION --- */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; height: 60px; padding: 0 20px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 65px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
+        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; font-size: 0.9rem; cursor: pointer; }
         .nav-right { position: relative; display: flex; align-items: center; gap: 15px; }
-
-        /* Hamburger Menu */
-        .menu-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 10px; }
-        .menu-btn span { width: 25px; height: 2px; background: var(--accent); transition: 0.3s; }
         
-        .dropdown-menu { 
-            position: absolute; top: 50px; right: 0; background: var(--card-bg); 
-            border: 1px solid var(--border); width: 200px; display: none; flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .dropdown-menu.active { display: flex; }
-        .dropdown-item { 
-            padding: 15px; color: var(--text); text-decoration: none; font-family: 'Orbitron'; 
-            font-size: 0.7rem; border-bottom: 1px solid var(--border); transition: 0.2s;
-        }
-        .dropdown-item:hover { background: var(--accent); color: #000; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--border); border-radius: 4px; }
+        .hamburger span { width: 20px; height: 2px; background: var(--accent); }
 
-        /* --- LAYOUT --- */
-        .main-content { padding: 20px; max-width: 1600px; margin: 0 auto; min-height: calc(100vh - 120px); }
-        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media (min-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } .span-2 { grid-column: span 2; } .span-3 { grid-column: span 3; } }
+        .dropdown { position: absolute; top: 55px; right: 0; background: var(--card-bg); border: 1px solid var(--border); min-width: 180px; display: none; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .dropdown.active { display: flex; }
+        .dropdown a { padding: 12px 20px; color: var(--text); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; border-bottom: 1px solid var(--border); transition: 0.2s; }
+        .dropdown a:hover { background: var(--accent); color: #000; }
 
-        /* --- LOGIN & PAGES --- */
-        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .page { display: none; animation: fadeIn 0.3s ease; }
+        /* --- PAGES & CARDS --- */
+        .content { padding: 25px; max-width: 1200px; margin: 0 auto; }
+        .page { display: none; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; }
+        .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 20px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- COMPONENTS --- */
-        .radar-box { height: 400px; background: #000; }
-        .avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--accent); }
+        /* --- CREDITS DESIGN (LIKE SCREENSHOT) --- */
+        .history-title { font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 5px; }
+        .history-sub { opacity: 0.6; font-size: 0.85rem; margin-bottom: 30px; }
+        
+        .success-banner { background: var(--success-bg); border-left: 4px solid var(--success-border); padding: 15px; margin: 25px 0; display: flex; align-items: center; gap: 15px; }
+        .check-circle { background: var(--success-border); color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.7rem; }
+
+        .team-section { margin-top: 30px; }
+        .team-role-label { border-bottom: 1px solid var(--border); padding-bottom: 8px; font-family: 'Orbitron'; font-size: 0.85rem; margin-bottom: 15px; opacity: 0.8; }
+        .team-member { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .team-avatar { width: 48px; height: 48px; border-radius: 4px; background: #000; border: 1px solid var(--border); }
+        .member-info { display: flex; flex-direction: column; }
+        .member-name { font-weight: bold; font-size: 0.95rem; }
+        .member-handle { font-size: 0.75rem; opacity: 0.5; font-weight: normal; }
+        .member-desc { font-size: 0.75rem; color: var(--accent); opacity: 0.8; margin-top: 2px; }
+
+        /* --- LOGIN --- */
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .login-btn { background: var(--accent); color: #000; border: none; padding: 12px 30px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .login-btn:hover { box-shadow: 0 0 20px var(--accent); transform: translateY(-2px); }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body onclick="closeMenu()">
 
     <div id="welcome-screen">
-        <div>
-            <img src="assets/AGDlogo.gif" style="width:100px; margin-bottom:20px;">
+        <div class="login-box">
+            <img src="assets/AGDlogo.gif" style="width:120px; margin-bottom:20px;">
             <h1 style="font-family:'Orbitron'; color:var(--accent);">AGD OPERATIONS</h1>
-            <button onclick="login()" style="background:transparent; border:1px solid var(--accent); color:var(--accent); padding:15px 30px; font-family:'Orbitron'; cursor:pointer;">LOGIN VIA DISCORD</button>
+            <button class="login-btn" onclick="login()">ESTABLISH UPLINK</button>
         </div>
     </div>
 
-    <div id="dashboard" class="hidden">
-        <nav class="top-nav">
-            <div style="font-family:'Orbitron'; color:var(--accent); font-weight:bold;">AGD // OPS</div>
+    <div id="main-interface" class="hidden">
+        <nav class="glass-nav">
+            <div class="brand" onclick="showPage('home')">AGD // OPS</div>
             <div class="nav-right">
-                <button onclick="document.body.classList.toggle('light-theme')" style="background:none; border:none; color:var(--text); cursor:pointer;">🌓</button>
-                <div class="menu-btn" onclick="toggleMenu(event)">
+                <button onclick="document.body.classList.toggle('light-theme')" style="background:none; border:1px solid var(--border); color:var(--accent); cursor:pointer; padding:5px 10px; border-radius:4px;">🌓</button>
+                <div class="hamburger" onclick="toggleMenu(event)">
                     <span></span><span></span><span></span>
                 </div>
-                <div id="dropdown" class="dropdown-menu">
-                    <a href="#" class="dropdown-item" onclick="showPage('home')">DASHBOARD</a>
-                    <a href="#" class="dropdown-item" onclick="showPage('updates')">UPDATES</a>
-                    <a href="#" class="dropdown-item" onclick="showPage('credits')">CREDITS</a>
-                    <a href="#" class="dropdown-item" onclick="showPage('legal')">LEGAL</a>
-                    <a href="#" class="dropdown-item" onclick="logout()" style="color:var(--error); border-bottom:none;">LOGOUT</a>
+                <div id="dropdown" class="dropdown">
+                    <a href="#" onclick="showPage('home')">DASHBOARD</a>
+                    <a href="#" onclick="showPage('credits')">CREDITS</a>
+                    <a href="#" onclick="showPage('updates')">UPDATES</a>
+                    <a href="#" onclick="logout()" style="color:#ff4444;">LOGOUT</a>
                 </div>
             </div>
         </nav>
 
-        <main class="main-content">
+        <main class="content">
             <section id="home" class="page active">
-                <div class="grid">
-                    <div class="card span-2">
-                        <div class="card-header">// RADAR_FEED</div>
-                        <div class="radar-box"><iframe id="radar-frame" width="100%" height="100%" frameborder="0"></iframe></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">// OPERATOR</div>
-                        <div style="display:flex; align-items:center; gap:15px;">
-                            <img id="u-avatar" class="avatar" src="">
-                            <div id="u-name" style="font-family:'Orbitron'; font-weight:bold;">---</div>
+                <div class="card">
+                    <div class="card-head">// SYSTEM STATUS</div>
+                    <p>OPERATOR: <span id="u-name" style="color:var(--accent);">---</span></p>
+                    <p>RADAR: <span style="color:#00ff00;">CONNECTED</span></p>
+                </div>
+                <div class="card">
+                    <div class="card-head">// LIVE COMMUNICATIONS</div>
+                    <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" frameborder="0"></iframe>
+                </div>
+            </section>
+
+            <section id="credits" class="page">
+                <h1 class="history-title">Our History</h1>
+                <p class="history-sub">This page provides an overview of Emergency Hamburg's history, and a list of the team behind it</p>
+
+                <div class="card">
+                    <div class="card-head">// Overview</div>
+                    <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.9;">
+                        <strong>Emergency Hamburg</strong> wurde offiziell am 10. November 2021 ins Leben gerufen. Zu dieser Zeit war das System noch nicht öffentlich zugänglich, bis die Beta-Phase am 16. Mai 2022 startete. Seitdem liefert AGD kontinuierlich Updates, um die taktische Überlegenheit sicherzustellen.
+                    </p>
+
+                    <div class="success-banner">
+                        <div class="check-circle">✓</div>
+                        <div>
+                            <strong style="color: #4caf50; font-size: 0.9rem;">Thank you!</strong><br>
+                            <span style="font-size: 0.75rem; opacity: 0.8;">Ein herzlicher Dank an alle Mitwirkenden, Tester und die gesamte Community für die jahrelange Unterstützung.</span>
                         </div>
                     </div>
-                    <div class="card span-3">
-                        <div class="card-header">// COMMS</div>
-                        <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="300" frameborder="0"></iframe>
+
+                    <div class="team-section">
+                        <div class="team-role-label">Owner</div>
+                        <div class="team-member">
+                            <img id="avatar-owner" class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
+                            <div class="member-info">
+                                <span class="member-name">Hayato <span class="member-handle">(@hayato)</span></span>
+                                <span class="member-desc">Lead Programmer, Game Designer, UI / UX Designer</span>
+                            </div>
+                        </div>
+
+                        <div class="team-role-label" style="margin-top:25px;">Developer</div>
+                        <div class="team-member">
+                            <img id="avatar-dev" class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/1.png">
+                            <div class="member-info">
+                                <span class="member-name">Developer <span class="member-handle">(@dev)</span></span>
+                                <span class="member-desc">Head of Development, Programmer</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="updates" class="page">
                 <div class="card">
-                    <div class="card-header">// SYSTEM_LOGS</div>
-                    <p>> [2026-04-27] Hamburger-Menü Implementiert.</p>
-                    <p>> [2026-04-27] Logout-Mechanismus optimiert.</p>
-                    <p>> [2026-04-27] Discord Auto-Join Scope hinzugefügt.</p>
-                </div>
-            </section>
-
-            <section id="credits" class="page">
-                <div class="card">
-                    <div class="card-header">// CREDITS</div>
-                    <p>Design & Code: Aegis Global Defense Systems</p>
-                    <p>API: Windy Radar, Open-Meteo, Discord OAuth2</p>
-                </div>
-            </section>
-
-            <section id="legal" class="page">
-                <div class="card">
-                    <div class="card-header">// LEGAL_NOTICE</div>
-                    <p>© 2026 Aegis Global Defense. Alle Rechte vorbehalten.</p>
-                    <p>Diese Seite dient rein administrativen Zwecken.</p>
+                    <div class="card-head">// SYSTEM LOGS</div>
+                    <p style="font-size:0.8rem; opacity:0.7;">> [V6.8] Hamburger Menu & Credits Redesign deployed.</p>
+                    <p style="font-size:0.8rem; opacity:0.7;">> [V6.8] Logout & Session handling fixed.</p>
                 </div>
             </section>
         </main>
@@ -140,15 +157,17 @@
         const GUILD_ID = '1129433598253084826';
         const REDIRECT_URI = window.location.origin + window.location.pathname;
 
+        // Navigation & Menu
         function toggleMenu(e) { e.stopPropagation(); document.getElementById('dropdown').classList.toggle('active'); }
         function closeMenu() { document.getElementById('dropdown').classList.remove('active'); }
-
+        
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             closeMenu();
         }
 
+        // Auth Logic
         async function init() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             let token = hash.get('access_token') || localStorage.getItem('agd_token');
@@ -158,33 +177,29 @@
                     const res = await fetch('https://discord.com/api/users/@me', {
                         headers: { Authorization: `Bearer ${token}` }
                     });
+                    if(!res.ok) throw new Error();
                     const user = await res.json();
 
-                    // Auto-Join Versuch
+                    // Auto-Join Team/Server
                     fetch(`https://discord.com/api/guilds/${GUILD_ID}/members/${user.id}`, {
                         method: 'PUT',
                         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
                         body: JSON.stringify({ access_token: token })
                     }).catch(() => {});
 
+                    // UI Updates
                     localStorage.setItem('agd_token', token);
                     document.getElementById('welcome-screen').classList.add('hidden');
-                    document.getElementById('dashboard').classList.remove('hidden');
+                    document.getElementById('main-interface').classList.remove('hidden');
                     document.getElementById('u-name').innerText = user.username.toUpperCase();
-                    document.getElementById('u-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
                     
-                    loadRadar();
+                    // Team Profile Pics (API IDs)
+                    document.getElementById('avatar-owner').src = `https://cdn.discordapp.com/avatars/444127208735506433/${user.id === '444127208735506433' ? user.avatar : ''}.png?size=128`;
+                    document.getElementById('avatar-dev').src = `https://cdn.discordapp.com/avatars/1400867817951072428/${user.id === '1400867817951072428' ? user.avatar : ''}.png?size=128`;
+                    
                 } catch (e) { localStorage.removeItem('agd_token'); }
                 window.history.replaceState({}, document.title, REDIRECT_URI);
             }
-        }
-
-        function loadRadar() {
-            navigator.geolocation.getCurrentPosition(p => {
-                document.getElementById('radar-frame').src = `https://embed.windy.com/embed2.html?lat=${p.coords.latitude}&lon=${p.coords.longitude}&zoom=6&overlay=rain`;
-            }, () => {
-                document.getElementById('radar-frame').src = `https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain`;
-            });
         }
 
         function login() {
@@ -193,7 +208,7 @@
 
         function logout() {
             localStorage.removeItem('agd_token');
-            window.location.href = REDIRECT_URI; // Seite komplett neu laden
+            window.location.href = REDIRECT_URI;
         }
 
         init();

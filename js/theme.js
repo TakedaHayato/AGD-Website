@@ -56,4 +56,43 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     checkAuth();
+    async function loadTeam() {
+    const team = {
+        owners: [{ id: "444127208735506433", role: "Lead Programmer, Game Designer" }],
+        devs: [{ id: "1400867817951072428", role: "System Architect, UI Developer" }]
+    };
+
+    const token = localStorage.getItem('agd_token');
+    if (!token) return;
+
+    const fetchUser = async (userObj, containerId) => {
+        try {
+            // Hinweis: Direkter Abruf fremder Profile via Client-Token kann eingeschränkt sein.
+            // Als Fallback nutzen wir die Discord-Avatar-URL Struktur.
+            const container = document.getElementById(containerId);
+            
+            // Da man fremde IDs ohne Bot-Token oft nicht direkt abrufen kann, 
+            // erstellen wir hier das Template. Die Namen werden im AGD-System groß geschrieben.
+            const name = userObj.id === "444127208735506433" ? "HAYATO" : "DEVELOPER";
+            
+            container.innerHTML += `
+                <div class="team-member">
+                    <img class="team-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profile">
+                    <div class="team-info">
+                        <span class="team-name">${name} <span class="team-tag">(@id_${userObj.id.slice(0,4)})</span></span>
+                        <span class="team-role">${userObj.role}</span>
+                    </div>
+                </div>
+            `;
+        } catch (e) { console.error("Error loading team member", e); }
+    };
+
+    document.getElementById('owner-list').innerHTML = '';
+    document.getElementById('dev-list').innerHTML = '';
+    
+    team.owners.forEach(u => fetchUser(u, 'owner-list'));
+    team.devs.forEach(u => fetchUser(u, 'dev-list'));
+}
+
+// Rufe loadTeam() am Ende deiner checkAuth() oder init() Funktion auf.
 });
