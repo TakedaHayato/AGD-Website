@@ -12,7 +12,7 @@
         }
         body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-        /* Splash Screen mit GIF */
+        /* Splash Screen */
         #welcome-screen {
             position: fixed; inset: 0; z-index: 2000;
             background-image: url('AGDlogo.gif');
@@ -27,31 +27,25 @@
         }
         .btn-main:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        /* Header & Menüs */
+        /* UI */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 15px 40px; background: var(--nav-bg); backdrop-filter: blur(10px);
             border-bottom: 1px solid #1f2937; position: sticky; top: 0; z-index: 1000;
         }
-        
         .menu-icon { font-size: 28px; cursor: pointer; color: var(--accent); }
         .dropdown {
             display: none; position: absolute; top: 70px; left: 20px;
             background: #000; border: 1px solid #333; width: 200px; padding: 10px 0;
             border-radius: 8px; z-index: 1001;
         }
-        .dropdown div, .dropdown a { padding: 15px 20px; color: #fff; cursor: pointer; font-family: 'Orbitron'; text-transform: uppercase; }
+        .dropdown div { padding: 15px 20px; color: #fff; cursor: pointer; font-family: 'Orbitron'; text-transform: uppercase; }
         .dropdown div:hover { background: #1a1a1a; color: var(--accent); }
 
-        /* Profil Bereich */
         .profile-container { position: relative; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid #333; padding: 5px 15px; border-radius: 20px; }
         .avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); }
         
-        .user-menu {
-            display: none; position: absolute; top: 60px; right: 0;
-            background: #000; border: 1px solid #333; width: 150px; padding: 10px 0;
-            border-radius: 8px; z-index: 2000;
-        }
+        .user-menu { display: none; position: absolute; top: 60px; right: 0; background: #000; border: 1px solid #333; width: 150px; padding: 10px 0; border-radius: 8px; z-index: 2000; }
         .user-menu div { padding: 10px 20px; font-family: 'Orbitron'; color: #ff4444; text-align: center; }
         .user-menu div:hover { background: #1a1a1a; }
         .user-menu.show { display: block; }
@@ -74,6 +68,8 @@
                 <div onclick="showPage('home'); toggleDropdown()">Home</div>
                 <div onclick="showPage('factions'); toggleDropdown()">Factions</div>
                 <div onclick="showPage('history'); toggleDropdown()">History</div>
+                <div onclick="showPage('credits'); toggleDropdown()">Credits</div>
+                <div onclick="showPage('privacy'); toggleDropdown()">Privacy Policy</div>
             </div>
 
             <div class="profile-container" onclick="toggleUserMenu(event)">
@@ -95,11 +91,28 @@
                     <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="500" frameborder="0"></iframe>
                 </div>
             </section>
+
             <section id="factions" class="page hidden">
                 <div class="card"><h2>Current Divisions</h2><p>War Tycoon / SCNV</p></div>
             </section>
+
             <section id="history" class="page hidden">
-                <div class="card"><h2>History</h2><p>AGD Origins...</p></div>
+                <div class="card"><h2>History</h2><p>The rise of AGD...</p></div>
+            </section>
+
+            <section id="credits" class="page hidden">
+                <div class="card">
+                    <h2>Credits</h2>
+                    <p>Development & Main System Architecture: <b>Hayato</b></p>
+                </div>
+            </section>
+
+            <section id="privacy" class="page hidden">
+                <div class="card">
+                    <h2>Privacy Policy</h2>
+                    <p>This website is an official information portal for the <b>Aegis Global Defense</b> Discord community.</p>
+                    <p><b>Important Note:</b> We do not store, sell, or track any personal user data. This site is purely for information and connection to our server. No cookies or tracking scripts are used.</p>
+                </div>
             </section>
         </main>
     </div>
@@ -113,8 +126,9 @@
         }
 
         function logout() { 
-            localStorage.removeItem('token'); 
-            window.location.href = window.location.origin + window.location.pathname; // Kompletter Reload
+            localStorage.clear(); 
+            // Leitet zurück zur Seite ohne Token in der URL
+            window.location.href = window.location.origin + window.location.pathname;
         }
 
         async function init() {
@@ -135,15 +149,13 @@
             }
         }
 
-        // UI Helpers
         function toggleDropdown() { const d = document.getElementById('dropdown-menu'); d.style.display = (d.style.display === 'block') ? 'none' : 'block'; }
         
         function toggleUserMenu(event) {
-            event.stopPropagation(); // WICHTIG: Verhindert, dass das Menü sofort wieder schließt
+            event.stopPropagation();
             document.getElementById('user-menu').classList.toggle('show');
         }
 
-        // Schließt Menüs bei Klick außerhalb
         document.addEventListener('click', () => {
             document.getElementById('user-menu').classList.remove('show');
             document.getElementById('dropdown-menu').style.display = 'none';
