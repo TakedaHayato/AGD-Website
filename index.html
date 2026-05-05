@@ -10,86 +10,112 @@
             --bg: #05070a; 
             --accent: #00f0ff; 
             --panel: rgba(15, 20, 30, 0.85); 
-            --border: rgba(0, 240, 255, 0.3); 
+            --text: #e6edf3;
+            --border: rgba(0, 240, 255, 0.2);
         }
         
-        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* Login Screen */
-        #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .logo-main { width: 350px; margin-bottom: 20px; }
-        .title-text { font-family: 'Orbitron'; font-size: 2.5rem; color: var(--accent); letter-spacing: 5px; margin-bottom: 30px; text-transform: uppercase; }
-        .btn-uplink { padding: 15px 50px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; font-size: 1.2rem; }
-        .btn-uplink:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+        /* Login Screen - Beautified */
+        #login-screen { 
+            position: fixed; inset: 0; z-index: 5000; background: #000; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://i.imgur.com/W8he4kN.gif') center/contain no-repeat;
+        }
+        .login-box { text-align: center; background: rgba(0,0,0,0.7); padding: 40px; border: 1px solid var(--accent); }
+        .login-title { font-family: 'Orbitron'; font-size: 3rem; color: var(--accent); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 5px; }
 
-        /* App Container */
-        #app { display: none; height: 100vh; width: 100%; position: relative; }
+        #app { display: none; width: 92%; max-width: 1000px; margin: 0 auto; position: relative; padding-top: 100px; }
         
         /* Sidebar */
-        .sidebar { position: fixed; left: -300px; top: 0; width: 300px; height: 100%; background: rgba(10, 15, 25, 0.95); backdrop-filter: blur(20px); border-right: 1px solid var(--border); transition: 0.5s; z-index: 3000; padding-top: 100px; }
+        .sidebar { position: fixed; left: -300px; top: 0; width: 260px; height: 100%; background: rgba(10, 14, 20, 0.98); backdrop-filter: blur(20px); border-right: 1px solid var(--border); transition: 0.5s; z-index: 3000; padding-top: 100px; }
         .sidebar.active { left: 0; }
-        .nav-link { padding: 20px 30px; cursor: pointer; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; color: #fff; }
-        .nav-link:hover { color: var(--accent); background: rgba(0, 240, 255, 0.05); }
+        .nav-link { padding: 20px 30px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; transition: 0.3s; }
+        .nav-link:hover { background: rgba(0, 240, 255, 0.1); color: var(--accent); }
 
-        /* Content Area */
-        .page { padding: 80px 20px; max-width: 900px; margin: 0 auto; display: none; }
-        #page-home { display: block; }
-        
-        /* Map Styles */
-        .map-container { width: 100%; max-width: 800px; margin: 20px auto; fill: #1a2a3a; stroke: var(--accent); stroke-width: 1.5; cursor: crosshair; display: block; }
-        .map-container path:hover { fill: var(--accent); transition: 0.3s; }
-        .info-panel { background: var(--panel); border: 1px solid var(--border); padding: 20px; margin-top: 20px; text-align: center; font-family: 'Orbitron'; }
+        /* Map & Content */
+        .page { display: none; padding: 40px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+        .map-container { width: 100%; height: 400px; background: #0a0e14; border: 1px solid var(--accent); cursor: crosshair; }
+        .map-path { fill: #1a2a3a; stroke: var(--accent); stroke-width: 1.5; transition: 0.3s; }
+        .map-path:hover { fill: var(--accent); cursor: pointer; }
         
         h1, h2 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; }
+        button { cursor: pointer; font-family: 'Orbitron'; padding: 15px 40px; background: transparent; border: 1px solid var(--accent); color: var(--accent); transition: 0.3s; font-size: 1.2rem; }
+        button:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <img src="https://i.imgur.com/W8he4kN.gif" class="logo-main" alt="Logo">
-        <div class="title-text">AGD OPS</div>
-        <button class="btn-uplink" onclick="login()">ESTABLISH UPLINK</button>
+        <div class="login-box">
+            <div class="login-title">AGD OPS</div>
+            <button onclick="login()">ESTABLISH UPLINK</button>
+        </div>
     </div>
 
     <div id="app">
-        <div style="position: absolute; top: 20px; left: 20px; z-index: 2000; cursor: pointer; color: var(--accent);" onclick="toggleSidebar()">☰ MENU</div>
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 2000; cursor: pointer; color: var(--accent);" onclick="toggleSidebar()">☰ MENU</div>
 
         <div id="sidebar" class="sidebar">
             <div class="nav-link" onclick="showPage('home')">Dashboard</div>
-            <div class="nav-link" onclick="showPage('map')">Tactical Airstrike Map</div>
-            <div class="nav-link" style="color: #ff4444;" onclick="logout()">Logout</div>
+            <div class="nav-link" onclick="showPage('map')">Searching Tactical Airstrike Location</div>
+            <div class="nav-link" onclick="logout()" style="color: #ff4444;">Logout</div>
         </div>
 
-        <div id="page-home" class="page">
-            <h1>AGD OPERATIONAL STATUS</h1>
-            <p>Uplink established. Communications online. Systems ready.</p>
-        </div>
+        <main>
+            <div id="page-home" class="page" style="display:block;">
+                <h1>AEGIS GLOBAL DEFENSE</h1>
+                <p>Uplink established. Awaiting Command.</p>
+            </div>
 
-        <div id="page-map" class="page">
-            <h2>Searching Tactical Airstrike Location</h2>
-            <svg class="map-container" viewBox="0 0 800 400">
-                <path d="M100,100 L200,100 L200,200 L100,200 Z" onclick="selectRegion('Europe', 'Sector secure.')" />
-                <text x="110" y="150" fill="white" style="pointer-events: none;">EUROPE</text>
-            </svg>
-            <div id="map-info" class="info-panel">SELECT A SECTOR</div>
-        </div>
+            <div id="page-map" class="page">
+                <h2>Tactical Airstrike Map</h2>
+                <svg class="map-container" viewBox="0 0 800 400">
+                    <path class="map-path" d="M100,50 L300,50 L300,200 L100,200 Z" onclick="selectRegion('Europe', 'Sector secure. High readiness.')" />
+                    <text x="150" y="130" fill="white" style="pointer-events: none;">EUROPE</text>
+                    
+                    <path class="map-path" d="M400,50 L600,50 L600,200 L400,200 Z" onclick="selectRegion('USA', 'Active surveillance. Low threat.')" />
+                    <text x="450" y="130" fill="white" style="pointer-events: none;">USA</text>
+                </svg>
+                <div id="map-info" style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.5); border: 1px solid var(--accent);">
+                    SELECT A SECTOR ON THE MAP
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
-        function login() { 
-            document.getElementById('login-screen').style.display = 'none'; 
-            document.getElementById('app').style.display = 'block';
-        }
-        function logout() { location.reload(); }
+        const CLIENT_ID = '1292148049358884905';
+        
+        function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`; }
+        function logout() { localStorage.clear(); location.reload(); }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById('page-' + id).style.display = 'block';
             toggleSidebar();
         }
+
         function selectRegion(name, info) {
-            document.getElementById('map-info').innerHTML = `<h3>${name}</h3><p>${info}</p>`;
+            document.getElementById('map-info').innerHTML = `<h3>Sector: ${name}</h3><p>${info}</p>`;
         }
+
+        // Auth Logic
+        async function init() {
+            const hash = new URLSearchParams(window.location.hash.slice(1));
+            const token = hash.get('access_token') || localStorage.getItem('token');
+            if (token) {
+                localStorage.setItem('token', token);
+                try {
+                    const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
+                    const user = await res.json();
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+                } catch(e) { logout(); }
+            }
+        }
+        init();
     </script>
 </body>
 </html>
