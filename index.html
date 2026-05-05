@@ -1,197 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGD // OPERATIONS CENTER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>AGD // Operations Center</title>
     <style>
-        :root { 
-            --bg: #05070a; --text: #e6edf3; --accent: #00f0ff; 
-            --card-bg: rgba(13, 17, 23, 0.9); --nav-bg: rgba(0, 0, 0, 0.8);
-        }
-        body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        :root { --bg: #05070a; --accent: #00f0ff; --text: #e6edf3; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: sans-serif; }
 
-        /* Splash Screen */
+        /* Splash Screen Fix */
         #welcome-screen {
-            position: fixed; inset: 0; z-index: 2000;
+            position: fixed; inset: 0; z-index: 2000; background: #000;
             background-image: url('AGDlogo.gif');
-            background-size: cover; background-position: center;
+            background-size: contain; background-repeat: no-repeat; background-position: center;
             display: flex; justify-content: center; align-items: flex-end; padding-bottom: 50px;
         }
-
-        .btn-main {
-            background: transparent; color: var(--accent); border: 1px solid var(--accent);
-            padding: 15px 40px; font-family: 'Orbitron'; text-transform: uppercase;
-            cursor: pointer; transition: 0.3s; letter-spacing: 2px;
-        }
-        .btn-main:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
-
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 40px; background: var(--nav-bg); backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1f2937; position: sticky; top: 0; z-index: 1000;
-        }
-        .menu-icon { font-size: 28px; cursor: pointer; color: var(--accent); }
-        .dropdown {
-            display: none; position: absolute; top: 70px; left: 20px;
-            background: #000; border: 1px solid #333; width: 200px; padding: 10px 0;
-            border-radius: 8px; z-index: 1001;
-        }
-        .dropdown div { padding: 15px 20px; color: #fff; cursor: pointer; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; }
-        .dropdown div:hover { background: #1a1a1a; color: var(--accent); }
-
-        .profile-container { position: relative; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid #333; padding: 5px 15px; border-radius: 20px; }
-        .avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); }
         
-        .user-menu { display: none; position: absolute; top: 60px; right: 0; background: #000; border: 1px solid #333; width: 150px; padding: 10px 0; border-radius: 8px; z-index: 2000; }
-        .user-menu div { padding: 10px 20px; font-family: 'Orbitron'; color: #ff4444; text-align: center; cursor: pointer; }
-        .user-menu div:hover { background: #1a1a1a; }
-        .user-menu.show { display: block; }
-
-        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
-        .card { background: var(--card-bg); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
-        .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; }
-        .hidden { display: none !important; }
+        .btn-main { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 15px 30px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
+        
+        /* Navigation & Content */
+        header { padding: 20px; display: flex; gap: 20px; background: #111; border-bottom: 1px solid #333; }
+        header div { cursor: pointer; color: var(--accent); }
+        .page { padding: 40px; }
+        .hidden { display: none; }
+        .card { border: 1px solid #333; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #0a0a0a; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <button class="btn-main" onclick="login()">ESTABLISH UPLINK</button>
+        <button class="btn-main" onclick="startUplink()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
         <header>
-            <div class="menu-icon" onclick="toggleDropdown(event)">☰</div>
-            <div id="dropdown-menu" class="dropdown">
-                <div onclick="showPage('home')">Home</div>
-                <div onclick="showPage('factions')">Factions</div>
-                <div onclick="showPage('history')">History</div>
-                <div onclick="showPage('credits')">Credits</div>
-                <div onclick="showPage('privacy')">Privacy Policy</div>
-            </div>
-
-            <div class="profile-container" onclick="toggleUserMenu(event)">
-                <img id="user-avatar" class="avatar" src="">
-                <span id="user-name">User</span>
-                <div id="user-menu" class="user-menu">
-                    <div onclick="logout()">LOGOUT</div>
-                </div>
-            </div>
+            <div onclick="showPage('home')">HOME</div>
+            <div onclick="showPage('history')">HISTORY</div>
+            <div onclick="showPage('credits')">CREDITS</div>
+            <div onclick="showPage('legal')">LEGAL</div>
         </header>
 
-        <main class="content">
-            <section id="home" class="page">
-                <div class="card">
-                    <h2>Network Status</h2>
-                    <p>Aegis Global Defense Systems Online. Welcome to the Operations Center.</p>
-                </div>
-                <div class="card">
-                    <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="500" frameborder="0"></iframe>
-                </div>
-            </section>
+        <section id="home" class="page">
+            <div class="card">
+                <h1>Aegis Global Defense</h1>
+                <p>Welcome to the Operations Center.</p>
+            </div>
+        </section>
 
-            <section id="factions" class="page hidden">
-                <div class="card">
-                    <h2>Current Divisions</h2>
-                    <p><b>War Tycoon (Roblox):</b> Primary Ground Operations</p>
-                    <p><b>Sechenovs Legion (SCNV):</b> War Thunder Tactical Division</p>
-                </div>
-            </section>
+        <section id="history" class="page hidden">
+            <div class="card">
+                <h2>What Defines Us</h2>
+                <p><strong>Integrated Communications:</strong> Our Discord serves as our digital headquarters, featuring custom-built systems for 50+ synced users.</p>
+                <p><strong>Tactical Excellence:</strong> From rebirth grinds to full-scale server wars, we move as one unit.</p>
+                <p><strong>Professional Growth:</strong> We offer structured ranks and leadership opportunities for those who show loyalty and skill.</p>
+            </div>
+        </section>
 
-            <section id="history" class="page hidden">
-                <div class="card">
-                    <h2>The Rise of Aegis Global Defense</h2>
-                    <p>Aegis Global Defense was born from the chaos of Emergency Hamburg. Founded on July 14th, 2023, by Hayato, Nemesis, and Tim.</p>
-                    <p>By 2026, AGD expanded its reach into War Thunder with the establishment of Sechenov's Legion (SCNV). Despite facing challenges and the loss of our co-founder TimTheKeks in 2026, the community stands stronger than ever, united by tactics and teamwork.</p>
-                </div>
-            </section>
+        <section id="credits" class="page hidden">
+            <div class="card">
+                <h2>Credits</h2>
+                <p>System Architecture and Website Development by <strong>Hayato</strong>.</p>
+            </div>
+        </section>
 
-            <section id="credits" class="page hidden">
-                <div class="card">
-                    <h2>Credits</h2>
-                    <p>Main System Architecture & Design: <b>Hayato</b></p>
-                    <p>Legacy Foundation: <b>Tim & Nemesis</b></p>
-                </div>
-            </section>
-
-            <section id="privacy" class="page hidden">
-                <div class="card">
-                    <h2>Data Privacy & Disclaimer</h2>
-                    <p>This website is a non-commercial information portal for the <b>Aegis Global Defense</b> Discord community.</p>
-                    <p><b>No Data Storage:</b> We do not collect, store, or sell any personal data. The Discord login is used exclusively to display your profile locally on this site for an immersive experience. No information is sent to our own servers.</p>
-                </div>
-            </section>
-        </main>
+        <section id="legal" class="page hidden">
+            <div class="card">
+                <h2>Privacy & Disclaimer</h2>
+                <p>This website is an unofficial information portal for the Aegis Global Defense Discord community.</p>
+                <p><strong>Data Handling:</strong> We do not store, sell, or analyze user data. This site is purely for informational purposes regarding our Discord activities. No cookies or tracking scripts are deployed.</p>
+            </div>
+        </section>
     </div>
 
     <script>
-        const CLIENT_ID = '1292148049358884905';
-        const REDIRECT_URI = window.location.origin + window.location.pathname;
-
-        function login() {
-            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+        function startUplink() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-interface').classList.remove('hidden');
         }
 
-        function logout() { 
-            localStorage.clear(); 
-            // Entfernt den Hash aus der URL und lädt neu
-            window.location.href = REDIRECT_URI;
-        }
-
-        async function init() {
-            const hashParams = new URLSearchParams(window.location.hash.slice(1));
-            const token = hashParams.get('access_token') || localStorage.getItem('token');
-            
-            if (token) {
-                localStorage.setItem('token', token);
-                try {
-                    const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
-                    if (!res.ok) throw new Error('Token expired');
-                    const user = await res.json();
-                    
-                    document.getElementById('user-name').innerText = user.username;
-                    document.getElementById('user-avatar').src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'https://cdn.discordapp.com/embed/avatars/0.png';
-                    
-                    document.getElementById('welcome-screen').style.display = 'none';
-                    document.getElementById('main-interface').classList.remove('hidden');
-
-                    // URL bereinigen ohne Neuladen
-                    if (window.location.hash) {
-                        window.history.replaceState(null, null, window.location.pathname);
-                    }
-                } catch(e) {
-                    logout();
-                }
-            }
-        }
-
-        // NAVIGATION
-        function showPage(id) { 
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); 
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
-            document.getElementById('dropdown-menu').style.display = 'none';
         }
-
-        function toggleDropdown(event) {
-            event.stopPropagation();
-            const d = document.getElementById('dropdown-menu');
-            d.style.display = (d.style.display === 'block') ? 'none' : 'block';
-        }
-        
-        function toggleUserMenu(event) {
-            event.stopPropagation();
-            document.getElementById('user-menu').classList.toggle('show');
-        }
-
-        // Schließen bei Klick außerhalb
-        document.addEventListener('click', () => {
-            document.getElementById('user-menu').classList.remove('show');
-            document.getElementById('dropdown-menu').style.display = 'none';
-        });
-
-        init();
     </script>
 </body>
 </html>
