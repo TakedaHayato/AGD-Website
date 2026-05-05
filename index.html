@@ -5,40 +5,45 @@
     <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.85); }
-        body { margin: 0; background: var(--bg); color: #e6edf3; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
+        :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.9); --text: #e6edf3; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; min-height: 100vh; }
 
-        /* Login */
+        /* Login Screen */
         #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #logo-img { width: 350px; margin-bottom: 30px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .logo-container { width: 350px; height: 350px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        #logo-img { max-width: 100%; max-height: 100%; display: block; }
+
         .btn-ui { padding: 15px 40px; background: transparent; border: 1px solid var(--accent); color: var(--accent); cursor: pointer; text-transform: uppercase; font-family: 'Orbitron'; letter-spacing: 2px; transition: 0.3s; }
         .btn-ui:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        /* Navigation */
+        /* App Layout */
         #app { display: none; }
         .sidebar { position: fixed; left: -260px; top: 0; width: 250px; height: 100%; background: #0a0e14; border-right: 1px solid #222; transition: 0.4s; z-index: 3000; padding-top: 80px; }
         .sidebar.active { left: 0; }
-        .nav-link { padding: 20px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; transition: 0.2s; }
+        .nav-link { padding: 20px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; }
         .nav-link:hover { background: #161b22; color: var(--accent); }
 
         /* Top Bar */
-        .top-bar { position: fixed; top: 0; width: 100%; height: 60px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2000; box-sizing: border-box; }
+        .top-bar { position: fixed; top: 0; width: 100%; height: 60px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2000; box-sizing: border-box; border-bottom: 1px solid #333; }
         .menu-icon { cursor: pointer; color: var(--accent); font-size: 20px; font-family: 'Orbitron'; }
         .profile-section { display: flex; align-items: center; gap: 15px; }
         .avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; }
-        .user-dropdown { position: absolute; top: 65px; right: 20px; background: #000; border: 1px solid #333; display: none; padding: 10px; }
+        .user-dropdown { position: absolute; top: 65px; right: 20px; background: #000; border: 1px solid #333; display: none; padding: 10px; z-index: 3000; }
         .user-dropdown.show { display: block; }
 
         /* Content */
         .main-content { margin: 80px auto; padding: 20px; max-width: 900px; }
         .page { display: none; background: var(--panel); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; }
-        h1, h2 { color: var(--accent); font-family: 'Orbitron'; }
+        h1, h2 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; }
+        p { line-height: 1.7; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <img id="logo-img" src="https://i.imgur.com/W8he4kN.gif" alt="AGD Logo">
+        <div class="logo-container">
+            <img id="logo-img" src="https://i.imgur.com/W8he4kN.gif" alt="AGD Logo">
+        </div>
         <button class="btn-ui" onclick="login()">Establish Uplink</button>
     </div>
 
@@ -49,7 +54,7 @@
                 <button class="btn-ui" style="padding:5px 10px; font-size: 12px;" onclick="toggleLang()">DE / EN</button>
                 <img id="avatar" class="avatar" src="" onclick="toggleUserMenu()">
                 <div id="user-menu" class="user-dropdown">
-                    <div style="color:#ff4444; cursor:pointer;" onclick="logout()">LOGOUT</div>
+                    <div style="color:#ff4444; cursor:pointer; font-family: 'Orbitron';" onclick="logout()">LOGOUT</div>
                 </div>
             </div>
         </div>
@@ -58,60 +63,66 @@
             <div class="nav-link" onclick="showPage('home')">Home</div>
             <div class="nav-link" onclick="showPage('history')">History</div>
             <div class="nav-link" onclick="showPage('credits')">Credits</div>
+            <div class="nav-link" onclick="showPage('legal')">Legal</div>
         </div>
 
         <main class="main-content">
             <div id="page-home" class="page" style="display:block;">
-                <h1 data-de="Willkommen bei AGD" data-en="Welcome to AGD">Welcome to AGD</h1>
-                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? ...</p>
+                <h1>Welcome to AGD</h1>
+                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further!</p>
             </div>
+
             <div id="page-history" class="page">
                 <h2>The Rise of Aegis Global Defense</h2>
-                <p>Before Aegis Global Defense ever stood on its own...</p>
+                <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
+                <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
+                <p>They called it Aegis Global Defense (AGD).</p>
+                <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace.</p>
+                <p>What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds. Their mission was clear: protect, organize, and dominate—not through destruction, but through control and strategy.</p>
+                <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields. It was only the beginning—plans for expansion into even more games were already in motion.</p>
+                <p>But not all chapters were easy.</p>
+                <p>In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever.</p>
+                <p>Because AGD was never just about its founders. It was about the idea they created together. And that idea still lives on.</p>
             </div>
+
             <div id="page-credits" class="page">
                 <h2>Credits</h2>
-                <p>Architecture: Hayato</p>
+                <p>Main Architecture: Hayato<br>Legacy: Tim & Nemesis</p>
+            </div>
+
+            <div id="page-legal" class="page">
+                <h2>Legal & Privacy</h2>
+                <p>Official Information Portal. No user data storage.</p>
             </div>
         </main>
     </div>
 
     <script>
         const CLIENT_ID = '1292148049358884905';
-        let lang = 'en';
-
-        // Auth
+        
         function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`; }
         function logout() { localStorage.clear(); location.reload(); }
-
-        // UI
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
         function toggleUserMenu() { document.getElementById('user-menu').classList.toggle('show'); }
+        
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById('page-' + id).style.display = 'block';
             toggleSidebar();
         }
 
-        // Language Switcher
-        function toggleLang() {
-            lang = lang === 'en' ? 'de' : 'en';
-            document.querySelectorAll('[data-en]').forEach(el => {
-                el.innerText = el.getAttribute('data-' + lang);
-            });
-        }
-
-        // Check Auth
         async function init() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             const token = hash.get('access_token') || localStorage.getItem('token');
             if (token) {
                 localStorage.setItem('token', token);
-                const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
-                const user = await res.json();
-                document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
+                try {
+                    const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
+                    const user = await res.json();
+                    document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+                } catch(e) { logout(); }
             }
         }
         init();
