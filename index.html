@@ -6,152 +6,29 @@
     <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #05070a; 
-            --accent: #00f0ff; 
-            --text: #e6edf3; 
-            --card-bg: rgba(13, 17, 23, 0.95);
-        }
-        body { 
-            margin: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Rajdhani', sans-serif; 
-            min-height: 100vh;
-        }
+        :root { --bg: #05070a; --accent: #00f0ff; --text: #e6edf3; --card-bg: rgba(13, 17, 23, 0.95); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; }
 
-        /* Splash Screen */
-        #welcome-screen {
-            position: fixed; 
-            inset: 0; 
-            z-index: 2000; 
-            background: #000;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center;
-            padding: 20px;
-        }
+        #welcome-screen { position: fixed; inset: 0; z-index: 2000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        #welcome-screen img { max-width: 400px; margin-bottom: 30px; border: 2px solid var(--accent); }
         
-        /* Logo Container & Fallback */
-        .logo-container {
-            max-width: 450px;
-            width: 100%;
-            height: 350px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-        #welcome-screen img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain;
-            position: relative;
-            z-index: 2;
-        }
-        /* Sichtbar falls der Discord Link blockiert wird */
-        .logo-fallback {
-            position: absolute;
-            font-family: 'Orbitron';
-            font-size: 2rem;
-            color: var(--accent);
-            text-shadow: 0 0 15px var(--accent);
-            letter-spacing: 5px;
-            text-align: center;
-            z-index: 1;
-        }
+        .btn-main { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 15px 40px; cursor: pointer; text-transform: uppercase; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px; transition: 0.3s; }
+        .btn-main:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
         
-        .btn-main { 
-            background: transparent; 
-            color: var(--accent); 
-            border: 1px solid var(--accent); 
-            padding: 15px 40px; 
-            cursor: pointer; 
-            text-transform: uppercase; 
-            font-family: 'Orbitron'; 
-            font-weight: bold; 
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
-        }
-        .btn-main:hover { 
-            background: var(--accent); 
-            color: #000; 
-            box-shadow: 0 0 25px var(--accent); 
-        }
-        
-        /* Navigation */
-        header { 
-            padding: 15px; 
-            display: flex; 
-            gap: 15px; 
-            background: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1f2937; 
-            justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            flex-wrap: wrap;
-        }
-        header div { 
-            cursor: pointer; 
-            color: var(--accent); 
-            font-family: 'Orbitron'; 
-            font-weight: bold; 
-            padding: 8px 16px; 
-            border: 1px solid transparent;
-            transition: 0.2s;
-        }
-        header div:hover, header div.active { 
-            border: 1px solid var(--accent);
-            background: rgba(0, 240, 255, 0.05);
-        }
+        header { padding: 15px; display: flex; gap: 15px; background: rgba(0, 0, 0, 0.85); border-bottom: 1px solid #1f2937; justify-content: center; position: sticky; top: 0; z-index: 1000; }
+        header div { cursor: pointer; color: var(--accent); font-family: 'Orbitron'; font-weight: bold; padding: 8px 16px; border: 1px solid transparent; }
+        header div:hover, header div.active { border: 1px solid var(--accent); background: rgba(0, 240, 255, 0.05); }
 
-        /* Content Area */
-        .main-content {
-            max-width: 850px; 
-            margin: 40px auto; 
-            padding: 0 20px; 
-        }
-        .page { 
-            display: none; 
-            animation: fadeIn 0.4s ease-in-out forwards;
-        }
-        .card { 
-            border: 1px solid #1f2937; 
-            padding: 30px; 
-            border-radius: 8px; 
-            margin-bottom: 25px; 
-            background: var(--card-bg); 
-            line-height: 1.7; 
-            font-size: 1.15rem;
-        }
-        h1, h2 { 
-            color: var(--accent); 
-            font-family: 'Orbitron'; 
-            margin-top: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        p { margin-bottom: 15px; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .main-content { max-width: 850px; margin: 40px auto; padding: 0 20px; }
+        .page { display: none; }
+        .card { border: 1px solid #1f2937; padding: 30px; border-radius: 8px; margin-bottom: 25px; background: var(--card-bg); line-height: 1.7; }
+        h1, h2 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <div class="logo-container">
-            <div class="logo-fallback">AEGIS GLOBAL DEFENSE</div>
-            <img src="https://media.discordapp.net/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png?ex=69faad8d&is=69f95c0d&hm=67c267ab3153f0eb99c4cf0845feee7edad850c0ae4913f1c457c6c0fd74971e&=&format=webp&quality=lossless&width=498&height=498" 
-                 onerror="this.style.opacity='0';" alt="AGD Logo">
-        </div>
+        <img src="https://imgur.com/a/JvIz403" alt="AGD Logo" onerror="this.style.display='none'">
         <button class="btn-main" onclick="startUplink()">ESTABLISH UPLINK</button>
     </div>
 
@@ -167,7 +44,7 @@
             <section id="home" class="page" style="display: block;">
                 <div class="card">
                     <h1>✨ AEGIS GLOBAL DEFENSE!</h1>
-                    <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                    <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting.</p>
                     <p><strong>Why join AGD?</strong><br>
                     > `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>
                     > `ノ🤝`・<strong>Active</strong> community<br>
@@ -177,15 +54,7 @@
                     > `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>
                     > `ノ🤝`・<strong>Partnerships</strong><br>
                     > `ノ🎮`・<strong>Games / Anime</strong></p>
-                    
-                    <hr style="border: 0; border-top: 1px solid #1f2937; margin: 20px 0;">
-                    
-                    <p><strong>Requirements:</strong><br>
-                    > `☑️`・Follow the Discord ToS and our Server Rules<br>
-                    > `☑️`・Show respect, discipline & logic<br>
-                    > `☑️`・Speak decent English or German</p>
-                    
-                    <p><strong>Inv:</strong> <a href="http://discord.gg/mDZRkgxpGb" target="_blank" style="color:var(--accent); text-decoration: none; font-weight: bold;">http://discord.gg/mDZRkgxpGb</a></p>
+                    <p><strong>Inv:</strong> <a href="http://discord.gg/mDZRkgxpGb" target="_blank" style="color:var(--accent);">http://discord.gg/mDZRkgxpGb</a></p>
                 </div>
             </section>
 
@@ -197,8 +66,7 @@
                     <p><strong>They called it Aegis Global Defense (AGD).</strong></p>
                     <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace.</p>
                     <p>What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds. Their mission was clear: protect, organize, and dominate—not through destruction, but through control and strategy.</p>
-                    <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: <strong>Sechenov’s Legion (SCNV)</strong>. This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields. It was only the beginning—plans for expansion into even more games were already in motion.</p>
-                    <p>But not all chapters were easy.</p>
+                    <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: <strong>Sechenov’s Legion (SCNV)</strong>. This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields.</p>
                     <p>In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever.</p>
                     <p>Because AGD was never just about its founders. It was about the idea they created together. And that idea still lives on.</p>
                 </div>
@@ -216,7 +84,7 @@
                 <div class="card">
                     <h2>Privacy Policy & Disclaimer</h2>
                     <p>This website is an official non-commercial information portal for the <b>Aegis Global Defense</b> Discord community.</p>
-                    <p><strong>Data Statement:</strong> We strictly do not store, sell, harvest or track any personal user data. This site has no analytical tools or background tracking databases. It serves purely to represent the Aegis Global Defense division info.</p>
+                    <p><strong>Data Statement:</strong> We strictly do not store, sell, harvest or track any personal user data.</p>
                 </div>
             </section>
         </main>
@@ -227,14 +95,9 @@
             document.getElementById('welcome-screen').style.display = 'none';
             document.getElementById('main-interface').style.display = 'block';
         }
-
         function showPage(id) {
-            // Alle Seiten verstecken
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            // Alle Navigations-Klassen zurücksetzen
             document.querySelectorAll('header div').forEach(d => d.classList.remove('active'));
-            
-            // Gewählte Seite anzeigen und Nav-Button aktivieren
             document.getElementById(id).style.display = 'block';
             document.getElementById('nav-' + id).classList.add('active');
         }
