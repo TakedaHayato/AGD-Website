@@ -6,123 +6,97 @@
     <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #05070a; --text: #e6edf3; --accent: #00f0ff; 
-            --card-bg: rgba(15, 20, 25, 0.85); --nav-bg: rgba(0, 0, 0, 0.8);
-        }
-        body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        :root { --bg: #05070a; --text: #e6edf3; --accent: #00f0ff; --border: #1f2937; --card-bg: #0d1117; }
+        body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
 
         /* Splash Screen */
         #welcome-screen {
-            position: fixed; inset: 0; z-index: 2000;
-            background-image: url('background.jpg'); 
-            background-size: cover; background-position: center;
-            display: flex; justify-content: center; align-items: flex-end; padding-bottom: 50px;
+            position: fixed; inset: 0; background: #000; z-index: 10000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
         }
+        .login-logo { width: 300px; height: 300px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
 
-        .btn-main {
-            background: transparent; color: var(--accent); border: 1px solid var(--accent);
-            padding: 15px 40px; font-family: 'Orbitron'; text-transform: uppercase;
-            cursor: pointer; transition: 0.3s; letter-spacing: 2px;
-        }
-        .btn-main:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
-
-        /* Header & Dropdown */
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 20px 40px; background: var(--nav-bg); backdrop-filter: blur(15px);
-            border-bottom: 1px solid #1f2937; position: sticky; top: 0; z-index: 1000;
-        }
-        .menu-wrapper { position: relative; }
-        .menu-icon { font-size: 28px; cursor: pointer; color: var(--accent); transition: 0.3s; }
-        .menu-icon:hover { text-shadow: 0 0 10px var(--accent); }
+        /* Interface */
+        #main-interface { height: 100vh; display: flex; flex-direction: column; }
+        .nav-bar { display: flex; justify-content: space-between; padding: 20px 40px; background: rgba(0,0,0,0.8); border-bottom: 1px solid var(--border); align-items: center; }
+        .content { flex: 1; overflow-y: auto; padding: 40px; max-width: 1200px; margin: 0 auto; width: 100%; }
         
-        .dropdown {
-            display: none; position: absolute; top: 50px; left: 0;
-            background: #111; border: 1px solid #333; width: 220px; padding: 10px 0;
-            border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .dropdown div, .dropdown a { 
-            padding: 15px 20px; color: #fff; text-decoration: none;
-            font-family: 'Orbitron'; text-transform: uppercase; cursor: pointer;
-            border-bottom: 1px solid #222;
-        }
-        .dropdown div:hover, .dropdown a:hover { background: #1a1a1a; color: var(--accent); }
-
-        /* Content */
-        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
-        .card { background: var(--card-bg); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; margin-bottom: 30px; backdrop-filter: blur(5px); }
-        .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; border-left: 3px solid var(--accent); padding-left: 15px; }
+        /* Karten & Grid */
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+        .card-head { font-family: 'Orbitron'; color: var(--accent); margin-bottom: 15px; border-left: 3px solid var(--accent); padding-left: 10px; }
+        
+        /* Hilfsklassen */
         .hidden { display: none !important; }
         .lang-de { display: none; }
+        .btn { padding: 10px 20px; font-family: 'Orbitron'; cursor: pointer; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+        .btn:hover { background: var(--accent); color: #000; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <button class="btn-main" onclick="establishUplink()">Establish Uplink</button>
+        <img src="AGDlogo.gif" alt="AGD Logo" class="login-logo" onerror="this.style.display='none'">
+        <button class="btn" style="padding: 15px 40px;" onclick="establishUplink()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
-        <header>
-            <div class="menu-wrapper">
-                <div class="menu-icon" onclick="toggleDropdown()">☰</div>
-                <div id="dropdown-menu" class="dropdown">
-                    <div onclick="showPage('home'); toggleDropdown()">Home</div>
-                    <div onclick="showPage('factions'); toggleDropdown()">Factions</div>
-                    <div onclick="showPage('history'); toggleDropdown()">History</div>
-                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank">Discord Server</a>
-                </div>
+        <nav class="nav-bar">
+            <div style="font-family: 'Orbitron'; font-size: 1.5rem; color: var(--accent);">AGD // OPERATIONS</div>
+            <div>
+                <button class="btn" onclick="showPage('home')">DASHBOARD</button>
+                <button class="btn" onclick="showPage('history')">HISTORY</button>
+                <button class="btn" onclick="toggleLang()" id="lang-btn">EN -> DE</button>
             </div>
-            <div onclick="toggleLang()" style="cursor:pointer; font-family:'Orbitron'; color:var(--accent); font-size: 14px; border:1px solid var(--accent); padding: 5px 10px; border-radius: 4px;">DE / EN</div>
-        </header>
+        </nav>
 
         <main class="content">
             <section id="home" class="page">
                 <div class="card">
-                    <h2 class="lang-en">Network Status</h2>
-                    <h2 class="lang-de">Netzwerk Status</h2>
-                    <p class="lang-en">Aegis Global Defense is currently a Community Server with Factions / Squadrons in Games.</p>
-                    <p class="lang-de">Aegis Global Defense ist derzeit ein Community-Server mit Fraktionen / Squadrons in verschiedenen Spielen.</p>
-                </div>
-                <div class="card">
-                    <h2>Live Server Feed</h2>
-                    <iframe src="https://discord.com/widget?id=1365673302105919548&theme=dark" width="100%" height="500" frameborder="0" style="border-radius: 8px;"></iframe>
-                </div>
-            </section>
-
-            <section id="factions" class="page hidden">
-                <div class="card">
-                    <h2>Current Divisions</h2>
-                    <p><b>War Tycoon (Roblox)</b><br>Primary Ground Operations</p>
-                    <p><b>Sechenovs Legion (SCNV)</b><br>War Thunder Tactical Division</p>
+                    <h2 class="card-head">
+                        <span class="lang-en">LIVE COMMUNICATIONS</span>
+                        <span class="lang-de">LIVE KOMMUNIKATION</span>
+                    </h2>
+                    <iframe src="https://discord.com/widget?id=1365673302105919548&theme=dark" width="100%" height="400" frameborder="0"></iframe>
                 </div>
             </section>
 
             <section id="history" class="page hidden">
                 <div class="card">
-                    <div class="lang-en">
-                        <h2>The Rise of Aegis Global Defense</h2>
-                        <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force...</p>
-                    </div>
-                    <div class="lang-de">
-                        <h2>Der Aufstieg der Aegis Global Defense</h2>
-                        <p>Bevor die Aegis Global Defense auf eigenen Beinen stand, war sie mit der Aegis Global Task Force verbündet...</p>
-                    </div>
+                    <h2 class="card-head">
+                        <span class="lang-en">THE RISE OF AGD</span>
+                        <span class="lang-de">DER AUFSTIEG DER AGD</span>
+                    </h2>
+                    <p class="lang-en">
+                        Aegis Global Defense was born from the chaos of Emergency Hamburg. Founded on July 14th, 2023, by Hayato, Nemesis, and Tim...
+                    </p>
+                    <p class="lang-de">
+                        Aegis Global Defense entstand aus dem Chaos von Emergency Hamburg. Gegründet am 14. Juli 2023 von Hayato, Nemesis und Tim...
+                    </p>
                 </div>
             </section>
         </main>
     </div>
 
     <script>
-        function establishUplink() { document.getElementById('welcome-screen').style.display = 'none'; document.getElementById('main-interface').classList.remove('hidden'); }
-        function toggleDropdown() { const d = document.getElementById('dropdown-menu'); d.style.display = (d.style.display === 'block') ? 'none' : 'block'; }
-        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
+        let isEnglish = true;
+
+        function establishUplink() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-interface').classList.remove('hidden');
+        }
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
         function toggleLang() {
-            const en = document.querySelectorAll('.lang-en'); const de = document.querySelectorAll('.lang-de');
-            const isEn = window.getComputedStyle(en[0]).display !== 'none';
-            en.forEach(e => e.style.display = isEn ? 'none' : 'block');
-            de.forEach(e => e.style.display = isEn ? 'block' : 'none');
+            isEnglish = !isEnglish;
+            const btn = document.getElementById('lang-btn');
+            btn.innerText = isEnglish ? "EN -> DE" : "DE -> EN";
+
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEnglish ? 'inline' : 'none');
+            document.querySelectorAll('.lang-de').forEach(el => el.style.display = isEnglish ? 'none' : 'inline');
         }
     </script>
 </body>
