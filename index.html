@@ -9,10 +9,18 @@
         :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.95); --text: #e6edf3; --border: rgba(255, 255, 255, 0.1); }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
         
-        #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: url('https://i.imgur.com/e46ea5.jpg'); background-size: cover; background-position: center; }
+        /* LOGIN SCREEN */
+        #login-screen { 
+            position: fixed; inset: 0; z-index: 5000; background: #000; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background-image: url('https://i.imgur.com/e46ea5.jpg');
+            background-size: cover; background-position: center;
+        }
+        .logo-login { width: 200px; margin-bottom: 20px; }
         .login-btn { padding: 15px 40px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron'; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 20px; }
         .login-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
+        /* MAIN APP */
         #app { display: none; width: 100%; max-width: 900px; padding: 100px 20px 50px 20px; box-sizing: border-box; }
         .top-bar { position: fixed; top: 0; width: 100%; max-width: 900px; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid var(--border); z-index: 2000; }
         
@@ -32,7 +40,6 @@
         button:hover { background: var(--accent); color: #000; }
         .profile-dropdown { position: absolute; top: 70px; right: 20px; background: var(--panel); border: 1px solid var(--border); display: none; width: 120px; padding: 10px; z-index: 4000; text-align: center; }
         
-        /* Custom formatting for the requested content */
         .content-block { margin-top: 20px; line-height: 1.6; }
         .box-design { border: 1px solid var(--border); padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.02); }
     </style>
@@ -40,6 +47,7 @@
 <body>
 
     <div id="login-screen">
+        <img src="https://i.imgur.com/W8he4kN.gif" class="logo-login" alt="AGD Logo">
         <button class="login-btn" onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
