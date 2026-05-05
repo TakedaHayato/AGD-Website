@@ -9,29 +9,27 @@
         :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.85); --border: rgba(0, 240, 255, 0.3); }
         body { margin: 0; background: var(--bg); color: #fff; font-family: 'Rajdhani', sans-serif; overflow: hidden; }
 
-        /* Login Screen */
         #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .logo-main { width: 350px; margin-bottom: 20px; }
         .title-text { font-family: 'Orbitron'; font-size: 2.5rem; color: var(--accent); letter-spacing: 5px; margin-bottom: 30px; text-transform: uppercase; }
         .btn-uplink { padding: 15px 50px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron'; cursor: pointer; transition: 0.3s; font-size: 1.2rem; }
         .btn-uplink:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        /* App Layout */
         #app { display: none; height: 100vh; width: 100%; position: relative; }
-        .sidebar { position: fixed; left: -300px; top: 0; width: 300px; height: 100%; background: rgba(10, 14, 20, 0.95); backdrop-filter: blur(20px); border-right: 1px solid var(--border); transition: 0.5s; z-index: 3000; padding-top: 100px; }
+        .sidebar { position: fixed; left: -300px; top: 0; width: 300px; height: 100%; background: rgba(10, 15, 25, 0.95); backdrop-filter: blur(20px); border-right: 1px solid var(--border); transition: 0.5s; z-index: 3000; padding-top: 100px; }
         .sidebar.active { left: 0; }
         .nav-link { padding: 20px 30px; cursor: pointer; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; }
         .nav-link:hover { color: var(--accent); background: rgba(0, 240, 255, 0.05); }
 
-        /* Music Player UI */
-        .music-player { 
-            position: fixed; bottom: 20px; left: 20px; z-index: 2500; 
-            background: rgba(0,0,0,0.7); border: 1px solid var(--accent); 
-            padding: 10px 20px; border-radius: 5px; display: flex; align-items: center; gap: 15px;
+        /* Music Console UI */
+        .music-console {
+            position: fixed; bottom: 20px; left: 20px; z-index: 2500;
+            width: 320px; background: rgba(10, 15, 25, 0.9); border: 1px solid var(--accent);
+            padding: 10px; border-radius: 12px; color: var(--accent);
         }
-        audio { height: 30px; filter: invert(1) hue-rotate(180deg); }
+        .btn-audio { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 5px 15px; cursor: pointer; margin-top: 10px; width: 100%; }
+        .btn-audio:hover { background: var(--accent); color: #000; }
 
-        /* Map Styles */
         .map-container { width: 100%; max-width: 800px; margin: 0 auto; fill: #1a2a3a; stroke: var(--accent); stroke-width: 1.5; cursor: crosshair; }
         .map-container path:hover { fill: var(--accent); transition: 0.3s; }
         .info-panel { background: var(--panel); border: 1px solid var(--border); padding: 20px; margin-top: 20px; text-align: center; font-family: 'Orbitron'; }
@@ -48,12 +46,9 @@
     <div id="app">
         <div style="position: absolute; top: 20px; left: 20px; z-index: 2000; cursor: pointer; color: var(--accent);" onclick="toggleSidebar()">☰ MENU</div>
 
-        <div class="music-player">
-            <span style="font-family: 'Orbitron'; font-size: 0.8rem; color: var(--accent);">SIGNAL:</span>
-            <audio id="audio-player" controls>
-                <source src="https://open.spotify.com/playlist/11Bpr0uvDgend47yfQ2al7?si=d6ba4c67640648b3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+        <div id="music-container" class="music-console">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/11Bpr0uvDgend47yfQ2al7?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <button class="btn-audio" onclick="stopMusic()">STREAM STOPPEN</button>
         </div>
 
         <div id="sidebar" class="sidebar">
@@ -83,9 +78,6 @@
         function login() { 
             document.getElementById('login-screen').style.display = 'none'; 
             document.getElementById('app').style.display = 'block';
-            // Set volume to "normal" (0.5 is 50%)
-            const player = document.getElementById('audio-player');
-            player.volume = 0.5;
         }
         function logout() { location.reload(); }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
@@ -93,6 +85,10 @@
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById('page-' + id).style.display = 'block';
             toggleSidebar();
+        }
+        function stopMusic() {
+            // Blendet den Player aus, um den Stream zu beenden
+            document.getElementById('music-container').style.display = 'none';
         }
         function selectRegion(name, info) {
             document.getElementById('map-info').innerHTML = `<h3>${name}</h3><p>${info}</p>`;
