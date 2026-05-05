@@ -7,155 +7,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg: #05070a; 
-            --text: #e6edf3; 
-            --accent: #00f0ff; 
-            --accent-dim: rgba(0, 240, 255, 0.15);
-            --border: #1f2937; 
-            --card-bg: rgba(13, 17, 23, 0.8); 
+            --bg: #05070a; --text: #e6edf3; --accent: #00f0ff; 
+            --card-bg: rgba(15, 20, 25, 0.7); --nav-bg: rgba(0, 0, 0, 0.8);
+        }
+        body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* Splash Screen */
+        #welcome-screen {
+            position: fixed; inset: 0; z-index: 2000;
+            background-image: url('image_d6c0d4.jpg'); /* HIER DATEINAME PRÜFEN */
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: flex-end; padding-bottom: 50px;
         }
 
-        body { 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Rajdhani', sans-serif; 
-            background: var(--bg); 
-            color: var(--text);
-            background-image: radial-gradient(circle at 50% 50%, #0a111a 0%, #05070a 100%);
-            min-height: 100vh;
-        }
-
-        /* Sprach-Konfiguration */
-        .lang-de { display: none; }
-        .lang-en { display: block; }
-
-        /* Login Screen */
-        #welcome-screen { 
-            position: fixed; 
-            inset: 0; 
-            background: #000; 
-            z-index: 1000; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-        }
-
-        /* Runder Logo Container */
-        .logo-wrapper { 
-            width: 250px; 
-            height: 250px; 
-            border-radius: 50%; 
-            border: 2px solid var(--accent); 
-            box-shadow: 0 0 30px var(--accent-dim);
-            overflow: hidden; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin-bottom: 40px;
-            background: #000;
-        }
-        .logo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Navigation (Tabs) */
-        nav { 
-            display: flex; 
-            justify-content: center; 
-            padding: 30px 0; 
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        nav ul { 
-            list-style: none; 
-            display: flex; 
-            gap: 40px; 
-            padding: 0; 
-            margin: 0; 
-        }
-        nav ul li { 
-            cursor: pointer; 
-            font-family: 'Orbitron'; 
-            color: var(--text); 
-            text-transform: uppercase; 
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            padding-bottom: 5px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        nav ul li:hover { 
-            color: var(--accent); 
-            border-bottom: 2px solid var(--accent);
-            text-shadow: 0 0 10px var(--accent-dim);
-        }
-
-        /* Main Content */
-        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
-        
-        .card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            padding: 30px; 
-            border-radius: 12px; 
-            margin-bottom: 30px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .card h2 { 
-            color: var(--accent); 
-            font-family: 'Orbitron'; 
-            margin-top: 0; 
-            font-size: 1.5rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-            margin-bottom: 20px;
-        }
-
-        p { line-height: 1.6; font-size: 1.1rem; color: #cbd5e1; }
-
+        /* UI Elemente */
         .btn-main {
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 12px 40px;
-            font-family: 'Orbitron';
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            letter-spacing: 2px;
+            background: transparent; color: var(--accent); border: 1px solid var(--accent);
+            padding: 15px 40px; font-family: 'Orbitron'; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s; letter-spacing: 2px;
         }
-        .btn-main:hover {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 20px var(--accent);
-        }
+        .btn-main:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
+        /* Header & Dropdown */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 20px 40px; background: var(--nav-bg); backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1f2937; position: sticky; top: 0; z-index: 1000;
+        }
+        .menu-icon { font-size: 24px; cursor: pointer; color: var(--accent); }
+        .dropdown {
+            display: none; position: absolute; top: 70px; left: 20px;
+            background: #111; border: 1px solid #333; width: 200px; padding: 10px 0;
+            border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .dropdown a, .dropdown div { 
+            padding: 15px 20px; display: block; color: #fff; text-decoration: none;
+            font-family: 'Orbitron'; text-transform: uppercase; cursor: pointer;
+        }
+        .dropdown a:hover, .dropdown div:hover { background: #1a1a1a; color: var(--accent); }
+
+        /* Content */
+        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
+        .card { background: var(--card-bg); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
+        .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; }
         .hidden { display: none !important; }
+        .lang-de { display: none; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <div class="logo-wrapper">
-            <img src="AGDlogo.gif" alt="AGD Logo">
-        </div>
         <button class="btn-main" onclick="establishUplink()">Establish Uplink</button>
     </div>
 
     <div id="main-interface" class="hidden">
-        <nav>
-            <ul>
-                <li onclick="showPage('home')">Home</li>
-                <li onclick="showPage('factions')">Factions</li>
-                <li onclick="showPage('history')">History</li>
-                <li><a href="https://discord.gg/mDZRkgxpGb" target="_blank" style="color:inherit; text-decoration:none;">Discord</a></li>
-                <li onclick="toggleLang()" style="color:var(--accent); border-color: var(--accent-dim);">DE/EN</li>
-            </ul>
-        </nav>
+        <header>
+            <div style="display:flex; align-items:center; gap: 20px;">
+                <div class="menu-icon" onclick="toggleDropdown()">☰</div>
+                <div id="dropdown-menu" class="dropdown">
+                    <div onclick="showPage('home'); toggleDropdown()">Home</div>
+                    <div onclick="showPage('factions'); toggleDropdown()">Factions</div>
+                    <div onclick="showPage('history'); toggleDropdown()">History</div>
+                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank">Discord</a>
+                </div>
+            </div>
+            <div onclick="toggleLang()" style="cursor:pointer; font-family:'Orbitron'; color:var(--accent);">DE / EN</div>
+        </header>
 
         <main class="content">
             <section id="home" class="page">
@@ -165,11 +82,8 @@
                     <p class="lang-en">Aegis Global Defense is currently a Community Server with Factions / Squadrons in Games.</p>
                     <p class="lang-de">Aegis Global Defense ist derzeit ein Community-Server mit Fraktionen / Squadrons in verschiedenen Spielen.</p>
                 </div>
-                
                 <div class="card">
-                    <h2 class="lang-en">Discord Intelligence</h2>
-                    <h2 class="lang-de">Discord Intelligence</h2>
-                    <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                    <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="500" frameborder="0"></iframe>
                 </div>
             </section>
 
@@ -177,8 +91,7 @@
                 <div class="card">
                     <h2>Current Divisions</h2>
                     <p><b>War Tycoon (Roblox)</b><br>Primary Ground Operations</p>
-                    <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-                    <p><b>Sechenovs Legion (SCNV)</b><br>War Thunder Tactical Division (Daughter Faction)</p>
+                    <p><b>Sechenovs Legion (SCNV)</b><br>War Thunder Tactical Division</p>
                 </div>
             </section>
 
@@ -186,16 +99,11 @@
                 <div class="card">
                     <div class="lang-en">
                         <h2>The Rise of Aegis Global Defense</h2>
-                        <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
-                        <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
-                        <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder. In 2026, unfortunately, our 2nd founder Tim—known as TimTheKeks—left us. His departure left a gap, but we remain strong and continue to expand!</p>
+                        <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force... (History Text)...</p>
                     </div>
-
                     <div class="lang-de">
                         <h2>Der Aufstieg der Aegis Global Defense</h2>
-                        <p>Bevor die Aegis Global Defense auf eigenen Beinen stand, war sie mit der Aegis Global Task Force verbündet. Gemeinsam agierten sie als mächtige Streitmacht – doch Allianzen halten nicht immer. Spannungen wuchsen, Meinungsverschiedenheiten eskalierten und schließlich brach ein Krieg zwischen den beiden Seiten aus.</p>
-                        <p>In den Straßen von Emergency Hamburg war das Ziel klar: Gegen Gangs kämpfen und Frieden wiederherstellen. Inmitten von Chaos und zunehmender Gewalt fanden sich am 14. Juli 2023 drei Gründer zusammen: Hayato, Nemesis und Tim. Sie bauten etwas völlig Neues auf.</p>
-                        <p>Jahre vergingen, und bis 2026 war die AGD über ihren ursprünglichen Rahmen hinausgewachsen. Eine neue Division wurde geformt: Sechenov’s Legion (SCNV). Diese Elite-Sub-Fraktion fand ihr Zuhause in War Thunder. 2026 ist leider unser 2. Gründer Tim – bekannt als TimTheKeks – gegangen. Sein Weggang hinterließ eine Lücke, doch wir bleiben stark und bauen uns weiter aus!</p>
+                        <p>Bevor die Aegis Global Defense auf eigenen Beinen stand... (Geschichte)...</p>
                     </div>
                 </div>
             </section>
@@ -203,23 +111,14 @@
     </div>
 
     <script>
-        function establishUplink() { 
-            document.getElementById('welcome-screen').classList.add('hidden'); 
-            document.getElementById('main-interface').classList.remove('hidden'); 
-        }
-        
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
-
+        function establishUplink() { document.getElementById('welcome-screen').style.display = 'none'; document.getElementById('main-interface').classList.remove('hidden'); }
+        function toggleDropdown() { const d = document.getElementById('dropdown-menu'); d.style.display = (d.style.display === 'block') ? 'none' : 'block'; }
+        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
         function toggleLang() {
-            const enElements = document.querySelectorAll('.lang-en');
-            const deElements = document.querySelectorAll('.lang-de');
-            const isEnVisible = window.getComputedStyle(enElements[0]).display !== 'none';
-            
-            enElements.forEach(el => el.style.display = isEnVisible ? 'none' : 'block');
-            deElements.forEach(el => el.style.display = isEnVisible ? 'block' : 'none');
+            const en = document.querySelectorAll('.lang-en'); const de = document.querySelectorAll('.lang-de');
+            const isEn = window.getComputedStyle(en[0]).display !== 'none';
+            en.forEach(e => e.style.display = isEn ? 'none' : 'block');
+            de.forEach(e => e.style.display = isEn ? 'block' : 'none');
         }
     </script>
 </body>
