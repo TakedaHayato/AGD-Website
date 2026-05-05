@@ -2,91 +2,224 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGD // OPERATIONS CENTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f0ff; --text: #e6edf3; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: sans-serif; }
+        :root { 
+            --bg: #05070a; 
+            --accent: #00f0ff; 
+            --text: #e6edf3; 
+            --card-bg: rgba(13, 17, 23, 0.95);
+        }
+        body { 
+            margin: 0; 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Rajdhani', sans-serif; 
+            min-height: 100vh;
+        }
 
         /* Splash Screen */
         #welcome-screen {
-            position: fixed; inset: 0; z-index: 2000; background: #000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: fixed; 
+            inset: 0; 
+            z-index: 2000; 
+            background: #000;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            padding: 20px;
         }
-        #welcome-screen img { max-width: 300px; margin-bottom: 30px; border: 2px solid var(--accent); }
         
-        .btn-main { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 15px 40px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
+        /* Logo Container & Fallback */
+        .logo-container {
+            max-width: 450px;
+            width: 100%;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        #welcome-screen img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+        }
+        /* Sichtbar falls der Discord Link blockiert wird */
+        .logo-fallback {
+            position: absolute;
+            font-family: 'Orbitron';
+            font-size: 2rem;
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent);
+            letter-spacing: 5px;
+            text-align: center;
+            z-index: 1;
+        }
         
-        /* Main Layout */
-        #main-interface { display: none; }
-        header { padding: 20px; display: flex; gap: 20px; background: #111; border-bottom: 1px solid #333; justify-content: center; }
-        header div { cursor: pointer; color: var(--accent); font-weight: bold; padding: 10px; }
+        .btn-main { 
+            background: transparent; 
+            color: var(--accent); 
+            border: 1px solid var(--accent); 
+            padding: 15px 40px; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-family: 'Orbitron'; 
+            font-weight: bold; 
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+        .btn-main:hover { 
+            background: var(--accent); 
+            color: #000; 
+            box-shadow: 0 0 25px var(--accent); 
+        }
         
-        .page { padding: 40px; max-width: 800px; margin: auto; }
-        .card { border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 20px; background: #0a0a0a; }
-        h1 { color: var(--accent); }
+        /* Navigation */
+        header { 
+            padding: 15px; 
+            display: flex; 
+            gap: 15px; 
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1f2937; 
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+        header div { 
+            cursor: pointer; 
+            color: var(--accent); 
+            font-family: 'Orbitron'; 
+            font-weight: bold; 
+            padding: 8px 16px; 
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        header div:hover, header div.active { 
+            border: 1px solid var(--accent);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        /* Content Area */
+        .main-content {
+            max-width: 850px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+        }
+        .page { 
+            display: none; 
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+        .card { 
+            border: 1px solid #1f2937; 
+            padding: 30px; 
+            border-radius: 8px; 
+            margin-bottom: 25px; 
+            background: var(--card-bg); 
+            line-height: 1.7; 
+            font-size: 1.15rem;
+        }
+        h1, h2 { 
+            color: var(--accent); 
+            font-family: 'Orbitron'; 
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        p { margin-bottom: 15px; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <img src="https://media.discordapp.net/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png" alt="AGD Logo">
+        <div class="logo-container">
+            <div class="logo-fallback">AEGIS GLOBAL DEFENSE</div>
+            <img src="https://media.discordapp.net/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png?ex=69faad8d&is=69f95c0d&hm=67c267ab3153f0eb99c4cf0845feee7edad850c0ae4913f1c457c6c0fd74971e&=&format=webp&quality=lossless&width=498&height=498" 
+                 onerror="this.style.opacity='0';" alt="AGD Logo">
+        </div>
         <button class="btn-main" onclick="startUplink()">ESTABLISH UPLINK</button>
     </div>
 
-    <div id="main-interface">
+    <div id="main-interface" style="display: none;">
         <header>
-            <div onclick="showPage('home')">HOME</div>
-            <div onclick="showPage('history')">HISTORY</div>
-            <div onclick="showPage('credits')">CREDITS</div>
-            <div onclick="showPage('legal')">LEGAL</div>
+            <div id="nav-home" class="active" onclick="showPage('home')">HOME</div>
+            <div id="nav-history" onclick="showPage('history')">HISTORY</div>
+            <div id="nav-credits" onclick="showPage('credits')">CREDITS</div>
+            <div id="nav-legal" onclick="showPage('legal')">LEGAL</div>
         </header>
 
-        <section id="home" class="page">
-            <div class="card">
-                <h1>✨ AEGIS GLOBAL DEFENSE!</h1>
-                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting.</p>
-                <p><strong>Why join AGD?</strong><br>
-                > `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>
-                > `ノ🤝`・<strong>Active</strong> community<br>
-                > `ノ🤗`・Friendly & Supportive<br>
-                > `ノ⚡`・<strong>Fast-Paced</strong> & Exciting<br>
-                > `ノ🌈`・<strong>LGBTQ</strong> Friendly<br>
-                > `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>
-                > `ノ🤝`・<strong>Partnerships</strong><br>
-                > `ノ🎮`・<strong>Games / Anime</strong></p>
-                <p><strong>Inv:</strong> <a href="http://discord.gg/mDZRkgxpGb" style="color:var(--accent);">http://discord.gg/mDZRkgxpGb</a></p>
-            </div>
-        </section>
+        <main class="main-content">
+            <section id="home" class="page" style="display: block;">
+                <div class="card">
+                    <h1>✨ AEGIS GLOBAL DEFENSE!</h1>
+                    <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                    <p><strong>Why join AGD?</strong><br>
+                    > `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>
+                    > `ノ🤝`・<strong>Active</strong> community<br>
+                    > `ノ🤗`・Friendly & Supportive<br>
+                    > `ノ⚡`・<strong>Fast-Paced</strong> & Exciting<br>
+                    > `ノ🌈`・<strong>LGBTQ</strong> Friendly<br>
+                    > `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>
+                    > `ノ🤝`・<strong>Partnerships</strong><br>
+                    > `ノ🎮`・<strong>Games / Anime</strong></p>
+                    
+                    <hr style="border: 0; border-top: 1px solid #1f2937; margin: 20px 0;">
+                    
+                    <p><strong>Requirements:</strong><br>
+                    > `☑️`・Follow the Discord ToS and our Server Rules<br>
+                    > `☑️`・Show respect, discipline & logic<br>
+                    > `☑️`・Speak decent English or German</p>
+                    
+                    <p><strong>Inv:</strong> <a href="http://discord.gg/mDZRkgxpGb" target="_blank" style="color:var(--accent); text-decoration: none; font-weight: bold;">http://discord.gg/mDZRkgxpGb</a></p>
+                </div>
+            </section>
 
-        <section id="history" class="page" style="display:none;">
-            <div class="card">
-                <h2>The Rise of Aegis Global Defense</h2>
-                <p>Aegis Global Defense was born from the chaos of Emergency Hamburg. Founded on July 14th, 2023, by Hayato, Nemesis, and Tim.</p>
-                <p>By 2026, AGD expanded its reach into War Thunder with the establishment of Sechenov's Legion (SCNV). Despite facing challenges and the loss of our co-founder TimTheKeks in 2026, the community stands stronger than ever, united by tactics and teamwork.</p>
-                <p><strong>What Defines Us:</strong></p>
-                <ul>
-                    <li><strong>Integrated Communications:</strong> Our Discord serves as our digital headquarters.</li>
-                    <li><strong>Tactical Excellence:</strong> From rebirth grinds to full-scale server wars, we move as one unit.</li>
-                    <li><strong>Professional Growth:</strong> We offer structured ranks and leadership opportunities.</li>
-                </ul>
-            </div>
-        </section>
+            <section id="history" class="page">
+                <div class="card">
+                    <h2>The Rise of Aegis Global Defense</h2>
+                    <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
+                    <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
+                    <p><strong>They called it Aegis Global Defense (AGD).</strong></p>
+                    <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace.</p>
+                    <p>What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds. Their mission was clear: protect, organize, and dominate—not through destruction, but through control and strategy.</p>
+                    <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: <strong>Sechenov’s Legion (SCNV)</strong>. This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields. It was only the beginning—plans for expansion into even more games were already in motion.</p>
+                    <p>But not all chapters were easy.</p>
+                    <p>In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever.</p>
+                    <p>Because AGD was never just about its founders. It was about the idea they created together. And that idea still lives on.</p>
+                </div>
+            </section>
 
-        <section id="credits" class="page" style="display:none;">
-            <div class="card">
-                <h2>Credits</h2>
-                <p>System Architecture and Website Development by <strong>Hayato</strong>.</p>
-                <p>Legacy Foundation: <strong>Tim & Nemesis</strong></p>
-            </div>
-        </section>
+            <section id="credits" class="page">
+                <div class="card">
+                    <h2>Credits</h2>
+                    <p>Main System Architecture & Website Development: <b>Hayato</b></p>
+                    <p>Legacy Foundation & History: <b>Tim & Nemesis</b></p>
+                </div>
+            </section>
 
-        <section id="legal" class="page" style="display:none;">
-            <div class="card">
-                <h2>Privacy & Disclaimer</h2>
-                <p>This website is an unofficial information portal for the Aegis Global Defense Discord community.</p>
-                <p><strong>Data Handling:</strong> We do not store, sell, or analyze user data.</p>
-            </div>
-        </section>
+            <section id="legal" class="page">
+                <div class="card">
+                    <h2>Privacy Policy & Disclaimer</h2>
+                    <p>This website is an official non-commercial information portal for the <b>Aegis Global Defense</b> Discord community.</p>
+                    <p><strong>Data Statement:</strong> We strictly do not store, sell, harvest or track any personal user data. This site has no analytical tools or background tracking databases. It serves purely to represent the Aegis Global Defense division info.</p>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
@@ -96,11 +229,14 @@
         }
 
         function showPage(id) {
-            // Verstecke alle Seiten
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(p => p.style.display = 'none');
-            // Zeige nur die gewählte
+            // Alle Seiten verstecken
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            // Alle Navigations-Klassen zurücksetzen
+            document.querySelectorAll('header div').forEach(d => d.classList.remove('active'));
+            
+            // Gewählte Seite anzeigen und Nav-Button aktivieren
             document.getElementById(id).style.display = 'block';
+            document.getElementById('nav-' + id).classList.add('active');
         }
     </script>
 </body>
