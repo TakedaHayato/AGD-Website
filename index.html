@@ -5,85 +5,103 @@
     <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f0ff; --text: #e6edf3; --panel: rgba(13, 17, 23, 0.8); }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
+        :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.85); }
+        body { margin: 0; background: var(--bg); color: #e6edf3; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
 
-        /* Login Screen */
+        /* Login */
         #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #login-screen img { width: 300px; margin-bottom: 30px; border: 1px solid var(--accent); }
-        .login-btn { padding: 15px 30px; background: transparent; border: 1px solid var(--accent); color: var(--accent); cursor: pointer; text-transform: uppercase; font-family: 'Orbitron'; }
-        
-        /* Layout */
+        #logo-img { width: 350px; margin-bottom: 30px; filter: drop-shadow(0 0 10px var(--accent)); }
+        .btn-ui { padding: 15px 40px; background: transparent; border: 1px solid var(--accent); color: var(--accent); cursor: pointer; text-transform: uppercase; font-family: 'Orbitron'; letter-spacing: 2px; transition: 0.3s; }
+        .btn-ui:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+
+        /* Navigation */
         #app { display: none; }
-        .sidebar { position: fixed; left: -250px; top: 0; width: 250px; height: 100%; background: #0a0e14; border-right: 1px solid #222; transition: 0.3s; padding-top: 80px; z-index: 1000; }
+        .sidebar { position: fixed; left: -260px; top: 0; width: 250px; height: 100%; background: #0a0e14; border-right: 1px solid #222; transition: 0.4s; z-index: 3000; padding-top: 80px; }
         .sidebar.active { left: 0; }
-        .sidebar-item { padding: 20px; cursor: pointer; color: #fff; font-family: 'Orbitron'; border-bottom: 1px solid #111; }
-        
+        .nav-link { padding: 20px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; transition: 0.2s; }
+        .nav-link:hover { background: #161b22; color: var(--accent); }
+
         /* Top Bar */
-        .top-bar { position: fixed; top: 0; width: 100%; height: 60px; background: rgba(0,0,0,0.9); border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2000; }
-        .menu-btn { cursor: pointer; color: var(--accent); font-size: 24px; }
-        .profile-area { display: flex; align-items: center; gap: 15px; }
-        .lang-btn { background: #222; border: 1px solid #444; color: #fff; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--accent); cursor: pointer; }
-        
-        /* Dropdown */
-        .user-dropdown { position: absolute; top: 60px; right: 20px; background: #000; border: 1px solid #333; display: none; }
+        .top-bar { position: fixed; top: 0; width: 100%; height: 60px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2000; box-sizing: border-box; }
+        .menu-icon { cursor: pointer; color: var(--accent); font-size: 20px; font-family: 'Orbitron'; }
+        .profile-section { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; }
+        .user-dropdown { position: absolute; top: 65px; right: 20px; background: #000; border: 1px solid #333; display: none; padding: 10px; }
         .user-dropdown.show { display: block; }
-        .user-dropdown div { padding: 10px 20px; cursor: pointer; color: #ff4444; }
 
         /* Content */
-        .main-content { margin-top: 80px; padding: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
-        .card { background: var(--panel); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; backdrop-filter: blur(10px); }
+        .main-content { margin: 80px auto; padding: 20px; max-width: 900px; }
+        .page { display: none; background: var(--panel); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; }
+        h1, h2 { color: var(--accent); font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <img src="https://imgur.com/a/JvIz403" alt="Logo" onerror="this.style.display='none'">
-        <button class="login-btn" onclick="login()">Connect Uplink</button>
+        <img id="logo-img" src="https://i.imgur.com/W8he4kN.gif" alt="AGD Logo">
+        <button class="btn-ui" onclick="login()">Establish Uplink</button>
     </div>
 
     <div id="app">
         <div class="top-bar">
-            <div class="menu-btn" onclick="toggleSidebar()">☰ MENU</div>
-            <div class="profile-area">
-                <button class="lang-btn" onclick="toggleLang()">DE / EN</button>
+            <div class="menu-icon" onclick="toggleSidebar()">☰ MENU</div>
+            <div class="profile-section">
+                <button class="btn-ui" style="padding:5px 10px; font-size: 12px;" onclick="toggleLang()">DE / EN</button>
                 <img id="avatar" class="avatar" src="" onclick="toggleUserMenu()">
                 <div id="user-menu" class="user-dropdown">
-                    <div onclick="logout()">LOGOUT</div>
+                    <div style="color:#ff4444; cursor:pointer;" onclick="logout()">LOGOUT</div>
                 </div>
             </div>
         </div>
 
         <div id="sidebar" class="sidebar">
-            <div class="sidebar-item" onclick="showPage('home')">HOME</div>
-            <div class="sidebar-item" onclick="showPage('history')">HISTORY</div>
-            <div class="sidebar-item" onclick="showPage('credits')">CREDITS</div>
+            <div class="nav-link" onclick="showPage('home')">Home</div>
+            <div class="nav-link" onclick="showPage('history')">History</div>
+            <div class="nav-link" onclick="showPage('credits')">Credits</div>
         </div>
 
         <main class="main-content">
-            <div id="page-home" class="page card">
-                <h1 data-lang="en">Welcome to AGD</h1>
-                <p>Welcome to the Aegis Global Defense Command Center.</p>
+            <div id="page-home" class="page" style="display:block;">
+                <h1 data-de="Willkommen bei AGD" data-en="Welcome to AGD">Welcome to AGD</h1>
+                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? ...</p>
             </div>
-            </main>
+            <div id="page-history" class="page">
+                <h2>The Rise of Aegis Global Defense</h2>
+                <p>Before Aegis Global Defense ever stood on its own...</p>
+            </div>
+            <div id="page-credits" class="page">
+                <h2>Credits</h2>
+                <p>Architecture: Hayato</p>
+            </div>
+        </main>
     </div>
 
     <script>
         const CLIENT_ID = '1292148049358884905';
-        let currentLang = 'en';
+        let lang = 'en';
 
-        // Auth Logic
-        function login() {
-            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`;
-        }
-
+        // Auth
+        function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`; }
         function logout() { localStorage.clear(); location.reload(); }
 
-        // UI Logic
+        // UI
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
         function toggleUserMenu() { document.getElementById('user-menu').classList.toggle('show'); }
-        
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            document.getElementById('page-' + id).style.display = 'block';
+            toggleSidebar();
+        }
+
+        // Language Switcher
+        function toggleLang() {
+            lang = lang === 'en' ? 'de' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerText = el.getAttribute('data-' + lang);
+            });
+        }
+
+        // Check Auth
         async function init() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             const token = hash.get('access_token') || localStorage.getItem('token');
@@ -94,21 +112,8 @@
                 document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
-                window.history.replaceState(null, null, window.location.pathname);
             }
         }
-
-        function toggleLang() {
-            currentLang = currentLang === 'en' ? 'de' : 'en';
-            alert('Switched to: ' + currentLang.toUpperCase()); // Hier kannst du die Textinhalte austauschen
-        }
-
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById('page-' + id).style.display = 'block';
-            toggleSidebar();
-        }
-
         init();
     </script>
 </body>
