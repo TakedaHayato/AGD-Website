@@ -20,32 +20,35 @@
 
         /* --- LOGIN SCREEN --- */
         #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
-        .login-logo { width: 300px; height: 300px; border-radius: 50%; border: 2px solid var(--accent); }
+        .login-logo { width: 350px; height: auto; max-width: 90%; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3)); }
 
-        /* --- NAV --- */
+        /* --- NAVIGATION --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
         .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; }
-        .nav-controls { display: flex; align-items: center; gap: 8px; }
-        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+        .nav-controls { display: flex; align-items: center; gap: 10px; }
+        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.65rem; cursor: pointer; border-radius: 4px; transition: 0.2s; text-transform: uppercase; text-decoration: none; }
         .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
         .btn-join { background: rgba(0, 240, 255, 0.1); border-color: var(--accent); color: var(--accent); }
 
-        /* --- PAGES --- */
+        /* --- CONTENT --- */
         .page { display: none; padding: 20px; max-width: 1600px; margin: 0 auto; }
         .page.active { display: block; }
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
-        
+
         /* --- FACTIONS GRID --- */
-        .faction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .faction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .faction-card h3 { font-family: 'Orbitron'; color: var(--accent); margin-top: 0; }
+        .tag { background: var(--accent); color: #000; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 0.8rem; margin-left: 10px; }
+
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <img src="AGDlogo.gif" alt="AGD Logo" class="login-logo">
-        <button class="nav-btn" style="padding:15px 30px;" onclick="login()">ESTABLISH UPLINK</button>
+        <img src="https://cdn.discordapp.com/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png?ex=69faad8d&is=69f95c0d&hm=67c267ab3153f0eb99c4cf0845feee7edad850c0ae4913f1c457c6c0fd74971e" alt="AGD Logo" class="login-logo">
+        <button class="nav-btn" style="padding:15px 30px; font-size:0.9rem;" onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
@@ -54,56 +57,71 @@
             <div class="nav-controls">
                 <button class="nav-btn" onclick="showPage('home')">Home</button>
                 <button class="nav-btn" onclick="showPage('factions')">Factions</button>
-                <a href="https://discord.gg/agd-global" target="_blank" class="nav-btn btn-join">Join Server</a>
+                <a href="https://discord.gg/mDZRkgxpGb" target="_blank" class="nav-btn btn-join">Join Server</a>
                 <button class="nav-btn" onclick="showPage('credits')">Credits</button>
                 <button class="nav-btn" onclick="logout()" style="color:#ff4444;">Disconnect</button>
             </div>
         </nav>
 
-        <section id="home" class="page active">
-            <div class="card">
-                <div style="text-align:center; padding:20px;">
-                    <h2 style="font-family:Orbitron; color:var(--accent);">AGD - GLOBAL DEFENSE</h2>
-                    <p style="font-size:1.2rem;">Faction in: <b>War Tycoon (Roblox)</b>, <b>War Thunder</b> and soon other Games</p>
+        <main class="content">
+            <section id="home" class="page active">
+                <div class="card" style="text-align: center; border-bottom: 2px solid var(--accent);">
+                    <h1 style="font-family: 'Orbitron'; margin-bottom: 10px;">AEGIS GLOBAL DEFENSE</h1>
+                    <p style="font-size: 1.2rem; letter-spacing: 1px;">
+                        Faction in: <b style="color: var(--accent);">War Tycoon (Roblox)</b>, 
+                        <b style="color: var(--accent);">War Thunder</b> and soon other Games.
+                    </p>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-head">// TACTICAL_RADAR</div>
-                <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
-            </div>
-        </section>
+                <div class="card">
+                    <div class="card-head">// TACTICAL_RADAR</div>
+                    <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
+                </div>
+            </section>
 
-        <section id="factions" class="page">
-            <div class="card">
-                <div class="card-head">// FACTION_OVERVIEW</div>
-                <div class="faction-grid">
-                    <div class="card">
-                        <h3>War Tycoon (Roblox)</h3>
-                        <p>Status: <b>Active</b></p>
-                        <p>Our primary operation hub for large-scale economic warfare.</p>
-                        <button class="nav-btn">VIEW RANK STRUCTURE</button>
-                    </div>
-                    <div class="card">
-                        <h3>War Thunder</h3>
-                        <p>Status: <b>Deployment Active</b></p>
-                        <p>Aerial and ground dominance units currently recruiting.</p>
-                        <button class="nav-btn">UNIT RULES</button>
+            <section id="factions" class="page">
+                <div class="card">
+                    <div class="card-head">// GLOBAL_FACTIONS</div>
+                    <div class="faction-grid">
+                        <div class="card faction-card">
+                            <h3>War Tycoon <span class="tag">ROBLOX</span></h3>
+                            <p>Status: <span style="color: var(--terminal-green);">OPERATIONAL</span></p>
+                            <p>Primary focus on base defense, tactical resource control, and economic dominance.</p>
+                            <button class="nav-btn" style="width: 100%;">View Rank Structure</button>
+                        </div>
+                        <div class="card faction-card">
+                            <h3>Sechenovs Legion <span class="tag">SCNV</span></h3>
+                            <p>Status: <span style="color: var(--terminal-green);">ACTIVE DEPLOYMENT</span></p>
+                            <p>War Thunder specialized unit. Focused on armored warfare and air superiority.</p>
+                            <button class="nav-btn" style="width: 100%;">Combat Rules</button>
+                        </div>
+                        <div class="card faction-card" style="opacity: 0.6; border-style: dashed;">
+                            <h3>Other Games</h3>
+                            <p>Status: <span style="color: #888;">IN FILTRATION</span></p>
+                            <p>New theater of operations being scouted by high command.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="credits" class="page">
-            <div class="card">
-                <div class="card-head">// PROJECT_STRUCTURE</div>
-                <p>Team credits and project leadership.</p>
-            </div>
-        </section>
+            <section id="credits" class="page">
+                <div class="card">
+                    <div class="card-head">// PROJECT_STRUCTURE</div>
+                    <p>Leadership and development of the AGD Operations Center.</p>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script>
-        function login() { document.getElementById('welcome-screen').classList.add('hidden'); document.getElementById('main-interface').classList.remove('hidden'); }
-        function logout() { location.reload(); }
+        function login() { 
+            document.getElementById('welcome-screen').classList.add('hidden'); 
+            document.getElementById('main-interface').classList.remove('hidden'); 
+        }
+        
+        function logout() { 
+            location.reload(); 
+        }
+
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
