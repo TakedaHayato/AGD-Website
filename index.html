@@ -17,17 +17,19 @@
         /* --- LOGIN SCREEN --- */
         #welcome-screen { 
             position: fixed; inset: 0; background: #000; z-index: 10000; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; 
         }
-        
-        /* Das Logo-Containment */
-        .logo-container {
-            width: 400px; height: 400px; display: flex; align-items: center; justify-content: center;
+
+        /* RUNDES LOGO DESIGN */
+        .logo-wrapper {
+            width: 250px; height: 250px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
         }
-        .login-logo { 
-            width: 100%; height: auto; max-height: 100%; object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4)); 
-        }
+        .login-logo { width: 100%; height: 100%; object-fit: cover; }
 
         /* --- NAVIGATION --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
@@ -43,20 +45,16 @@
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
 
-        .faction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .tag { background: var(--accent); color: #000; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 0.8rem; margin-left: 10px; }
-
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <div class="logo-container">
-            <img src="https://cdn.discordapp.com/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png?ex=69faad8d&is=69f95c0d&hm=67c267ab3153f0eb99c4cf0845feee7edad850c0ae4913f1c457c6c0fd74971e" 
-                 alt="AGD Logo" class="login-logo" onerror="this.src='AGDlogo.gif'">
+        <div class="logo-wrapper">
+            <img src="AGDlogo.gif" alt="AGD Logo" class="login-logo">
         </div>
-        <button class="nav-btn" style="padding:15px 30px; font-size:0.9rem;" onclick="login()">ESTABLISH UPLINK</button>
+        <button class="nav-btn" style="padding:15px 30px; font-size:0.9rem;" onclick="establishUplink()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
@@ -64,53 +62,27 @@
             <div class="brand" onclick="showPage('home')">AGD // OPS</div>
             <div class="nav-controls">
                 <button class="nav-btn" onclick="showPage('home')">Home</button>
-                <button class="nav-btn" onclick="showPage('factions')">Factions</button>
                 <a href="https://discord.gg/mDZRkgxpGb" target="_blank" class="nav-btn btn-join">Join Server</a>
-                <button class="nav-btn" onclick="showPage('credits')">Credits</button>
                 <button class="nav-btn" onclick="logout()" style="color:#ff4444;">Disconnect</button>
             </div>
         </nav>
 
         <main class="content">
             <section id="home" class="page active">
-                <div class="card" style="text-align: center;">
-                    <h1 style="font-family: 'Orbitron';">AEGIS GLOBAL DEFENSE</h1>
-                    <p>Faction in: <b>War Tycoon (Roblox)</b>, <b>War Thunder</b> and soon other Games.</p>
+                <div class="card">
+                    <h2 style="font-family: 'Orbitron'; color: var(--accent);">SYSTEM STATUS: ONLINE</h2>
+                    <p>Willkommen beim AGD Operations Center. Alle Sub-Systeme sind bereit.</p>
                 </div>
                 <div class="card">
                     <div class="card-head">// TACTICAL_RADAR</div>
                     <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
                 </div>
             </section>
-
-            <section id="factions" class="page">
-                <div class="card">
-                    <div class="card-head">// GLOBAL_FACTIONS</div>
-                    <div class="faction-grid">
-                        <div class="card">
-                            <h3>War Tycoon <span class="tag">ROBLOX</span></h3>
-                            <p>Status: <span style="color: var(--terminal-green);">OPERATIONAL</span></p>
-                        </div>
-                        <div class="card">
-                            <h3>Sechenovs Legion <span class="tag">SCNV</span></h3>
-                            <p>Status: <span style="color: var(--terminal-green);">ACTIVE</span></p>
-                            <p>Official War Thunder Division.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="credits" class="page">
-                <div class="card">
-                    <div class="card-head">// PROJECT_STRUCTURE</div>
-                    <p>Leadership: Hayato & Lionel</p>
-                </div>
-            </section>
         </main>
     </div>
 
     <script>
-        function login() { 
+        function establishUplink() { 
             document.getElementById('welcome-screen').classList.add('hidden'); 
             document.getElementById('main-interface').classList.remove('hidden'); 
         }
