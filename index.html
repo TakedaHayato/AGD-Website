@@ -13,9 +13,25 @@
         .lang-de { display: none; }
         .lang-en { display: block; }
 
-        /* Logo Rund */
-        .logo-wrapper { width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--accent); overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); margin: 0 auto 20px auto; }
-        .logo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        /* Runder Logo Container */
+        .logo-wrapper { 
+            width: 250px; 
+            height: 250px; 
+            border-radius: 50%; 
+            border: 2px solid var(--accent); 
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 0 auto 30px auto; 
+            background: #000;
+        }
+        .logo-wrapper img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Sorgt dafür, dass das Bild den Kreis ausfüllt */
+        }
 
         /* Navigation */
         nav { display: flex; justify-content: center; padding: 20px; border-bottom: 1px solid var(--border); }
@@ -29,16 +45,16 @@
         .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; }
         .hidden { display: none !important; }
         
-        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
         <div class="logo-wrapper">
-            <img src="AGDlogo.gif" alt="Logo">
+            <img src="AGDlogo.gif" alt="AGD Logo">
         </div>
-        <button onclick="establishUplink()" style="background:transparent; color:white; border:1px solid #fff; padding:15px 30px; cursor:pointer; font-family: 'Orbitron';">ESTABLISH UPLINK</button>
+        <button onclick="establishUplink()" style="background:transparent; color:white; border:1px solid #fff; padding:15px 30px; cursor:pointer; font-family: 'Orbitron'; text-transform: uppercase;">Establish Uplink</button>
     </div>
 
     <div id="main-interface" class="hidden">
@@ -75,18 +91,14 @@
                     <div class="lang-en">
                         <h2>The Rise of Aegis Global Defense</h2>
                         <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
-                        <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
-                        <p>They called it Aegis Global Defense (AGD).</p>
-                        <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace. What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds.</p>
+                        <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new. They called it Aegis Global Defense (AGD).</p>
                         <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder. In 2026, unfortunately, our 2nd founder Tim—known as TimTheKeks—left us. His departure left a gap, but we remain strong and continue to expand!</p>
                     </div>
 
                     <div class="lang-de">
                         <h2>Der Aufstieg der Aegis Global Defense</h2>
                         <p>Bevor die Aegis Global Defense auf eigenen Beinen stand, war sie mit der Aegis Global Task Force verbündet. Gemeinsam agierten sie als mächtige Streitmacht – doch Allianzen halten nicht immer. Spannungen wuchsen, Meinungsverschiedenheiten eskalierten und schließlich brach ein Krieg zwischen den beiden Seiten aus. Was einst Einheit war, wurde zu Konflikt und formte die Zukunft der AGD für immer.</p>
-                        <p>In den Straßen von Emergency Hamburg war das Ziel klar: Gegen Gangs kämpfen und Frieden wiederherstellen. Inmitten von Chaos und zunehmender Gewalt fanden sich am 14. Juli 2023 drei Gründer zusammen: Hayato, Nemesis und Tim. Sie reagierten nicht nur auf die Situation – sie bauten etwas Neues auf.</p>
-                        <p>Sie nannten es Aegis Global Defense (AGD).</p>
-                        <p>Als die Gruppe später in War Tycoon expandierte, wurde ihre Vision noch klarer: Sie wollten nicht nur gewinnen. Sie wollten etwas Größeres erschaffen: eine Streitmacht, die sich Ordnung, Stärke und vor allem dem Frieden widmete. Was als kleine Allianz begann, wuchs schnell zu etwas Strukturierterem heran. Die AGD wurde zu einer anerkannten Fraktion, ein Symbol der Einheit auf chaotischen Schlachtfeldern.</p>
+                        <p>In den Straßen von Emergency Hamburg war das Ziel klar: Gegen Gangs kämpfen und Frieden wiederherstellen. Inmitten von Chaos und zunehmender Gewalt fanden sich am 14. Juli 2023 drei Gründer zusammen: Hayato, Nemesis und Tim. Sie reagierten nicht nur auf die Situation – sie bauten etwas Neues auf. Sie nannten es Aegis Global Defense (AGD).</p>
                         <p>Jahre vergingen, und bis 2026 war die AGD über ihren ursprünglichen Rahmen hinausgewachsen. Eine neue Division wurde geformt: Sechenov’s Legion (SCNV). Diese Elite-Sub-Fraktion fand ihr Zuhause in War Thunder. 2026 ist leider unser 2. Gründer Tim – bekannt als TimTheKeks – gegangen. Sein Weggang hinterließ eine Lücke, doch wir bleiben stark und bauen uns weiter aus!</p>
                     </div>
                 </div>
