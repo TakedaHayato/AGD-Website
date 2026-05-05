@@ -9,22 +9,13 @@
         :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.95); --text: #e6edf3; --border: rgba(255, 255, 255, 0.1); }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
         
-        /* LOGIN SCREEN */
-        #login-screen { 
-            position: fixed; inset: 0; z-index: 5000; background: #000; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            /* HIER WURDE DIE URL KORRIGIERT */
-            background-image: url('https://i.imgur.com/e46ea5o.jpg');
-            background-size: cover; background-position: center;
-        }
+        #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: url('https://i.imgur.com/e46ea5o.jpg'); background-size: cover; background-position: center; }
         .logo-login { width: 200px; margin-bottom: 20px; }
         .login-btn { padding: 15px 40px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron'; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 20px; }
         .login-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        /* MAIN APP */
         #app { display: none; width: 100%; max-width: 900px; padding: 100px 20px 50px 20px; box-sizing: border-box; }
         .top-bar { position: fixed; top: 0; width: 100%; max-width: 900px; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid var(--border); z-index: 2000; }
-        
         #lang-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 5px 10px; cursor: pointer; font-family: 'Orbitron'; }
         
         .sidebar { position: fixed; left: -300px; top: 0; width: 260px; height: 100%; background: var(--panel); border-right: 1px solid var(--border); transition: 0.4s; z-index: 3000; padding-top: 100px; }
@@ -32,7 +23,7 @@
         .nav-link { padding: 20px 30px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .nav-link:hover { background: rgba(0, 240, 255, 0.1); color: var(--accent); }
 
-        .page { display: none; padding: 40px; border-radius: 20px; background: rgba(15, 20, 30, 0.8); border: 1px solid var(--border); margin-top: 20px; }
+        .page { display: none; padding: 40px; border-radius: 20px; background: rgba(15, 20, 30, 0.8); border: 1px solid var(--border); margin-top: 20px; line-height: 1.6; }
         h1, h2 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; margin-top: 0; }
         .card { background: rgba(255,255,255,0.03); padding: 20px; border: 1px solid var(--border); display: block; color: inherit; text-decoration: none; border-radius: 10px; transition: 0.3s; margin-bottom: 15px; }
         .card:hover { border-color: var(--accent); background: rgba(0,240,255,0.05); }
@@ -40,9 +31,8 @@
         button { cursor: pointer; font-family: 'Orbitron'; padding: 10px 20px; background: transparent; border: 1px solid var(--accent); color: var(--accent); }
         button:hover { background: var(--accent); color: #000; }
         .profile-dropdown { position: absolute; top: 70px; right: 20px; background: var(--panel); border: 1px solid var(--border); display: none; width: 120px; padding: 10px; z-index: 4000; text-align: center; }
-        
-        .content-block { margin-top: 20px; line-height: 1.6; }
-        .box-design { border: 1px solid var(--border); padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.02); }
+        .content-block { margin-top: 20px; }
+        .box-design { border: 1px solid var(--border); padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.02); margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -79,30 +69,16 @@
                     <h1 data-i18n="h_title">AGD OPERATIONAL STATUS</h1>
                     <p style="color: var(--accent);">Uplink established. Communications online. Systems ready.</p>
                 </div>
-                
                 <div id="home-content" class="content-block"></div>
-                
                 <div style="text-align: center; margin-top: 40px;">
                     <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')" data-i18n="btn_join">JOIN US</button>
                 </div>
             </div>
 
-            <div id="page-active" class="page">
-                <h2 data-i18n="nav_official">Official</h2>
-                <div id="active-content"></div>
-            </div>
-            <div id="page-history" class="page">
-                <h2 data-i18n="nav_history">History</h2>
-                <div id="hist-content"></div>
-            </div>
-            <div id="page-credits" class="page">
-                <h2 data-i18n="nav_credits">Credits</h2>
-                <div id="credits-content"></div>
-            </div>
-            <div id="page-legal" class="page">
-                <h2 data-i18n="nav_legal">Legal & Privacy</h2>
-                <div id="legal-content"></div>
-            </div>
+            <div id="page-active" class="page"><h2 data-i18n="nav_official">Official</h2><div id="active-content"></div></div>
+            <div id="page-history" class="page"><h2 data-i18n="nav_history">History</h2><div id="hist-content"></div></div>
+            <div id="page-credits" class="page"><h2 data-i18n="nav_credits">Credits</h2><div id="credits-content"></div></div>
+            <div id="page-legal" class="page"><h2 data-i18n="nav_legal">Legal & Privacy</h2><div id="legal-content"></div></div>
         </main>
     </div>
 
@@ -120,15 +96,24 @@
                         <h3>Why join AGD?</h3>
                         <p>🎉・Very Unique <strong>GIVEAWAYS</strong><br>🤝・<strong>Active</strong> community<br>🤗・Friendly & Supportive<br>⚡・<strong>Fast-Paced</strong> & Exciting<br>🌈・<strong>LGBTQ</strong> Friendly<br>💎・<strong>Boosters</strong> We are Actively looking for Boosters<br>🤝・<strong>Partnerships</strong><br>🎮・<strong>Games / Anime</strong></p>
                     </div>
-                    <div class="box-design" style="margin-top:20px; text-align:center;">
+                    <div class="box-design" style="text-align:center;">
                         <h3>📝 Requirements:</h3>
                         <p>☑️・Follow the Discord ToS and our Server Rules<br>☑️・Show respect, discipline & logic<br>☑️・Speak decent English or German</p>
                     </div>
                 `,
                 active: `<a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>Operating as AGD.</p></a><a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>`,
-                hist: "<p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force...</p>",
+                hist: `
+                    <h3>The Rise of Aegis Global Defense</h3>
+                    <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
+                    <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
+                    <p><strong>They called it Aegis Global Defense (AGD).</strong></p>
+                    <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace.</p>
+                    <p>What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds. Their mission was clear: protect, organize, and dominate—not through destruction, but through control and strategy.</p>
+                    <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields. It was only the beginning—plans for expansion into even more games were already in motion.</p>
+                    <p>But not all chapters were easy. In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever. Because AGD was never just about its founders. It was about the idea they created together. <strong>And that idea still lives on.</strong></p>
+                `,
                 credits: "<p>Main Architecture: <strong>Hayato</strong></p>",
-                legal: "<p>Non-commercial fan project.</p>"
+                legal: "<h3>Legal & Privacy</h3><p>This is a non-commercial fan project. Aegis Global Defense (AGD) is an independent community group and is not affiliated with, endorsed by, or sponsored by Roblox Corporation, Gaijin Entertainment, or any other game developers. All content is created by fans for fans. Please respect the Discord Terms of Service and our internal server rules at all times.</p>"
             },
             de: {
                 nav_home: "Startseite", nav_official: "Offiziell", nav_history: "Geschichte", nav_credits: "Credits", nav_legal: "Rechtliches",
@@ -140,15 +125,23 @@
                         <h3>Warum AGD beitreten?</h3>
                         <p>🎉・Einzigartige <strong>GIVEAWAYS</strong><br>🤝・<strong>Aktive</strong> Community<br>🤗・Freundlich & Hilfsbereit<br>⚡・<strong>Schnelllebig</strong> & Aufregend<br>🌈・<strong>LGBTQ</strong>-freundlich<br>💎・<strong>Booster</strong> gesucht<br>🤝・<strong>Partnerschaften</strong><br>🎮・<strong>Spiele / Anime</strong></p>
                     </div>
-                    <div class="box-design" style="margin-top:20px; text-align:center;">
+                    <div class="box-design" style="text-align:center;">
                         <h3>📝 Anforderungen:</h3>
                         <p>☑️・Befolge die Discord AGB und Server Regeln<br>☑️・Zeige Respekt, Disziplin & Logik<br>☑️・Sprich ordentliches Englisch oder Deutsch</p>
                     </div>
                 `,
                 active: `<a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>AGD Einsatzgebiet.</p></a><a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>`,
-                hist: "<p>Bevor Aegis Global Defense auf eigenen Beinen stand, war es mit der Aegis Global Task Force verbündet...</p>",
+                hist: `
+                    <h3>Der Aufstieg von Aegis Global Defense</h3>
+                    <p>Bevor Aegis Global Defense auf eigenen Beinen stand, war es mit der Aegis Global Task Force verbündet. Zusammen operierten sie als mächtige Streitmacht – doch Allianzen halten nicht ewig. Spannungen wuchsen, Meinungsverschiedenheiten eskalierten und schließlich brach ein Krieg zwischen den beiden Seiten aus. Was einst Einheit war, verwandelte sich in einen Konflikt, der die Zukunft der AGD für immer prägte.</p>
+                    <p>In den Straßen von Emergency Hamburg war das Ziel klar: Kampf gegen Banden und die Wiederherstellung des Friedens. Inmitten von Chaos und zunehmender Gewalt kamen am 14. Juli 2023 drei Gründer zusammen – Hayato, Nemesis und Tim. Sie reagierten nicht nur auf die Situation – sie bauten etwas Neues auf. <strong>Sie nannten es Aegis Global Defense (AGD).</strong></p>
+                    <p>Als sich die Gruppe später auf War Tycoon ausweitete, wurde ihre Vision noch klarer: Sie wollten nicht nur gewinnen. Sie wollten etwas Größeres schaffen: eine Truppe, die sich der Ordnung, der Stärke und vor allem dem Frieden widmet.</p>
+                    <p>Was als kleine Allianz begann, wuchs schnell zu etwas Strukturierterem heran. AGD wurde zu einer anerkannten Fraktion, ein Symbol der Einheit auf chaotischen Schlachtfeldern. Ihre Mission war klar: Schützen, organisieren und dominieren – nicht durch Zerstörung, sondern durch Kontrolle und Strategie.</p>
+                    <p>Die Jahre vergingen, und bis 2026 war AGD über ihren ursprünglichen Rahmen hinausgewachsen. Eine neue Division wurde gegründet: Sechenov’s Legion (SCNV). Diese Elite-Unterfraktion fand in War Thunder ihr Zuhause und brachte ein neues Maß an Disziplin und taktischer Kriegsführung in die Lüfte und auf die Schlachtfelder. Es war erst der Anfang – Pläne für die Expansion in noch mehr Spiele waren bereits in Arbeit.</p>
+                    <p>Aber nicht alle Kapitel waren einfach. Im Jahr 2026 musste AGD einen schweren Verlust hinnehmen. Einer der Gründer, Tim – bekannt als TimTheKeks – verließ die Gruppe. Sein Weggang hinterließ eine Lücke, die nicht wirklich zu füllen war. Doch anstatt auseinanderzubrechen, blieb AGD standhaft. Die verbleibenden Mitglieder trugen sein Erbe weiter, stärker und entschlossener als je zuvor. Denn AGD ging es nie nur um die Gründer. Es ging um die Idee, die sie gemeinsam erschufen. <strong>Und diese Idee lebt weiter.</strong></p>
+                `,
                 credits: "<p>Hauptarchitektur: <strong>Hayato</strong></p>",
-                legal: "<p>Nicht-kommerzielles Fan-Projekt.</p>"
+                legal: "<h3>Rechtliches & Datenschutz</h3><p>Dies ist ein nicht-kommerzielles Fan-Projekt. Aegis Global Defense (AGD) ist eine unabhängige Community-Gruppe und steht in keinerlei Verbindung zu der Roblox Corporation, Gaijin Entertainment oder anderen Spieleentwicklern. Alle Inhalte wurden von Fans für Fans erstellt. Bitte beachte jederzeit die Discord AGB sowie unsere internen Serverregeln.</p>"
             }
         };
 
