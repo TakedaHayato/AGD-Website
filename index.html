@@ -2,134 +2,141 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.9); --text: #e6edf3; --border: rgba(255, 255, 255, 0.1); }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; display: flex; justify-content: center; }
+        :root { 
+            --bg: #05070a; 
+            --accent: #00f0ff; 
+            --panel: rgba(15, 20, 30, 0.7); 
+            --text: #e6edf3;
+            --border: rgba(255, 255, 255, 0.1);
+        }
         
+        body { 
+            margin: 0; background: var(--bg); color: var(--text); 
+            font-family: 'Rajdhani', sans-serif; min-height: 100vh; 
+            overflow-x: hidden; background-image: radial-gradient(circle at top right, #0a192f, transparent 60%);
+        }
+
+        .glass { background: var(--panel); backdrop-filter: blur(15px); border: 1px solid var(--border); }
+
         #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .logo-container { width: 250px; height: 250px; margin-bottom: 30px; }
 
-        #app { display: none; width: 90%; max-width: 900px; padding-top: 100px; padding-bottom: 50px; }
+        #app { display: none; width: 92%; max-width: 1000px; margin: 0 auto; position: relative; padding-top: 80px; }
         
-        .sidebar { position: fixed; left: -300px; top: 0; width: 260px; height: 100%; background: var(--panel); border-right: 1px solid var(--border); transition: 0.5s; z-index: 3000; padding-top: 100px; }
+        .sidebar { position: fixed; left: -300px; top: 0; width: 260px; height: 100%; background: rgba(10, 14, 20, 0.95); backdrop-filter: blur(20px); border-right: 1px solid var(--border); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 3000; padding-top: 100px; }
         .sidebar.active { left: 0; }
-        .nav-link { padding: 20px 30px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-link:hover { background: rgba(0, 240, 255, 0.1); color: var(--accent); }
+        .nav-link { padding: 20px 30px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; font-size: 0.9rem; }
+        .nav-link:hover { background: rgba(0, 240, 255, 0.1); color: var(--accent); padding-left: 40px; }
 
-        .top-bar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid var(--border); z-index: 2000; }
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 2000; box-sizing: border-box; border-bottom: 1px solid var(--border); }
         
-        .user-menu { position: relative; cursor: pointer; }
-        .profile-dropdown { position: absolute; top: 60px; right: 0; background: var(--panel); border: 1px solid var(--border); display: none; width: 120px; padding: 10px; z-index: 4000; text-align: center; }
+        .main-content { padding-bottom: 50px; }
+        .page { display: none; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        main { margin-top: 40px; }
-        .page { display: none; padding: 40px; border-radius: 20px; background: rgba(15, 20, 30, 0.5); border: 1px solid var(--border); }
-        h1, h2 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; }
-        .card { background: rgba(255,255,255,0.05); padding: 20px; border: 1px solid var(--border); margin-bottom: 15px; display: block; color: inherit; text-decoration: none; }
+        h1, h2, h3 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; letter-spacing: 2px; }
+        p { line-height: 1.8; font-size: 1.15rem; color: #cbd5e0; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 25px; border-radius: 15px; transition: all 0.3s ease; color: inherit; text-decoration: none; display: block; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 20px rgba(0,240,255,0.1); background: rgba(0,240,255,0.05); }
         
-        button { cursor: pointer; font-family: 'Orbitron'; padding: 10px 20px; background: transparent; border: 1px solid var(--accent); color: var(--accent); }
-        button:hover { background: var(--accent); color: #000; }
+        button { cursor: pointer; font-family: 'Orbitron'; padding: 12px 30px; background: transparent; border: 1px solid var(--accent); color: var(--accent); transition: 0.3s; font-size: 1rem; }
+        button:hover { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div class="logo-container"><img src="https://i.imgur.com/W8he4kN.gif" style="width:100%;"></div>
+        <div class="logo-container">
+            <img src="https://i.imgur.com/W8he4kN.gif" style="width:100%;" alt="AGD Logo">
+        </div>
         <button onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="app">
         <div class="top-bar">
             <div style="display: flex; align-items: center; gap: 20px;">
-                <div style="cursor: pointer; color: var(--accent);" onclick="toggleSidebar()">MENU ☰</div>
-                <button onclick="toggleLang()" id="lang-btn">EN</button>
+                <div style="cursor: pointer; color: var(--accent); font-family: 'Orbitron';" onclick="toggleSidebar()">MENU ☰</div>
+                <img src="https://i.imgur.com/W8he4kN.gif" style="height: 40px;" alt="Logo">
             </div>
-            <div class="user-menu">
-                <img id="avatar" onclick="toggleProfile()" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent);" src="">
-                <div id="profile-dropdown" class="profile-dropdown">
-                    <div style="color: #ff4444; font-size: 0.9rem;" onclick="logout()">LOGOUT</div>
-                </div>
-            </div>
+            <img id="avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent);" src="">
         </div>
 
         <div id="sidebar" class="sidebar">
-            <div class="nav-link" onclick="showPage('home')" data-i18n="nav_home">Home</div>
-            <div class="nav-link" onclick="showPage('active')" data-i18n="nav_official">Official</div>
-            <div class="nav-link" onclick="showPage('history')" data-i18n="nav_history">History</div>
-            <div class="nav-link" onclick="showPage('credits')" data-i18n="nav_credits">Credits</div>
-            <div class="nav-link" onclick="showPage('legal')" data-i18n="nav_legal">Legal</div>
+            <div class="nav-link" onclick="showPage('home')">Home</div>
+            <div class="nav-link" onclick="showPage('active')">Official</div>
+            <div class="nav-link" onclick="showPage('history')">History</div>
+            <div class="nav-link" onclick="showPage('credits')">Credits</div>
+            <div class="nav-link" onclick="showPage('legal')">Legal</div>
             <div class="nav-link" style="color: var(--accent);" onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')">JOIN US</div>
+            <div class="nav-link" style="color: #ff4444;" onclick="logout()">Logout</div>
         </div>
 
-        <main>
-            <div id="page-home" class="page" style="display:block; text-align: center;">
-                <img src="https://i.imgur.com/W8he4kN.gif" style="width: 150px; margin-bottom: 20px;">
-                <h1 data-i18n="h_title">AEGIS GLOBAL DEFENSE!</h1>
-                <p data-i18n="h_text" style="text-align: left;">Looking for a friendly space to connect with like-minded people? The future of teamwork, tactics, and community starts here.</p>
-                <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')" data-i18n="btn_join">JOIN US ON DISCORD</button>
+        <main class="main-content">
+            <div id="page-home" class="page glass" style="display:block; text-align: center;">
+                <img src="https://i.imgur.com/W8he4kN.gif" style="width: 150px; margin-bottom: 20px;" alt="AGD Logo">
+                <h1 style="text-align: left;">✨ AEGIS GLOBAL DEFENSE!</h1>
+                <p style="text-align: left;">Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                
+                <h3 style="margin-top:40px; text-align: left;">Why join AGD?</h3>
+                <p style="text-align: left;">> `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>> `ノ🤝`・<strong>Active</strong> community<br>> `ノ🤗`・Friendly & Supportive<br>> `ノ⚡`・<strong>Fast-Paced</strong> & Exciting<br>> `ノ🌈`・<strong>LGBTQ</strong> Friendly<br>> `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>> `ノ🤝`・<strong>Partnerships</strong><br>> `ノ🎮`・<strong>Games / Anime</strong></p>
+                
+                <hr style="border:0; border-top:1px solid var(--border); margin: 30px 0;">
+                
+                <h3 style="text-align: left;">Requirements:</h3>
+                <p style="text-align: left;">> `☑️`・Follow the Discord ToS and our Server Rules<br>> `☑️`・Show respect, discipline & logic<br>> `☑️`・Speak decent English or German</p>
+                
+                <div style="margin-top: 40px;">
+                    <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')">JOIN US ON DISCORD</button>
+                </div>
             </div>
 
-            <div id="page-active" class="page">
-                <h2 data-i18n="nav_official">Official</h2>
-                <a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>Operating as AGD.</p></a>
-                <a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV). Tactical warfare.</p></a>
-                <a href="https://www.roblox.com/games/4639625707/Emergency-Hamburg" target="_blank" class="card"><h3>Emergency Hamburg</h3><p>Restoring peace and fighting gangs.</p></a>
+            <div id="page-active" class="page glass">
+                <h2>Where we are official</h2>
+                <div class="grid">
+                    <a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card">
+                        <h3>War Tycoon</h3>
+                        <p>Operating as AGD.</p>
+                    </a>
+                    <a href="https://warthunder.com/de/" target="_blank" class="card">
+                        <h3>War Thunder</h3>
+                        <p>Sechenov’s Legion (SCNV).</p>
+                    </a>
+                    <a href="https://www.roblox.com/games/4639625707/Emergency-Hamburg" target="_blank" class="card">
+                        <h3>Emergency Hamburg</h3>
+                        <p>Restoring peace and fighting gangs.</p>
+                    </a>
+                </div>
             </div>
 
-            <div id="page-history" class="page">
-                <h2 data-i18n="nav_history">History</h2>
-                <div id="hist-content" data-i18n="hist_text"></div>
+            <div id="page-history" class="page glass">
+                <h2>The Rise of Aegis Global Defense</h2>
+                <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force...</p>
             </div>
-
-            <div id="page-credits" class="page">
-                <h2 data-i18n="nav_credits">Credits</h2>
+            <div id="page-credits" class="page glass">
+                <h2>Credits</h2>
                 <p>Main Architecture: <strong>Hayato</strong></p>
             </div>
-
-            <div id="page-legal" class="page">
-                <h2 data-i18n="nav_legal">Legal & Privacy</h2>
-                <div id="legal-content" data-i18n="legal_text"></div>
+            <div id="page-legal" class="page glass">
+                <h2>Legal & Privacy</h2>
+                <p>Dies ist ein inoffizielles Fan-Projekt.</p>
             </div>
         </main>
     </div>
 
     <script>
-        const content = {
-            en: {
-                nav_home: "Home", nav_official: "Official", nav_history: "History", nav_credits: "Credits", nav_legal: "Legal",
-                h_title: "AEGIS GLOBAL DEFENSE!", h_text: "Looking for a friendly space to connect with like-minded people? The future of teamwork, tactics, and community starts here.", btn_join: "JOIN US ON DISCORD",
-                hist_text: "<p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p><p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new. They called it Aegis Global Defense (AGD).</p><p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace. Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare. It was only the beginning.</p><p>But not all chapters were easy. In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever. Because AGD was never just about its founders. It was about the idea they created together. And that idea still lives on.</p>",
-                legal_text: "<h3>Imprint</h3><p>Aegis Global Defense is an unofficial, non-commercial fan project. We are not affiliated with the official game developers of Roblox or Gaijin Entertainment.</p><h3>Data Privacy (GDPR)</h3><p>We use Discord OAuth2 for authentication. We do not store, sell, or share your personal data with third parties. Your user ID is used solely to verify your account status.</p><h3>Terms of Service</h3><p>By accessing this dashboard, you agree to follow the Discord Terms of Service and our community guidelines. AGD reserves the right to restrict access to users who violate these rules.</p>"
-            },
-            de: {
-                nav_home: "Startseite", nav_official: "Offiziell", nav_history: "Geschichte", nav_credits: "Credits", nav_legal: "Rechtliches",
-                h_title: "AEGIS GLOBAL DEFENSE!", h_text: "Suche nach einem freundlichen Ort, um sich mit Gleichgesinnten zu verbinden? Die Zukunft der Teamarbeit, Taktik und Community beginnt hier.", btn_join: "TRITT UNS BEI",
-                hist_text: "<p>Bevor Aegis Global Defense auf eigenen Beinen stand, war es mit der Aegis Global Task Force verbündet. Zusammen waren sie eine starke Macht—aber Allianzen halten nicht ewig. Spannungen wuchsen, und ein Krieg brach aus. Was einst Einheit war, wurde zum Konflikt und prägte die Zukunft der AGD für immer.</p><p>In den Straßen von Emergency Hamburg war das Ziel klar: Gangs bekämpfen und Frieden wiederherstellen. Mitten im Chaos kamen am 14. Juli 2023 drei Gründer zusammen—Hayato, Nemesis und Tim. Sie bauten etwas Neues: Die Aegis Global Defense (AGD).</p><p>Als die Gruppe später in War Tycoon expandierte, wurde ihre Vision klarer: Sie wollten nicht nur gewinnen. Sie wollten etwas Größeres erschaffen: Eine Streitmacht für Ordnung, Stärke und vor allem Frieden. Jahre vergingen, und bis 2026 wuchs AGD über seinen ursprünglichen Umfang hinaus. Eine neue Division wurde gebildet: Sechenov’s Legion (SCNV). Diese Elite-Subfraktion fand ihr Zuhause in War Thunder und brachte eine neue Ebene von Disziplin und taktischer Kriegsführung. Es war erst der Anfang.</p><p>Aber nicht alle Kapitel waren einfach. Im Jahr 2026 erlitt AGD einen schweren Verlust. Einer der Gründer, Tim—bekannt als TimTheKeks—verließ die Gruppe. Sein Abschied hinterließ eine Lücke, die nicht wirklich gefüllt werden konnte. Doch statt zu zerbrechen, blieb AGD standhaft. Die verbleibenden Mitglieder trugen sein Vermächtnis weiter, stärker und entschlossener als je zuvor. Denn bei AGD ging es nie nur um die Gründer. Es ging um die Idee, die sie gemeinsam erschufen. Und diese Idee lebt weiter.</p>",
-                legal_text: "<h3>Impressum</h3><p>Aegis Global Defense ist ein inoffizielles, nicht-kommerzielles Fan-Projekt. Wir stehen in keiner Verbindung zu den offiziellen Spieleentwicklern von Roblox oder Gaijin Entertainment.</p><h3>Datenschutz (DSGVO)</h3><p>Wir verwenden Discord OAuth2 zur Authentifizierung. Wir speichern, verkaufen oder teilen keine persönlichen Daten mit Dritten. Deine User-ID wird lediglich zur Überprüfung deines Account-Status verwendet.</p><h3>Nutzungsbedingungen</h3><p>Mit dem Zugriff auf dieses Dashboard stimmst du den Discord-Nutzungsbedingungen und unseren internen Community-Richtlinien zu. AGD behält sich das Recht vor, den Zugang für Nutzer zu beschränken, die gegen diese Regeln verstoßen.</p>"
-            }
-        };
-
-        let lang = 'en';
-        function toggleLang() {
-            lang = lang === 'en' ? 'de' : 'en';
-            document.getElementById('lang-btn').innerText = lang.toUpperCase();
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(content[lang][key]) el.innerHTML = content[lang][key];
-            });
-        }
-
-        function toggleProfile() { const d = document.getElementById('profile-dropdown'); d.style.display = (d.style.display === 'block' ? 'none' : 'block'); }
-        function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=1292148049358884905&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`; }
-        function logout() { localStorage.clear(); window.location.href = window.location.origin + window.location.pathname; }
+        const CLIENT_ID = '1292148049358884905';
+        function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`; }
+        function logout() { localStorage.clear(); location.reload(); }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
             document.getElementById('page-' + id).style.display = 'block';
             toggleSidebar();
-            document.getElementById('profile-dropdown').style.display = 'none';
         }
 
         async function init() {
@@ -140,13 +147,9 @@
                 try {
                     const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
                     const user = await res.json();
-                    if(user.id) {
-                        document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-                        document.getElementById('login-screen').style.display = 'none';
-                        document.getElementById('app').style.display = 'block';
-                        // Apply language default
-                        toggleLang(); toggleLang(); 
-                    }
+                    document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
                 } catch(e) { logout(); }
             }
         }
