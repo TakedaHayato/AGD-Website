@@ -7,56 +7,104 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg: #05070a; --text: #e6edf3; --accent: #00f0ff; 
-            --card-bg: rgba(15, 20, 25, 0.7); --nav-bg: rgba(0, 0, 0, 0.8);
+            --bg: #05070a; 
+            --text: #e6edf3; 
+            --accent: #00f0ff; 
+            --accent-dim: rgba(0, 240, 255, 0.15);
+            --border: #1f2937; 
+            --card-bg: rgba(13, 17, 23, 0.9); 
+            --nav-bg: rgba(0, 0, 0, 0.5);
+            --terminal-green: #00ff41;
         }
-        body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Rajdhani', sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Sprach-Konfiguration */
+        .lang-de { display: none; }
+        .lang-en { display: block; }
 
         /* Splash Screen */
         #welcome-screen {
             position: fixed; inset: 0; z-index: 2000;
-            background: #000; /* Hier kannst du wieder background-image setzen */
-            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
+            background-image: url('image_d6c0d4.jpg'); /* HIER DATEINAME PRÜFEN */
+            background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: flex-end; padding-bottom: 50px;
         }
+
+        /* UI Elemente */
+        .btn-main {
+            background: transparent; color: var(--accent); border: 1px solid var(--accent);
+            padding: 15px 40px; font-family: 'Orbitron'; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--accent-dim);
+        }
+        .btn-main:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
         /* Header & Dropdown */
         header { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 10px 40px; background: var(--nav-bg); backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1f2937; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
         }
-        
-        /* Dropdown Menu */
-        .menu-icon { font-size: 24px; cursor: pointer; color: var(--accent); }
+        .menu-icon { font-size: 28px; cursor: pointer; color: var(--accent); transition: 0.3s; }
+        .menu-icon:hover { text-shadow: 0 0 10px var(--accent); }
+
         .dropdown {
-            display: none; position: absolute; top: 70px; left: 20px;
-            background: #111; border: 1px solid #333; width: 200px; padding: 10px 0;
-            border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 1000;
+            display: none; position: absolute; top: 60px; left: 20px;
+            background: #000; border: 1px solid var(--border); width: 220px; padding: 10px 0;
+            border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1000;
         }
-        .dropdown div, .dropdown a { padding: 15px 20px; display: block; color: #fff; text-decoration: none; font-family: 'Orbitron'; cursor: pointer; }
-        .dropdown div:hover, .dropdown a:hover { background: #1a1a1a; color: var(--accent); }
+        .dropdown div, .dropdown a { 
+            padding: 15px 20px; display: block; color: #fff; text-decoration: none;
+            font-family: 'Orbitron'; text-transform: uppercase; cursor: pointer;
+            font-size: 0.9rem; letter-spacing: 1px; border-bottom: 1px solid #111;
+        }
+        .dropdown div:hover, .dropdown a:hover { background: #111; color: var(--accent); }
 
         /* Profile Area */
-        .profile-container { display: flex; align-items: center; gap: 15px; cursor: pointer; position: relative; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
+        .profile-container { display: flex; align-items: center; gap: 15px; cursor: pointer; position: relative; border: 1px solid var(--border); padding: 5px 15px; border-radius: 20px; }
+        .avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); }
+        .profile-name { font-family: 'Orbitron'; font-weight: bold; font-size: 0.9rem; color: #fff; }
         .user-menu {
             display: none; position: absolute; top: 50px; right: 0;
-            background: #111; border: 1px solid #333; padding: 10px; border-radius: 8px;
+            background: #000; border: 1px solid var(--border); width: 160px; padding: 5px 0; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
+        .user-menu div { padding: 10px 20px; font-family: 'Orbitron'; text-transform: uppercase; cursor: pointer; color: #ff4444; font-size: 0.8rem; }
+        .user-menu div:hover { background: #111; color: #ff0000; }
 
-        /* Global UI */
-        .btn-main { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 15px 40px; font-family: 'Orbitron'; text-transform: uppercase; cursor: pointer; }
-        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
-        .card { background: var(--card-bg); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
-        .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; }
+        /* Main Content */
+        .content { flex: 1; max-width: 900px; margin: 40px auto; padding: 20px; width: 100%; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 12px; margin-bottom: 30px; backdrop-filter: blur(5px); }
+        .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; font-size: 1.6rem; margin-bottom: 25px; border-left: 4px solid var(--accent); padding-left: 15px; }
+        p { line-height: 1.6; font-size: 1.1rem; color: #cbd5e1; }
         .hidden { display: none !important; }
-        .lang-de { display: none; }
+
+        /* ADD Sektion */
+        .add-content h1 { color: #fff; font-family: 'Orbitron'; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .add-content h1 em { color: var(--terminal-green); font-style: normal; }
+        .add-content .highlight { color: #fff; font-weight: bold; border-bottom: 2px solid var(--accent); }
+        .add-content p { color: #cbd5e1; font-size: 1.0rem; line-height: 1.5; }
+        .add-content ul { list-style: none; padding: 0; }
+        .add-content li { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 0.95rem; font-family: 'Rajdhani'; font-weight: 500; }
+        .add-content li img { width: 18px; height: 18px; }
+        .add-content strong { color: #fff; font-weight: 600; }
+        .divider { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <button class="btn-main" onclick="login()">ESTABLISH UPLINK (DISCORD LOGIN)</button>
+        <button class="btn-main" onclick="login()">Establish Uplink</button>
     </div>
 
     <div id="main-interface" class="hidden">
@@ -67,16 +115,16 @@
                     <div onclick="showPage('home'); toggleDropdown()">Home</div>
                     <div onclick="showPage('factions'); toggleDropdown()">Factions</div>
                     <div onclick="showPage('history'); toggleDropdown()">History</div>
-                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank">Discord</a>
+                    <a href="https://discord.gg/mDZRkgxpGb" target="_blank">Discord Server</a>
                 </div>
             </div>
 
             <div style="display: flex; align-items: center; gap: 20px;">
-                <div onclick="toggleLang()" style="cursor:pointer; font-family:'Orbitron'; color:var(--accent);">DE / EN</div>
-                <div class="profile-container" onclick="document.getElementById('user-menu').classList.toggle('hidden')">
-                    <span id="user-name">...</span>
+                <div onclick="toggleLang()" style="cursor:pointer; font-family:'Orbitron'; color:var(--accent); font-size: 14px; border:1px solid var(--accent-dim); padding: 5px 10px; border-radius: 4px;">DE / EN</div>
+                <div class="profile-container" onclick="toggleUserMenu()">
                     <img id="user-avatar" class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png">
-                    <div id="user-menu" class="user-menu">
+                    <span id="user-name" class="profile-name">Authenticating...</span>
+                    <div id="user-menu" class="user-menu hidden">
                         <div onclick="logout()">LOGOUT</div>
                     </div>
                 </div>
@@ -84,14 +132,37 @@
         </header>
 
         <main class="content">
-            <section id="home" class="page">
+            <section id="home" class="page add-content">
                 <div class="card">
-                    <h2 class="lang-en">Network Status</h2>
-                    <h2 class="lang-de">Netzwerk Status</h2>
-                    <p class="lang-en">Aegis Global Defense is currently a Community Server.</p>
-                    <p class="lang-de">Aegis Global Defense ist derzeit ein Community-Server.</p>
+                    <h1>
+                        ✨ AEGIS GLOBAL DEFENSE!
+                    </h1>
+                    <p class="lang-en">Looking for a friendly space to <span class="highlight">CONNECT</span> with <span class="highlight">LIKE-MINDED</span> people? We’re all about keeping it chill, but still making things exciting. Come on in, the future of teamwork, tactics, and community starts here.</p>
+                    <p class="lang-de">Suchst du nach einem freundlichen Ort, um dich mit <span class="highlight">GLEICHGESINNTEN</span> Leuten zu <span class="highlight">VERBINDEN</span>? Bei uns geht es darum, es entspannt zu halten, aber Dinge trotzdem aufregend zu machen. Komm rein, die Zukunft von Teamwork, Taktik und Community beginnt hier.</p>
                 </div>
+                
                 <div class="card">
+                    <h2>Why join AGD?</h2>
+                    <ul>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/party-popper_1f389.png"> Very Unique <strong>GIVEAWAYS</strong></li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/handshake_1f91d.png"> <strong>Active</strong> community</li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/hugging-face_1f917.png"> Friendly & Supportive</li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/high-voltage_26a1.png"> <strong>Fast-Paced</strong> & Exciting</li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/rainbow_1f308.png"> <strong>LGBTQ</strong> Friendly</li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/gem-stone_1f48e.png"> <strong>Boosters</strong> We are actively looking for Boosters</li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/handshake_1f91d.png"> <strong>Partnerships</strong></li>
+                        <li><img src="https://em-content.zobj.net/source/microsoft-teams/337/video-game_1f3ae.png"> <strong>Games / Anime</strong></li>
+                    </ul>
+                </div>
+
+                <div class="card" style="text-align:center;">
+                    <h2>💎 JOIN THE FUN TODAY!</h2>
+                    <p>🔗 <strong>Inv:</strong> <a href="http://discord.gg/mDZRkgxpGb" target="_blank" style="color:var(--accent);">http://discord.gg/mDZRkgxpGb</a></p>
+                    <p>🔗 <strong>Banner:</strong> <a href="https://imgur.com/a/UNXA26n" target="_blank" style="color:var(--accent);">https://imgur.com/a/UNXA26n</a></p>
+                </div>
+
+                <div class="card">
+                    <h2>Network Intelligence</h2>
                     <iframe src="https://discord.com/widget?id=1129433598253084826&theme=dark" width="100%" height="500" frameborder="0"></iframe>
                 </div>
             </section>
@@ -99,8 +170,8 @@
             <section id="factions" class="page hidden">
                 <div class="card">
                     <h2>Current Divisions</h2>
-                    <p><b>War Tycoon (Roblox)</b></p>
-                    <p><b>Sechenovs Legion (SCNV)</b></p>
+                    <p><b>War Tycoon (Roblox)</b><br>Primary Ground Operations</p>
+                    <p><b>Sechenovs Legion (SCNV)</b><br>War Thunder Tactical Division</p>
                 </div>
             </section>
 
@@ -121,12 +192,12 @@
 
     <script>
         // -- CONFIG --
-        const CLIENT_ID = '1292148049358884905'; // <-- HIER CLIENT ID EINTRAGEN
+        const CLIENT_ID = '1292148049358884905'; // <-- CLIENT ID AKTUALISIERT
         const REDIRECT_URI = window.location.origin + window.location.pathname;
 
         // -- AUTH LOGIK --
         function login() {
-            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${1292148049358884905}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+            window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
         }
 
         function logout() { localStorage.removeItem('token'); window.location.reload(); }
@@ -140,16 +211,20 @@
                 try {
                     const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
                     const user = await res.json();
-                    document.getElementById('user-name').innerText = user.username;
-                    document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    document.getElementById('user-name').innerText = user.username.toUpperCase();
+                    if (user.avatar) {
+                        document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    }
                     document.getElementById('welcome-screen').style.display = 'none';
                     document.getElementById('main-interface').classList.remove('hidden');
-                } catch(e) { console.error(e); }
+                    if (hash.get('access_token')) window.history.replaceState({}, document.title, window.location.pathname);
+                } catch(e) { console.error(e); logout(); }
             }
         }
 
         // -- UI LOGIK --
         function toggleDropdown() { const d = document.getElementById('dropdown-menu'); d.style.display = (d.style.display === 'block') ? 'none' : 'block'; }
+        function toggleUserMenu() { const d = document.getElementById('user-menu'); d.classList.toggle('hidden'); }
         function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
         function toggleLang() {
             const en = document.querySelectorAll('.lang-en'); const de = document.querySelectorAll('.lang-de');
@@ -159,6 +234,10 @@
         }
 
         init();
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.profile-container')) document.getElementById('user-menu').classList.add('hidden');
+            if (!e.target.closest('.menu-icon') && !e.target.closest('.dropdown')) document.getElementById('dropdown-menu').style.display = 'none';
+        });
     </script>
 </body>
 </html>
