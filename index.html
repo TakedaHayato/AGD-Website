@@ -9,17 +9,10 @@
         :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.95); --text: #e6edf3; --border: rgba(255, 255, 255, 0.1); }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
         
-        /* LOGIN SCREEN */
-        #login-screen { 
-            position: fixed; inset: 0; z-index: 5000; background: #000; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-image: url('https://i.imgur.com/e46ea5.jpg');
-            background-size: cover; background-position: center;
-        }
+        #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: url('https://i.imgur.com/e46ea5.jpg'); background-size: cover; background-position: center; }
         .login-btn { padding: 15px 40px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron'; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 20px; }
         .login-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        /* MAIN APP */
         #app { display: none; width: 100%; max-width: 900px; padding: 100px 20px 50px 20px; box-sizing: border-box; }
         .top-bar { position: fixed; top: 0; width: 100%; max-width: 900px; height: 70px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; border-bottom: 1px solid var(--border); z-index: 2000; }
         
@@ -38,6 +31,10 @@
         button { cursor: pointer; font-family: 'Orbitron'; padding: 10px 20px; background: transparent; border: 1px solid var(--accent); color: var(--accent); }
         button:hover { background: var(--accent); color: #000; }
         .profile-dropdown { position: absolute; top: 70px; right: 20px; background: var(--panel); border: 1px solid var(--border); display: none; width: 120px; padding: 10px; z-index: 4000; text-align: center; }
+        
+        /* Custom formatting for the requested content */
+        .content-block { margin-top: 20px; line-height: 1.6; }
+        .box-design { border: 1px solid var(--border); padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.02); }
     </style>
 </head>
 <body>
@@ -67,36 +64,37 @@
         </div>
 
         <main>
-            <div id="page-home" class="page" style="display:block; text-align: left;">
+            <div id="page-home" class="page" style="display:block;">
                 <div style="text-align: center;">
                     <img src="https://i.imgur.com/W8he4kN.gif" style="width: 150px; margin-bottom: 20px;" alt="AGD Logo">
+                    <h1 data-i18n="h_title">AGD OPERATIONAL STATUS</h1>
+                    <p style="color: var(--accent);">Uplink established. Communications online. Systems ready.</p>
                 </div>
-                <h1 data-i18n="h_title"></h1>
-                <div id="home-text"></div>
-                <div id="home-why" style="margin-top:30px;"></div>
-                <div id="home-reqs" style="margin-top:30px;"></div>
+                
+                <div id="home-content" class="content-block"></div>
+                
                 <div style="text-align: center; margin-top: 40px;">
-                    <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')" data-i18n="btn_join"></button>
+                    <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')" data-i18n="btn_join">JOIN US</button>
                 </div>
             </div>
 
             <div id="page-active" class="page">
-                <h2 data-i18n="nav_official"></h2>
+                <h2 data-i18n="nav_official">Official</h2>
                 <div id="active-content"></div>
             </div>
 
             <div id="page-history" class="page">
-                <h2 data-i18n="nav_history"></h2>
+                <h2 data-i18n="nav_history">History</h2>
                 <div id="hist-content"></div>
             </div>
 
             <div id="page-credits" class="page">
-                <h2 data-i18n="nav_credits"></h2>
+                <h2 data-i18n="nav_credits">Credits</h2>
                 <div id="credits-content"></div>
             </div>
 
             <div id="page-legal" class="page">
-                <h2 data-i18n="nav_legal"></h2>
+                <h2 data-i18n="nav_legal">Legal & Privacy</h2>
                 <div id="legal-content"></div>
             </div>
         </main>
@@ -108,10 +106,19 @@
         const content = {
             en: {
                 nav_home: "Home", nav_official: "Official", nav_history: "History", nav_credits: "Credits", nav_legal: "Legal",
-                h_title: "AEGIS GLOBAL DEFENSE!", btn_join: "JOIN US ON DISCORD",
-                home_body: "<p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting.</p>",
-                home_why: "<h3>Why join AGD?</h3><p>> `🎉`・Very Unique <strong>GIVEAWAYS</strong><br>> `🤝`・<strong>Active</strong> community<br>> `🤗`・Friendly & Supportive<br>> `⚡`・<strong>Fast-Paced</strong> & Exciting<br>> `🌈`・<strong>LGBTQ</strong> Friendly<br>> `💎`・<strong>Boosters</strong> We are Actively looking for Boosters</p>",
-                home_reqs: "<h3>Requirements:</h3><p>> `☑️`・Follow the Discord ToS and our Server Rules<br>> `☑️`・Show respect, discipline & logic<br>> `☑️`・Speak decent English or German</p>",
+                h_title: "AGD OPERATIONAL STATUS", btn_join: "JOIN US ON DISCORD",
+                home_html: `
+                    <div style="margin-top:20px;">
+                        <h2 style="color:var(--accent)">✨ AEGIS GLOBAL DEFENSE!</h2>
+                        <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                        <h3>Why join AGD?</h3>
+                        <p>🎉・Very Unique <strong>GIVEAWAYS</strong><br>🤝・<strong>Active</strong> community<br>🤗・Friendly & Supportive<br>⚡・<strong>Fast-Paced</strong> & Exciting<br>🌈・<strong>LGBTQ</strong> Friendly<br>💎・<strong>Boosters</strong> We are Actively looking for Boosters<br>🤝・<strong>Partnerships</strong><br>🎮・<strong>Games / Anime</strong></p>
+                    </div>
+                    <div class="box-design" style="margin-top:20px; text-align:center;">
+                        <h3>📝 Requirements:</h3>
+                        <p>☑️・Follow the Discord ToS and our Server Rules<br>☑️・Show respect, discipline & logic<br>☑️・Speak decent English or German</p>
+                    </div>
+                `,
                 active: `<a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>Operating as AGD.</p></a><a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>`,
                 hist: "<p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force...</p>",
                 credits: "<p>Main Architecture: <strong>Hayato</strong></p>",
@@ -119,10 +126,19 @@
             },
             de: {
                 nav_home: "Startseite", nav_official: "Offiziell", nav_history: "Geschichte", nav_credits: "Credits", nav_legal: "Rechtliches",
-                h_title: "AEGIS GLOBAL DEFENSE!", btn_join: "TRITT UNS BEI",
-                home_body: "<p>Suchst du einen freundlichen Ort, um dich mit <strong>GLEICHGESINNTEN</strong> zu <strong>VERBINDEN</strong>? Such nicht weiter! Wir halten es entspannt, aber spannend.</p>",
-                home_why: "<h3>Warum AGD beitreten?</h3><p>> `🎉`・Einzigartige <strong>GIVEAWAYS</strong><br>> `🤝`・<strong>Aktive</strong> Community<br>> `🤗`・Freundlich & Hilfsbereit<br>> `⚡`・<strong>Schnelllebig</strong> & Aufregend<br>> `🌈`・<strong>LGBTQ</strong>-freundlich<br>> `💎`・<strong>Booster</strong> gesucht</p>",
-                home_reqs: "<h3>Anforderungen:</h3><p>> `☑️`・Befolge die Discord AGB und Server Regeln<br>> `☑️`・Zeige Respekt, Disziplin & Logik<br>> `☑️`・Sprich ordentliches Englisch oder Deutsch</p>",
+                h_title: "AGD OPERATIONAL STATUS", btn_join: "TRITT UNS BEI",
+                home_html: `
+                    <div style="margin-top:20px;">
+                        <h2 style="color:var(--accent)">✨ AEGIS GLOBAL DEFENSE!</h2>
+                        <p>Suchst du einen freundlichen Ort, um dich mit <strong>GLEICHGESINNTEN</strong> zu <strong>VERBINDEN</strong>? Such nicht weiter! Wir halten es entspannt, aber spannend. Komm rein, die Zukunft der Teamarbeit, Taktik und Community beginnt hier.</p>
+                        <h3>Warum AGD beitreten?</h3>
+                        <p>🎉・Einzigartige <strong>GIVEAWAYS</strong><br>🤝・<strong>Aktive</strong> Community<br>🤗・Freundlich & Hilfsbereit<br>⚡・<strong>Schnelllebig</strong> & Aufregend<br>🌈・<strong>LGBTQ</strong>-freundlich<br>💎・<strong>Booster</strong> gesucht<br>🤝・<strong>Partnerschaften</strong><br>🎮・<strong>Spiele / Anime</strong></p>
+                    </div>
+                    <div class="box-design" style="margin-top:20px; text-align:center;">
+                        <h3>📝 Anforderungen:</h3>
+                        <p>☑️・Befolge die Discord AGB und Server Regeln<br>☑️・Zeige Respekt, Disziplin & Logik<br>☑️・Sprich ordentliches Englisch oder Deutsch</p>
+                    </div>
+                `,
                 active: `<a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>AGD Einsatzgebiet.</p></a><a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>`,
                 hist: "<p>Bevor Aegis Global Defense auf eigenen Beinen stand, war es mit der Aegis Global Task Force verbündet...</p>",
                 credits: "<p>Hauptarchitektur: <strong>Hayato</strong></p>",
@@ -137,9 +153,7 @@
                 const key = el.getAttribute('data-i18n');
                 if(content[lang][key]) el.innerText = content[lang][key];
             });
-            document.getElementById('home-text').innerHTML = content[lang].home_body;
-            document.getElementById('home-why').innerHTML = content[lang].home_why;
-            document.getElementById('home-reqs').innerHTML = content[lang].home_reqs;
+            document.getElementById('home-content').innerHTML = content[lang].home_html;
             document.getElementById('active-content').innerHTML = content[lang].active;
             document.getElementById('hist-content').innerHTML = content[lang].hist;
             document.getElementById('credits-content').innerHTML = content[lang].credits;
