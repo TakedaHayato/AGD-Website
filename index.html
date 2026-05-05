@@ -3,45 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>AGD // OPERATIONS CENTER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #05070a; --accent: #00f0ff; --text: #e6edf3; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: sans-serif; }
 
-        /* Splash Screen - Logo als IMG Tag */
+        /* Splash Screen */
         #welcome-screen {
             position: fixed; inset: 0; z-index: 2000; background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        #welcome-screen img { max-width: 80%; max-height: 60vh; margin-bottom: 20px; }
+        #welcome-screen img { max-width: 300px; margin-bottom: 30px; border: 2px solid var(--accent); }
         
-        .btn-main { 
-            background: transparent; color: var(--accent); border: 1px solid var(--accent); 
-            padding: 15px 40px; cursor: pointer; text-transform: uppercase; 
-            font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px;
-        }
-        .btn-main:hover { background: var(--accent); color: #000; }
+        .btn-main { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 15px 40px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
         
-        /* Navigation */
+        /* Main Layout */
+        #main-interface { display: none; }
         header { padding: 20px; display: flex; gap: 20px; background: #111; border-bottom: 1px solid #333; justify-content: center; }
-        header div { cursor: pointer; color: var(--accent); font-family: 'Orbitron'; font-weight: bold; padding: 10px; }
-        header div:hover { text-decoration: underline; }
-
-        /* Content */
+        header div { cursor: pointer; color: var(--accent); font-weight: bold; padding: 10px; }
+        
         .page { padding: 40px; max-width: 800px; margin: auto; }
-        .hidden { display: none !important; }
-        .card { border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 20px; background: #0a0a0a; line-height: 1.6; }
-        h1 { color: var(--accent); font-family: 'Orbitron'; }
+        .card { border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 20px; background: #0a0a0a; }
+        h1 { color: var(--accent); }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <img src="https://cdn.discordapp.com/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png" alt="AGD Logo">
+        <img src="https://media.discordapp.net/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png" alt="AGD Logo">
         <button class="btn-main" onclick="startUplink()">ESTABLISH UPLINK</button>
     </div>
 
-    <div id="main-interface" class="hidden">
+    <div id="main-interface">
         <header>
             <div onclick="showPage('home')">HOME</div>
             <div onclick="showPage('history')">HISTORY</div>
@@ -66,15 +58,21 @@
             </div>
         </section>
 
-        <section id="history" class="page hidden">
+        <section id="history" class="page" style="display:none;">
             <div class="card">
                 <h2>The Rise of Aegis Global Defense</h2>
                 <p>Aegis Global Defense was born from the chaos of Emergency Hamburg. Founded on July 14th, 2023, by Hayato, Nemesis, and Tim.</p>
                 <p>By 2026, AGD expanded its reach into War Thunder with the establishment of Sechenov's Legion (SCNV). Despite facing challenges and the loss of our co-founder TimTheKeks in 2026, the community stands stronger than ever, united by tactics and teamwork.</p>
+                <p><strong>What Defines Us:</strong></p>
+                <ul>
+                    <li><strong>Integrated Communications:</strong> Our Discord serves as our digital headquarters.</li>
+                    <li><strong>Tactical Excellence:</strong> From rebirth grinds to full-scale server wars, we move as one unit.</li>
+                    <li><strong>Professional Growth:</strong> We offer structured ranks and leadership opportunities.</li>
+                </ul>
             </div>
         </section>
 
-        <section id="credits" class="page hidden">
+        <section id="credits" class="page" style="display:none;">
             <div class="card">
                 <h2>Credits</h2>
                 <p>System Architecture and Website Development by <strong>Hayato</strong>.</p>
@@ -82,11 +80,11 @@
             </div>
         </section>
 
-        <section id="legal" class="page hidden">
+        <section id="legal" class="page" style="display:none;">
             <div class="card">
                 <h2>Privacy & Disclaimer</h2>
-                <p>This website is an unofficial information portal for the <strong>Aegis Global Defense</strong> Discord community.</p>
-                <p><strong>Data Handling:</strong> We do not store, sell, or analyze user data. This site is purely for informational purposes regarding our Discord activities. No cookies or tracking scripts are deployed.</p>
+                <p>This website is an unofficial information portal for the Aegis Global Defense Discord community.</p>
+                <p><strong>Data Handling:</strong> We do not store, sell, or analyze user data.</p>
             </div>
         </section>
     </div>
@@ -94,14 +92,15 @@
     <script>
         function startUplink() {
             document.getElementById('welcome-screen').style.display = 'none';
-            document.getElementById('main-interface').classList.remove('hidden');
+            document.getElementById('main-interface').style.display = 'block';
         }
 
-        function showPage(targetId) {
-            // Alle Seiten ausblenden
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            // Zielseite einblenden
-            document.getElementById(targetId).classList.remove('hidden');
+        function showPage(id) {
+            // Verstecke alle Seiten
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.style.display = 'none');
+            // Zeige nur die gewählte
+            document.getElementById(id).style.display = 'block';
         }
     </script>
 </body>
