@@ -81,15 +81,6 @@
                 <img src="https://i.imgur.com/W8he4kN.gif" style="width: 150px; margin-bottom: 20px;" alt="AGD Logo">
                 <h1 style="text-align: left;">✨ AEGIS GLOBAL DEFENSE!</h1>
                 <p style="text-align: left;">Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
-                
-                <h3 style="margin-top:40px; text-align: left;">Why join AGD?</h3>
-                <p style="text-align: left;">> `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>> `ノ🤝`・<strong>Active</strong> community<br>> `ノ🤗`・Friendly & Supportive<br>> `ノ⚡`・<strong>Fast-Paced</strong> & Exciting<br>> `ノ🌈`・<strong>LGBTQ</strong> Friendly<br>> `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>> `ノ🤝`・<strong>Partnerships</strong><br>> `ノ🎮`・<strong>Games / Anime</strong></p>
-                
-                <hr style="border:0; border-top:1px solid var(--border); margin: 30px 0;">
-                
-                <h3 style="text-align: left;">Requirements:</h3>
-                <p style="text-align: left;">> `☑️`・Follow the Discord ToS and our Server Rules<br>> `☑️`・Show respect, discipline & logic<br>> `☑️`・Speak decent English or German</p>
-                
                 <div style="margin-top: 40px;">
                     <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')">JOIN US ON DISCORD</button>
                 </div>
@@ -115,12 +106,21 @@
 
             <div id="page-history" class="page glass">
                 <h2>The Rise of Aegis Global Defense</h2>
-                <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force...</p>
+                <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
+                <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
+                <p>They called it Aegis Global Defense (AGD).</p>
+                <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace.</p>
+                <p>What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds. Their mission was clear: protect, organize, and dominate—not through destruction, but through control and strategy.</p>
+                <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields. It was only the beginning—plans for expansion into even more games were already in motion.</p>
+                <p>But not all chapters were easy. In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever.</p>
+                <p>Because AGD was never just about its founders. It was about the idea they created together. And that idea still lives on.</p>
             </div>
+
             <div id="page-credits" class="page glass">
                 <h2>Credits</h2>
                 <p>Main Architecture: <strong>Hayato</strong></p>
             </div>
+
             <div id="page-legal" class="page glass">
                 <h2>Legal & Privacy</h2>
                 <p>Dies ist ein inoffizielles Fan-Projekt.</p>
@@ -147,9 +147,11 @@
                 try {
                     const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
                     const user = await res.json();
-                    document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('app').style.display = 'block';
+                    if(user.id) {
+                        document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                        document.getElementById('login-screen').style.display = 'none';
+                        document.getElementById('app').style.display = 'block';
+                    }
                 } catch(e) { logout(); }
             }
         }
