@@ -7,63 +7,68 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg: #05070a; --accent: #00f0ff; --panel: rgba(10, 15, 25, 0.95); 
-            --text: #e6edf3; --border: rgba(0, 240, 255, 0.2);
+            --bg: #05070a; 
+            --accent: #00f0ff; 
+            --panel: rgba(15, 20, 30, 0.7); 
+            --text: #e6edf3;
+            --border: rgba(255, 255, 255, 0.1);
         }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
-
-        /* Login Screen */
-        #login-screen { 
-            position: fixed; inset: 0; z-index: 5000; background: #000; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://i.imgur.com/W8he4kN.gif') center/contain no-repeat;
-        }
-        .login-box { text-align: center; padding: 40px; border: 1px solid var(--accent); background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); }
-        .login-title { font-family: 'Orbitron'; font-size: 3rem; color: var(--accent); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 5px; }
-
-        /* App Layout */
-        #app { display: none; width: 92%; max-width: 1000px; margin: 0 auto; padding-top: 100px; }
         
-        .sidebar { position: fixed; left: -300px; top: 0; width: 260px; height: 100%; background: var(--panel); border-right: 1px solid var(--border); transition: 0.5s; z-index: 3000; padding-top: 100px; }
+        body { 
+            margin: 0; background: var(--bg); color: var(--text); 
+            font-family: 'Rajdhani', sans-serif; min-height: 100vh; 
+            overflow-x: hidden; background-image: radial-gradient(circle at top right, #0a192f, transparent 60%);
+        }
+
+        .glass { background: var(--panel); backdrop-filter: blur(15px); border: 1px solid var(--border); }
+
+        #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .logo-container { width: 250px; height: 250px; margin-bottom: 30px; }
+
+        #app { display: none; width: 92%; max-width: 1000px; margin: 0 auto; position: relative; padding-top: 80px; }
+        
+        .sidebar { position: fixed; left: -300px; top: 0; width: 260px; height: 100%; background: rgba(10, 14, 20, 0.95); backdrop-filter: blur(20px); border-right: 1px solid var(--border); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 3000; padding-top: 100px; }
         .sidebar.active { left: 0; }
+        .nav-link { padding: 20px 30px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; font-size: 0.9rem; }
+        .nav-link:hover { background: rgba(0, 240, 255, 0.1); color: var(--accent); padding-left: 40px; }
+
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 2000; box-sizing: border-box; border-bottom: 1px solid var(--border); }
         
-        .nav-link { padding: 20px 30px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .nav-link:hover { background: rgba(0, 240, 255, 0.1); color: var(--accent); }
-
-        /* Content Pages */
-        .page { display: none; padding: 40px; background: rgba(15, 20, 30, 0.8); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 50px; }
-        h1, h2, h3 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; }
+        .main-content { padding-bottom: 50px; }
+        .page { display: none; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card { background: rgba(255,255,255,0.05); padding: 20px; border: 1px solid var(--border); text-decoration: none; color: inherit; display: block; }
-        .card:hover { border-color: var(--accent); }
+        h1, h2, h3 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; letter-spacing: 2px; }
+        p { line-height: 1.8; font-size: 1.15rem; color: #cbd5e0; }
 
-        /* Map */
-        .map-container { width: 100%; height: 350px; background: #0a0e14; border: 1px solid var(--accent); cursor: crosshair; }
-        .map-path { fill: #1a2a3a; stroke: var(--accent); stroke-width: 1.5; cursor: pointer; }
-        .map-path:hover { fill: var(--accent); }
-
-        button { cursor: pointer; font-family: 'Orbitron'; padding: 15px 40px; background: transparent; border: 1px solid var(--accent); color: var(--accent); transition: 0.3s; font-size: 1.2rem; }
-        button:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 25px; border-radius: 15px; transition: all 0.3s ease; color: inherit; text-decoration: none; display: block; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 20px rgba(0,240,255,0.1); background: rgba(0,240,255,0.05); }
+        
+        button { cursor: pointer; font-family: 'Orbitron'; padding: 12px 30px; background: transparent; border: 1px solid var(--accent); color: var(--accent); transition: 0.3s; font-size: 1rem; }
+        button:hover { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div class="login-box">
-            <div class="login-title">AGD OPS</div>
-            <button onclick="login()">ESTABLISH UPLINK</button>
+        <div class="logo-container">
+            <img src="https://i.imgur.com/W8he4kN.gif" style="width:100%;" alt="AGD Logo">
         </div>
+        <button onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="app">
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 2000; cursor: pointer; color: var(--accent);" onclick="toggleSidebar()">☰ MENU</div>
+        <div class="top-bar">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="cursor: pointer; color: var(--accent); font-family: 'Orbitron';" onclick="toggleSidebar()">MENU ☰</div>
+                <img src="https://i.imgur.com/W8he4kN.gif" style="height: 40px;" alt="Logo">
+            </div>
+            <img id="avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent);" src="">
+        </div>
 
         <div id="sidebar" class="sidebar">
             <div class="nav-link" onclick="showPage('home')">Home</div>
             <div class="nav-link" onclick="showPage('active')">Official</div>
-            <div class="nav-link" onclick="showPage('map')">Map</div>
             <div class="nav-link" onclick="showPage('history')">History</div>
             <div class="nav-link" onclick="showPage('credits')">Credits</div>
             <div class="nav-link" onclick="showPage('legal')">Legal</div>
@@ -71,40 +76,55 @@
             <div class="nav-link" style="color: #ff4444;" onclick="logout()">Logout</div>
         </div>
 
-        <main>
-            <div id="page-home" class="page" style="display:block;">
-                <h1>AEGIS GLOBAL DEFENSE!</h1>
-                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further!</p>
-                <h3>Why join AGD?</h3>
-                <p>> `🎉`・Very Unique GIVEAWAYS<br>> `🤝`・Active community<br>> `⚡`・Fast-Paced & Exciting</p>
-                <h3>Requirements:</h3>
-                <p>> `☑️`・Follow the Discord ToS and our Server Rules<br>> `☑️`・Show respect, discipline & logic</p>
-                <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')">JOIN US ON DISCORD</button>
-            </div>
-
-            <div id="page-active" class="page">
-                <h2>Where we are official</h2>
-                <div class="grid">
-                    <a href="#" class="card"><h3>War Tycoon</h3><p>Operating as AGD.</p></a>
-                    <a href="#" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>
-                    <a href="#" class="card"><h3>Emergency Hamburg</h3><p>Restoring peace and fighting gangs.</p></a>
+        <main class="main-content">
+            <div id="page-home" class="page glass" style="display:block; text-align: center;">
+                <img src="https://i.imgur.com/W8he4kN.gif" style="width: 150px; margin-bottom: 20px;" alt="AGD Logo">
+                <h1 style="text-align: left;">✨ AEGIS GLOBAL DEFENSE!</h1>
+                <p style="text-align: left;">Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                
+                <h3 style="margin-top:40px; text-align: left;">Why join AGD?</h3>
+                <p style="text-align: left;">> `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>> `ノ🤝`・<strong>Active</strong> community<br>> `ノ🤗`・Friendly & Supportive<br>> `ノ⚡`・<strong>Fast-Paced</strong> & Exciting<br>> `ノ🌈`・<strong>LGBTQ</strong> Friendly<br>> `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>> `ノ🤝`・<strong>Partnerships</strong><br>> `ノ🎮`・<strong>Games / Anime</strong></p>
+                
+                <hr style="border:0; border-top:1px solid var(--border); margin: 30px 0;">
+                
+                <h3 style="text-align: left;">Requirements:</h3>
+                <p style="text-align: left;">> `☑️`・Follow the Discord ToS and our Server Rules<br>> `☑️`・Show respect, discipline & logic<br>> `☑️`・Speak decent English or German</p>
+                
+                <div style="margin-top: 40px;">
+                    <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')">JOIN US ON DISCORD</button>
                 </div>
             </div>
 
-            <div id="page-map" class="page">
-                <h2>Searching Tactical Airstrike Location</h2>
-                <svg class="map-container" viewBox="0 0 800 400">
-                    <path class="map-path" d="M100,50 L300,50 L300,200 L100,200 Z" onclick="selectRegion('Europe', 'Sector secure.')" />
-                    <text x="150" y="130" fill="white" style="pointer-events: none;">EUROPE</text>
-                    <path class="map-path" d="M400,50 L600,50 L600,200 L400,200 Z" onclick="selectRegion('USA', 'Active surveillance.')" />
-                    <text x="450" y="130" fill="white" style="pointer-events: none;">USA</text>
-                </svg>
-                <div id="map-info" style="margin-top: 10px; padding: 15px; border: 1px solid var(--accent);">SELECT A SECTOR</div>
+            <div id="page-active" class="page glass">
+                <h2>Where we are official</h2>
+                <div class="grid">
+                    <a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card">
+                        <h3>War Tycoon</h3>
+                        <p>Operating as AGD.</p>
+                    </a>
+                    <a href="https://warthunder.com/de/" target="_blank" class="card">
+                        <h3>War Thunder</h3>
+                        <p>Sechenov’s Legion (SCNV).</p>
+                    </a>
+                    <a href="https://www.roblox.com/games/4639625707/Emergency-Hamburg" target="_blank" class="card">
+                        <h3>Emergency Hamburg</h3>
+                        <p>Restoring peace and fighting gangs.</p>
+                    </a>
+                </div>
             </div>
 
-            <div id="page-history" class="page"><h2>History</h2><p>The Rise of Aegis Global Defense...</p></div>
-            <div id="page-credits" class="page"><h2>Credits</h2><p>Main Architecture: Hayato</p></div>
-            <div id="page-legal" class="page"><h2>Legal</h2><p>Inoffizielles Fan-Projekt.</p></div>
+            <div id="page-history" class="page glass">
+                <h2>The Rise of Aegis Global Defense</h2>
+                <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force...</p>
+            </div>
+            <div id="page-credits" class="page glass">
+                <h2>Credits</h2>
+                <p>Main Architecture: <strong>Hayato</strong></p>
+            </div>
+            <div id="page-legal" class="page glass">
+                <h2>Legal & Privacy</h2>
+                <p>Dies ist ein inoffizielles Fan-Projekt.</p>
+            </div>
         </main>
     </div>
 
@@ -118,11 +138,7 @@
             document.getElementById('page-' + id).style.display = 'block';
             toggleSidebar();
         }
-        function selectRegion(name, info) {
-            document.getElementById('map-info').innerHTML = `<h3>Sector: ${name}</h3><p>${info}</p>`;
-        }
 
-        // Auth Logic
         async function init() {
             const hash = new URLSearchParams(window.location.hash.slice(1));
             const token = hash.get('access_token') || localStorage.getItem('token');
@@ -130,10 +146,10 @@
                 localStorage.setItem('token', token);
                 try {
                     const res = await fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } });
-                    if(res.ok) {
-                        document.getElementById('login-screen').style.display = 'none';
-                        document.getElementById('app').style.display = 'block';
-                    }
+                    const user = await res.json();
+                    document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
                 } catch(e) { logout(); }
             }
         }
