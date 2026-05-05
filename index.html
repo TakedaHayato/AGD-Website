@@ -3,84 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGD OPS - Startseite</title>
+    <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #05070a; --text: #e6edf3; --accent: #00f0ff;
             --border: #1f2937; --card-bg: #0d1117; --terminal-green: #00ff41;
         }
-        
+        body.light-theme {
+            --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7;
+            --border: #cbd5e1; --card-bg: #ffffff; --terminal-green: #0369a1;
+        }
+
         * { box-sizing: border-box; }
         body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; transition: 0.3s; overflow-x: hidden; }
 
-        /* --- LOGIN SCREEN MIT LOGO --- */
-        #welcome-screen {
-            position: fixed; inset: 0; background: #000; z-index: 10000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
-        }
-        .login-logo {
-            width: 300px;
-            height: 300px;
-            object-fit: contain; /* Damit das Logo nicht verzerrt wird */
-            /* Falls dein Logo einen transparenten Hintergrund hat, kannst du die folgenden Zeilen entfernen: */
-            /* border-radius: 50%; border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); */
-        }
-        .login-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 15px 30px;
-            font-family: 'Orbitron';
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.2s;
-            text-transform: uppercase;
-        }
-        .login-btn:hover { border-color: var(--accent); color: var(--accent); }
+        /* --- LOGIN SCREEN --- */
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+        .login-logo { width: 300px; height: 300px; border-radius: 50%; border: 2px solid var(--accent); }
 
-        /* --- NAVIGATION --- */
+        /* --- NAV --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
-        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-        
-        .nav-controls { display: flex; align-items: center; gap: 10px; }
-        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.65rem; cursor: pointer; border-radius: 4px; transition: 0.2s; text-transform: uppercase; text-decoration: none; display: inline-block; }
+        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; }
+        .nav-controls { display: flex; align-items: center; gap: 8px; }
+        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.6rem; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
         .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-join { background: rgba(0, 240, 255, 0.1); border-color: var(--accent); color: var(--accent); }
 
-        /* --- DROPDOWN --- */
-        .nav-right { position: relative; }
-        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--border); border-radius: 4px; }
-        .hamburger span { width: 20px; height: 2px; background: var(--accent); }
-        .dropdown { 
-            position: absolute; top: 60px; right: 0; background: var(--card-bg); 
-            border: 1px solid var(--border); display: none; flex-direction: column; 
-            min-width: 180px; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .dropdown.active { display: flex; }
-        .dropdown button { padding: 12px; color: var(--text); border: none; border-bottom: 1px solid var(--border); font-family: 'Orbitron'; font-size: 0.7rem; text-align: left; background: transparent; cursor: pointer; }
-        .dropdown button:hover { background: var(--accent); color: #000; }
-
-        /* --- CARDS & GRID --- */
-        .content { padding: 20px; max-width: 1600px; margin: 0 auto; }
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 400px; gap: 20px; }
-        @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: 1fr; } }
-        .page { display: none; }
+        /* --- PAGES --- */
+        .page { display: none; padding: 20px; max-width: 1600px; margin: 0 auto; }
         .page.active { display: block; }
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
-
-        /* --- TERMINAL --- */
-        .terminal-container { background: #000 !important; border: 1px solid var(--border); height: 250px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: var(--terminal-green); padding: 10px; overflow: hidden; position: relative; }
-        #terminal-log { display: flex; flex-direction: column; position: absolute; bottom: 10px; width: 95%; }
         
+        /* --- FACTIONS GRID --- */
+        .faction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
-        <img src="https://example.com/AGDlogo.gif" alt="AGD Logo" class="login-logo"> <button class="login-btn" onclick="establishUplink()">ESTABLISH UPLINK</button>
+        <img src="AGDlogo.gif" alt="AGD Logo" class="login-logo">
+        <button class="nav-btn" style="padding:15px 30px;" onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
@@ -88,76 +53,61 @@
             <div class="brand" onclick="showPage('home')">AGD // OPS</div>
             <div class="nav-controls">
                 <button class="nav-btn" onclick="showPage('home')">Home</button>
+                <button class="nav-btn" onclick="showPage('factions')">Factions</button>
                 <a href="https://discord.gg/agd-global" target="_blank" class="nav-btn btn-join">Join Server</a>
-                <a href="https://ptb.discord.com/channels/1129433598253084826/1380566062357282946" target="_blank" class="nav-btn">Contact</a>
-                <button class="nav-btn" onclick="logout()" style="color:#ff4444;">DISCONNECT</button>
-                <div class="nav-right">
-                    <div class="hamburger" onclick="toggleMenu(event)"><span></span><span></span></div>
-                    <div id="dropdown" class="dropdown">
-                        <button onclick="showPage('home')">DASHBOARD</button>
-                        <button onclick="showPage('credits')">CREDITS</button>
-                    </div>
-                </div>
+                <button class="nav-btn" onclick="showPage('credits')">Credits</button>
+                <button class="nav-btn" onclick="logout()" style="color:#ff4444;">Disconnect</button>
             </div>
         </nav>
 
-        <main class="content">
-            <section id="home" class="page active">
-                <div class="dashboard-grid">
-                    <div class="main-col">
-                        <div class="card">
-                            <div class="card-head t-radar">// TACTICAL_RADAR</div>
-                            <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
-                        </div>
+        <section id="home" class="page active">
+            <div class="card">
+                <div style="text-align:center; padding:20px;">
+                    <h2 style="font-family:Orbitron; color:var(--accent);">AGD - GLOBAL DEFENSE</h2>
+                    <p style="font-size:1.2rem;">Faction in: <b>War Tycoon (Roblox)</b>, <b>War Thunder</b> and soon other Games</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-head">// TACTICAL_RADAR</div>
+                <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
+            </div>
+        </section>
+
+        <section id="factions" class="page">
+            <div class="card">
+                <div class="card-head">// FACTION_OVERVIEW</div>
+                <div class="faction-grid">
+                    <div class="card">
+                        <h3>War Tycoon (Roblox)</h3>
+                        <p>Status: <b>Active</b></p>
+                        <p>Our primary operation hub for large-scale economic warfare.</p>
+                        <button class="nav-btn">VIEW RANK STRUCTURE</button>
                     </div>
-                    <div class="side-col">
-                        <div class="card">
-                            <div class="card-head t-auth">// AUTH_STATUS</div>
-                            <div class="terminal-container">
-                                <div id="terminal-log"></div>
-                            </div>
-                        </div>
+                    <div class="card">
+                        <h3>War Thunder</h3>
+                        <p>Status: <b>Deployment Active</b></p>
+                        <p>Aerial and ground dominance units currently recruiting.</p>
+                        <button class="nav-btn">UNIT RULES</button>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
+
+        <section id="credits" class="page">
+            <div class="card">
+                <div class="card-head">// PROJECT_STRUCTURE</div>
+                <p>Team credits and project leadership.</p>
+            </div>
+        </section>
     </div>
 
     <script>
-        function toggleMenu(e) { e.stopPropagation(); document.getElementById('dropdown').classList.toggle('active'); }
-        function closeMenu() { document.getElementById('dropdown').classList.remove('active'); }
+        function login() { document.getElementById('welcome-screen').classList.add('hidden'); document.getElementById('main-interface').classList.remove('hidden'); }
+        function logout() { location.reload(); }
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            closeMenu();
         }
-
-        function establishUplink() {
-            document.getElementById('welcome-screen').classList.add('hidden');
-            document.getElementById('main-interface').classList.remove('hidden');
-            startTerminal();
-        }
-
-        function logout() {
-            document.getElementById('welcome-screen').classList.remove('hidden');
-            document.getElementById('main-interface').classList.add('hidden');
-        }
-
-        function startTerminal() {
-            const log = document.getElementById('terminal-log');
-            log.innerHTML = ''; // Vorherigen Log leeren
-            const lines = ["UPLINK_ESTABLISHED", "AGD OPS_SYS_ONLINE", "AUTHENTICATING...", "ACCESS_GRANTED", "SYNCING_RADAR_DATA"];
-            let i = 0;
-            const interval = setInterval(() => {
-                const div = document.createElement('div');
-                div.innerText = `> ${lines[i]} [${Math.random().toString(16).substring(2,5).toUpperCase()}]`;
-                log.appendChild(div);
-                i++;
-                if (i === lines.length) clearInterval(interval);
-            }, 600);
-        }
-
-        document.addEventListener('click', (e) => { if (!e.target.closest('.nav-right')) closeMenu(); });
     </script>
 </body>
 </html>
