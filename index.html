@@ -2,27 +2,33 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>AGD // Operations Center</title>
+    <title>AGD // OPERATIONS CENTER</title>
     <style>
         :root { --bg: #05070a; --accent: #00f0ff; --text: #e6edf3; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: sans-serif; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; }
 
-        /* Splash Screen Fix */
+        /* Splash Screen - Neues Bild */
         #welcome-screen {
             position: fixed; inset: 0; z-index: 2000; background: #000;
-            background-image: url('AGDlogo.gif');
+            background-image: url('https://cdn.discordapp.com/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png');
             background-size: contain; background-repeat: no-repeat; background-position: center;
             display: flex; justify-content: center; align-items: flex-end; padding-bottom: 50px;
         }
         
-        .btn-main { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 15px 30px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
+        .btn-main { 
+            background: transparent; color: var(--accent); border: 1px solid var(--accent); 
+            padding: 15px 40px; cursor: pointer; text-transform: uppercase; 
+            font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px;
+        }
+        .btn-main:hover { background: var(--accent); color: #000; }
         
         /* Navigation & Content */
-        header { padding: 20px; display: flex; gap: 20px; background: #111; border-bottom: 1px solid #333; }
-        header div { cursor: pointer; color: var(--accent); }
-        .page { padding: 40px; }
+        header { padding: 20px; display: flex; gap: 20px; background: #111; border-bottom: 1px solid #333; justify-content: center; }
+        header div { cursor: pointer; color: var(--accent); font-family: 'Orbitron'; font-weight: bold; }
+        .page { padding: 40px; max-width: 800px; margin: auto; }
         .hidden { display: none; }
-        .card { border: 1px solid #333; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #0a0a0a; }
+        .card { border: 1px solid #333; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #0a0a0a; line-height: 1.6; }
+        h1 { color: var(--accent); font-family: 'Orbitron'; }
     </style>
 </head>
 <body>
@@ -41,17 +47,33 @@
 
         <section id="home" class="page">
             <div class="card">
-                <h1>Aegis Global Defense</h1>
-                <p>Welcome to the Operations Center.</p>
+                <h1>✨ AEGIS GLOBAL DEFENSE!</h1>
+                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                <p><strong>Why join AGD?</strong><br>
+                > `ノ🎉`・Very Unique <strong>GIVEAWAYS</strong><br>
+                > `ノ🤝`・<strong>Active</strong> community<br>
+                > `ノ🤗`・Friendly & Supportive<br>
+                > `ノ⚡`・<strong>Fast-Paced</strong> & Exciting<br>
+                > `ノ🌈`・<strong>LGBTQ</strong> Friendly<br>
+                > `ノ💎`・<strong>Boosters</strong> We are Actively looking for Boosters<br>
+                > `ノ🤝`・<strong>Partnerships</strong><br>
+                > `ノ🎮`・<strong>Games / Anime</strong></p>
+                
+                <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+                
+                <p><strong>Requirements:</strong><br>
+                > `☑️`・Follow the Discord ToS and our Server Rules<br>
+                > `☑️`・Show respect, discipline & logic<br>
+                > `☑️`・Speak decent English or German</p>
+                
+                <p><strong>Inv:</strong> <a href="http://discord.gg/mDZRkgxpGb" style="color:var(--accent);">http://discord.gg/mDZRkgxpGb</a></p>
             </div>
         </section>
 
         <section id="history" class="page hidden">
             <div class="card">
-                <h2>What Defines Us</h2>
-                <p><strong>Integrated Communications:</strong> Our Discord serves as our digital headquarters, featuring custom-built systems for 50+ synced users.</p>
-                <p><strong>Tactical Excellence:</strong> From rebirth grinds to full-scale server wars, we move as one unit.</p>
-                <p><strong>Professional Growth:</strong> We offer structured ranks and leadership opportunities for those who show loyalty and skill.</p>
+                <h2>The Rise of Aegis Global Defense</h2>
+                <p>Aegis Global Defense was born from the chaos of Emergency Hamburg. Founded on July 14th, 2023, by Hayato, Nemesis, and Tim.</p>
             </div>
         </section>
 
@@ -66,7 +88,7 @@
             <div class="card">
                 <h2>Privacy & Disclaimer</h2>
                 <p>This website is an unofficial information portal for the Aegis Global Defense Discord community.</p>
-                <p><strong>Data Handling:</strong> We do not store, sell, or analyze user data. This site is purely for informational purposes regarding our Discord activities. No cookies or tracking scripts are deployed.</p>
+                <p><strong>Data Handling:</strong> We do not store, sell, or analyze user data.</p>
             </div>
         </section>
     </div>
