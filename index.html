@@ -10,17 +10,24 @@
             --bg: #05070a; --text: #e6edf3; --accent: #00f0ff;
             --border: #1f2937; --card-bg: #0d1117; --terminal-green: #00ff41;
         }
-        body.light-theme {
-            --bg: #f0f4f8; --text: #1a202c; --accent: #0284c7;
-            --border: #cbd5e1; --card-bg: #ffffff; --terminal-green: #0369a1;
-        }
 
         * { box-sizing: border-box; }
         body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; transition: 0.3s; overflow-x: hidden; }
 
         /* --- LOGIN SCREEN --- */
-        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
-        .login-logo { width: 350px; height: auto; max-width: 90%; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3)); }
+        #welcome-screen { 
+            position: fixed; inset: 0; background: #000; z-index: 10000; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; 
+        }
+        
+        /* Das Logo-Containment */
+        .logo-container {
+            width: 400px; height: 400px; display: flex; align-items: center; justify-content: center;
+        }
+        .login-logo { 
+            width: 100%; height: auto; max-height: 100%; object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4)); 
+        }
 
         /* --- NAVIGATION --- */
         .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
@@ -36,9 +43,7 @@
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
         .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- FACTIONS GRID --- */
         .faction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .faction-card h3 { font-family: 'Orbitron'; color: var(--accent); margin-top: 0; }
         .tag { background: var(--accent); color: #000; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 0.8rem; margin-left: 10px; }
 
         .hidden { display: none !important; }
@@ -47,7 +52,10 @@
 <body>
 
     <div id="welcome-screen">
-        <img src="https://cdn.discordapp.com/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png?ex=69faad8d&is=69f95c0d&hm=67c267ab3153f0eb99c4cf0845feee7edad850c0ae4913f1c457c6c0fd74971e" alt="AGD Logo" class="login-logo">
+        <div class="logo-container">
+            <img src="https://cdn.discordapp.com/attachments/1477315074677805228/1500148648301039657/Aegis_Global_Defense_AGD.png?ex=69faad8d&is=69f95c0d&hm=67c267ab3153f0eb99c4cf0845feee7edad850c0ae4913f1c457c6c0fd74971e" 
+                 alt="AGD Logo" class="login-logo" onerror="this.src='AGDlogo.gif'">
+        </div>
         <button class="nav-btn" style="padding:15px 30px; font-size:0.9rem;" onclick="login()">ESTABLISH UPLINK</button>
     </div>
 
@@ -65,12 +73,9 @@
 
         <main class="content">
             <section id="home" class="page active">
-                <div class="card" style="text-align: center; border-bottom: 2px solid var(--accent);">
-                    <h1 style="font-family: 'Orbitron'; margin-bottom: 10px;">AEGIS GLOBAL DEFENSE</h1>
-                    <p style="font-size: 1.2rem; letter-spacing: 1px;">
-                        Faction in: <b style="color: var(--accent);">War Tycoon (Roblox)</b>, 
-                        <b style="color: var(--accent);">War Thunder</b> and soon other Games.
-                    </p>
+                <div class="card" style="text-align: center;">
+                    <h1 style="font-family: 'Orbitron';">AEGIS GLOBAL DEFENSE</h1>
+                    <p>Faction in: <b>War Tycoon (Roblox)</b>, <b>War Thunder</b> and soon other Games.</p>
                 </div>
                 <div class="card">
                     <div class="card-head">// TACTICAL_RADAR</div>
@@ -82,22 +87,14 @@
                 <div class="card">
                     <div class="card-head">// GLOBAL_FACTIONS</div>
                     <div class="faction-grid">
-                        <div class="card faction-card">
+                        <div class="card">
                             <h3>War Tycoon <span class="tag">ROBLOX</span></h3>
                             <p>Status: <span style="color: var(--terminal-green);">OPERATIONAL</span></p>
-                            <p>Primary focus on base defense, tactical resource control, and economic dominance.</p>
-                            <button class="nav-btn" style="width: 100%;">View Rank Structure</button>
                         </div>
-                        <div class="card faction-card">
+                        <div class="card">
                             <h3>Sechenovs Legion <span class="tag">SCNV</span></h3>
-                            <p>Status: <span style="color: var(--terminal-green);">ACTIVE DEPLOYMENT</span></p>
-                            <p>War Thunder specialized unit. Focused on armored warfare and air superiority.</p>
-                            <button class="nav-btn" style="width: 100%;">Combat Rules</button>
-                        </div>
-                        <div class="card faction-card" style="opacity: 0.6; border-style: dashed;">
-                            <h3>Other Games</h3>
-                            <p>Status: <span style="color: #888;">IN FILTRATION</span></p>
-                            <p>New theater of operations being scouted by high command.</p>
+                            <p>Status: <span style="color: var(--terminal-green);">ACTIVE</span></p>
+                            <p>Official War Thunder Division.</p>
                         </div>
                     </div>
                 </div>
@@ -106,7 +103,7 @@
             <section id="credits" class="page">
                 <div class="card">
                     <div class="card-head">// PROJECT_STRUCTURE</div>
-                    <p>Leadership and development of the AGD Operations Center.</p>
+                    <p>Leadership: Hayato & Lionel</p>
                 </div>
             </section>
         </main>
@@ -117,11 +114,7 @@
             document.getElementById('welcome-screen').classList.add('hidden'); 
             document.getElementById('main-interface').classList.remove('hidden'); 
         }
-        
-        function logout() { 
-            location.reload(); 
-        }
-
+        function logout() { location.reload(); }
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
