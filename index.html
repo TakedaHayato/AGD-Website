@@ -1,95 +1,111 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGD // OPERATIONS CENTER</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #05070a; --text: #e6edf3; --accent: #00f0ff;
-            --border: #1f2937; --card-bg: #0d1117; --terminal-green: #00ff41;
-        }
+        :root { --bg: #05070a; --text: #e6edf3; --accent: #00f0ff; --border: #1f2937; --card-bg: #0d1117; }
+        body { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); }
 
-        * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); height: 100%; transition: 0.3s; overflow-x: hidden; }
+        /* Sprach-Klassen */
+        .lang-de { display: none; }
+        .lang-en { display: block; }
 
-        /* --- LOGIN SCREEN --- */
-        #welcome-screen { 
-            position: fixed; inset: 0; background: #000; z-index: 10000; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; 
-        }
+        /* Logo Rund */
+        .logo-wrapper { width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--accent); overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); margin: 0 auto 20px auto; }
+        .logo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* RUNDES LOGO DESIGN */
-        .logo-wrapper {
-            width: 250px; height: 250px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-            overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .login-logo { width: 100%; height: 100%; object-fit: cover; }
+        /* Navigation */
+        nav { display: flex; justify-content: center; padding: 20px; border-bottom: 1px solid var(--border); }
+        nav ul { list-style: none; display: flex; gap: 30px; padding: 0; margin: 0; }
+        nav ul li { cursor: pointer; font-family: 'Orbitron'; color: var(--text); text-transform: uppercase; border: 1px solid var(--border); padding: 10px 20px; border-radius: 4px; transition: 0.2s; }
+        nav ul li:hover { color: var(--accent); border-color: var(--accent); }
 
-        /* --- NAVIGATION --- */
-        .glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 70px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 9999; }
-        .brand { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; cursor: pointer; }
-        .nav-controls { display: flex; align-items: center; gap: 10px; }
-        .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; font-family: 'Orbitron'; font-size: 0.65rem; cursor: pointer; border-radius: 4px; transition: 0.2s; text-transform: uppercase; text-decoration: none; }
-        .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .btn-join { background: rgba(0, 240, 255, 0.1); border-color: var(--accent); color: var(--accent); }
-
-        /* --- CONTENT --- */
-        .page { display: none; padding: 20px; max-width: 1600px; margin: 0 auto; }
-        .page.active { display: block; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
-        .card-head { font-family: 'Orbitron'; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; }
-
+        /* Sektionen */
+        .content { max-width: 900px; margin: 40px auto; padding: 20px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+        .card h2 { color: var(--accent); font-family: 'Orbitron'; margin-top: 0; }
         .hidden { display: none !important; }
+        
+        #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen">
         <div class="logo-wrapper">
-            <img src="AGDlogo.gif" alt="AGD Logo" class="login-logo">
+            <img src="AGDlogo.gif" alt="Logo">
         </div>
-        <button class="nav-btn" style="padding:15px 30px; font-size:0.9rem;" onclick="establishUplink()">ESTABLISH UPLINK</button>
+        <button onclick="establishUplink()" style="background:transparent; color:white; border:1px solid #fff; padding:15px 30px; cursor:pointer; font-family: 'Orbitron';">ESTABLISH UPLINK</button>
     </div>
 
     <div id="main-interface" class="hidden">
-        <nav class="glass-nav">
-            <div class="brand" onclick="showPage('home')">AGD // OPS</div>
-            <div class="nav-controls">
-                <button class="nav-btn" onclick="showPage('home')">Home</button>
-                <a href="https://discord.gg/mDZRkgxpGb" target="_blank" class="nav-btn btn-join">Join Server</a>
-                <button class="nav-btn" onclick="logout()" style="color:#ff4444;">Disconnect</button>
-            </div>
+        <nav>
+            <ul>
+                <li onclick="showPage('home')">Home</li>
+                <li onclick="showPage('factions')">Factions</li>
+                <li onclick="showPage('history')">History</li>
+                <li><a href="https://discord.gg/mDZRkgxpGb" target="_blank" style="color:inherit; text-decoration:none;">Join Server</a></li>
+                <li onclick="toggleLang()" style="color:var(--accent);">DE / EN</li>
+            </ul>
         </nav>
 
         <main class="content">
-            <section id="home" class="page active">
+            <section id="home" class="page">
                 <div class="card">
-                    <h2 style="font-family: 'Orbitron'; color: var(--accent);">SYSTEM STATUS: ONLINE</h2>
-                    <p>Willkommen beim AGD Operations Center. Alle Sub-Systeme sind bereit.</p>
+                    <h2 class="lang-en">Welcome to AGD Operations</h2>
+                    <h2 class="lang-de">Willkommen im AGD Operations Center</h2>
+                    <p class="lang-en">Aegis Global Defense is currently active in War Tycoon and War Thunder. We stand for order, strength, and peace.</p>
+                    <p class="lang-de">Aegis Global Defense ist aktuell in War Tycoon und War Thunder aktiv. Wir stehen für Ordnung, Stärke und Frieden.</p>
                 </div>
+            </section>
+
+            <section id="factions" class="page hidden">
                 <div class="card">
-                    <div class="card-head">// TACTICAL_RADAR</div>
-                    <iframe width="100%" height="450" frameborder="0" src="https://embed.windy.com/embed2.html?lat=52.52&lon=13.40&zoom=6&overlay=rain"></iframe>
+                    <h2>Factions</h2>
+                    <p><b>War Tycoon (Roblox)</b></p>
+                    <p><b>Sechenovs Legion (SCNV)</b> - War Thunder (Daughter Faction)</p>
+                </div>
+            </section>
+
+            <section id="history" class="page hidden">
+                <div class="card">
+                    <div class="lang-en">
+                        <h2>The Rise of Aegis Global Defense</h2>
+                        <p>Before Aegis Global Defense ever stood on its own, it was allied with the Aegis Global Task Force. Together, they operated as a powerful force—but alliances don’t always last. Tensions grew, disagreements escalated, and eventually, a war broke out between the two sides. What was once unity turned into conflict, shaping the future of AGD forever.</p>
+                        <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
+                        <p>They called it Aegis Global Defense (AGD).</p>
+                        <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace. What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds.</p>
+                        <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder. In 2026, unfortunately, our 2nd founder Tim—known as TimTheKeks—left us. His departure left a gap, but we remain strong and continue to expand!</p>
+                    </div>
+
+                    <div class="lang-de">
+                        <h2>Der Aufstieg der Aegis Global Defense</h2>
+                        <p>Bevor die Aegis Global Defense auf eigenen Beinen stand, war sie mit der Aegis Global Task Force verbündet. Gemeinsam agierten sie als mächtige Streitmacht – doch Allianzen halten nicht immer. Spannungen wuchsen, Meinungsverschiedenheiten eskalierten und schließlich brach ein Krieg zwischen den beiden Seiten aus. Was einst Einheit war, wurde zu Konflikt und formte die Zukunft der AGD für immer.</p>
+                        <p>In den Straßen von Emergency Hamburg war das Ziel klar: Gegen Gangs kämpfen und Frieden wiederherstellen. Inmitten von Chaos und zunehmender Gewalt fanden sich am 14. Juli 2023 drei Gründer zusammen: Hayato, Nemesis und Tim. Sie reagierten nicht nur auf die Situation – sie bauten etwas Neues auf.</p>
+                        <p>Sie nannten es Aegis Global Defense (AGD).</p>
+                        <p>Als die Gruppe später in War Tycoon expandierte, wurde ihre Vision noch klarer: Sie wollten nicht nur gewinnen. Sie wollten etwas Größeres erschaffen: eine Streitmacht, die sich Ordnung, Stärke und vor allem dem Frieden widmete. Was als kleine Allianz begann, wuchs schnell zu etwas Strukturierterem heran. Die AGD wurde zu einer anerkannten Fraktion, ein Symbol der Einheit auf chaotischen Schlachtfeldern.</p>
+                        <p>Jahre vergingen, und bis 2026 war die AGD über ihren ursprünglichen Rahmen hinausgewachsen. Eine neue Division wurde geformt: Sechenov’s Legion (SCNV). Diese Elite-Sub-Fraktion fand ihr Zuhause in War Thunder. 2026 ist leider unser 2. Gründer Tim – bekannt als TimTheKeks – gegangen. Sein Weggang hinterließ eine Lücke, doch wir bleiben stark und bauen uns weiter aus!</p>
+                    </div>
                 </div>
             </section>
         </main>
     </div>
 
     <script>
-        function establishUplink() { 
-            document.getElementById('welcome-screen').classList.add('hidden'); 
-            document.getElementById('main-interface').classList.remove('hidden'); 
-        }
-        function logout() { location.reload(); }
+        function establishUplink() { document.getElementById('welcome-screen').classList.add('hidden'); document.getElementById('main-interface').classList.remove('hidden'); }
+        
         function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function toggleLang() {
+            const isEn = document.querySelectorAll('.lang-en')[0].style.display !== 'none';
+            document.querySelectorAll('.lang-en').forEach(el => el.style.display = isEn ? 'none' : 'block');
+            document.querySelectorAll('.lang-de').forEach(el => el.style.display = isEn ? 'block' : 'none');
         }
     </script>
 </body>
