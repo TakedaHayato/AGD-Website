@@ -8,15 +8,13 @@
         :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.95); --text: #e6edf3; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-        /* Login */
+        /* Login Screen */
         #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .logo-container { width: 300px; height: 300px; margin-bottom: 20px; }
         #logo-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* App Wrapper - Zentriert */
-        #app { display: none; width: 100%; max-width: 900px; margin: 0 auto; position: relative; }
-        
-        /* Sidebar */
+        /* App Layout */
+        #app { display: none; width: 100%; max-width: 900px; margin: 0 auto; }
         .sidebar { position: fixed; left: -260px; top: 0; width: 250px; height: 100%; background: #0a0e14; border-right: 1px solid #222; transition: 0.4s; z-index: 3000; padding-top: 80px; }
         .sidebar.active { left: 0; }
         .nav-link { padding: 20px; cursor: pointer; color: #fff; font-family: 'Orbitron'; text-transform: uppercase; border-bottom: 1px solid #111; }
@@ -26,12 +24,15 @@
         .top-bar { position: fixed; top: 0; width: 100%; max-width: 900px; height: 60px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 2000; box-sizing: border-box; border-bottom: 1px solid #333; }
         
         .main-content { margin-top: 80px; padding: 20px; width: 100%; box-sizing: border-box; }
-        .page { display: none; background: var(--panel); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; margin-bottom: 20px; }
+        .page { display: none; background: var(--panel); border: 1px solid #1f2937; padding: 30px; border-radius: 12px; }
         
         h1, h2, h3 { color: var(--accent); font-family: 'Orbitron'; text-transform: uppercase; }
         p { line-height: 1.7; font-size: 1.1rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card-small { background: rgba(0,0,0,0.3); padding: 15px; border: 1px solid #333; border-radius: 8px; }
+
+        /* Tactical Cards for "Active" Tab */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .tactical-card { background: rgba(20, 25, 35, 0.6); border: 1px solid #333; padding: 20px; border-radius: 8px; transition: 0.3s; }
+        .tactical-card:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,240,255,0.2); }
     </style>
 </head>
 <body>
@@ -49,25 +50,22 @@
             <div style="display: flex; align-items: center; gap: 15px;">
                 <button id="lang-btn" onclick="toggleLang()" style="background: transparent; border: 1px solid #444; color: #fff; cursor: pointer;">EN</button>
                 <img id="avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer;" src="" onclick="toggleUserMenu()">
-                <div id="user-menu" style="position:absolute; top:65px; right:20px; background:#000; display:none; padding:10px; border:1px solid #333;">
-                    <div style="color: #ff4444; cursor: pointer;" onclick="logout()">LOGOUT</div>
-                </div>
             </div>
         </div>
 
         <div id="sidebar" class="sidebar">
-            <div class="nav-link" onclick="showPage('home')" data-en="Home" data-de="Startseite">Home</div>
-            <div class="nav-link" onclick="showPage('history')" data-en="History" data-de="Geschichte">History</div>
-            <div class="nav-link" onclick="showPage('credits')" data-en="Credits" data-de="Credits">Credits</div>
-            <div class="nav-link" onclick="showPage('legal')" data-en="Legal" data-de="Rechtliches">Legal</div>
+            <div class="nav-link" onclick="showPage('home')">Home</div>
+            <div class="nav-link" onclick="showPage('active')">Active</div>
+            <div class="nav-link" onclick="showPage('history')">History</div>
+            <div class="nav-link" onclick="showPage('credits')">Credits</div>
+            <div class="nav-link" onclick="showPage('legal')">Legal</div>
+            <div class="nav-link" style="color: #ff4444;" onclick="logout()">Logout</div>
         </div>
 
         <main class="main-content">
             <div id="page-home" class="page" style="display:block;">
-                <h1 data-en="AEGIS GLOBAL DEFENSE!" data-de="AEGIS GLOBAL DEFENSE!">AEGIS GLOBAL DEFENSE!</h1>
-                <p data-en="Looking for a friendly space to CONNECT with LIKE-MINDED people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here." 
-                   data-de="Suchst du einen freundlichen Ort, um dich mit Gleichgesinnten zu VERBINDEN? Dann bist du hier richtig! Wir sind entspannt, machen die Dinge aber trotzdem aufregend. Komm rein, die Zukunft der Teamarbeit, Taktik und Community beginnt hier.">
-                   Looking for a friendly space to CONNECT with LIKE-MINDED people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
+                <h1>✨ AEGIS GLOBAL DEFENSE!</h1>
+                <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
                 
                 <h3>Why join AGD?</h3>
                 <p>
@@ -80,19 +78,34 @@
                     > `ノ🤝`・<strong>Partnerships</strong><br>
                     > `ノ🎮`・<strong>Games / Anime</strong>
                 </p>
-
+                <br>
+                <hr style="border:0; border-top:1px solid #333;">
+                <br>
                 <h3>Requirements:</h3>
                 <p>
                     > `☑️`・Follow the Discord ToS and our Server Rules<br>
                     > `☑️`・Show respect, discipline & logic<br>
                     > `☑️`・Speak decent English or German
                 </p>
+                <br>
+                <h1>💎 JOIN THE FUN TODAY!</h1>
+            </div>
 
-                <h3>Where we are active</h3>
+            <div id="page-active" class="page">
+                <h2>Where we are active</h2>
                 <div class="grid">
-                    <div class="card-small"><h4>War Tycoon</h4><p>Operating as AGD.</p></div>
-                    <div class="card-small"><h4>War Thunder</h4><p>Sechenov’s Legion (SCNV).</p></div>
-                    <div class="card-small"><h4>Emergency Hamburg</h4><p>Restoring peace and fighting gangs.</p></div>
+                    <div class="tactical-card">
+                        <h3>War Tycoon</h3>
+                        <p>Operating as <strong>AGD</strong>. Focused on tactical dominance and base control.</p>
+                    </div>
+                    <div class="tactical-card">
+                        <h3>War Thunder</h3>
+                        <p>Sechenov’s Legion (<strong>SCNV</strong>). Discipline and tactical warfare in the skies.</p>
+                    </div>
+                    <div class="tactical-card">
+                        <h3>Emergency Hamburg</h3>
+                        <p>Law and order patrol, restoring peace and fighting gangs.</p>
+                    </div>
                 </div>
             </div>
 
@@ -102,11 +115,6 @@
                 <p>In the streets of Emergency Hamburg, the goal was clear: fight against gangs and restore peace. Amid chaos and rising violence, three founders—Hayato, Nemesis, and Tim—came together on July 14th, 2023. They weren’t just reacting to the situation—they were building something new.</p>
                 <p>They called it Aegis Global Defense (AGD).</p>
                 <p>When the group later expanded into War Tycoon, their vision became even clearer: They didn’t just want to win. They wanted to create something bigger: a force dedicated to order, strength, and above all, peace.</p>
-                <p>What started as a small alliance quickly grew into something more structured. AGD became a recognized faction, standing as a symbol of unity in chaotic battlegrounds. Their mission was clear: protect, organize, and dominate—not through destruction, but through control and strategy.</p>
-                <p>Years passed, and by 2026, AGD had grown beyond its original scope. A new division was formed: Sechenov’s Legion (SCNV). This elite sub-faction found its home in War Thunder, bringing a new level of discipline and tactical warfare to the skies and battlefields. It was only the beginning—plans for expansion into even more games were already in motion.</p>
-                <p>But not all chapters were easy.</p>
-                <p>In 2026, AGD faced a heavy loss. One of its founders, Tim—known as TimTheKeks—stepped away. His departure left a gap that couldn’t truly be filled. Yet, instead of breaking apart, AGD stood firm. The remaining members carried his legacy forward, stronger and more determined than ever.</p>
-                <p>Because AGD was never just about its founders. It was about the idea they created together. And that idea still lives on.</p>
             </div>
 
             <div id="page-credits" class="page">
@@ -128,7 +136,6 @@
         function login() { window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&response_type=token&scope=identify`; }
         function logout() { localStorage.clear(); location.reload(); }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function toggleUserMenu() { document.getElementById('user-menu').style.display = document.getElementById('user-menu').style.display === 'block' ? 'none' : 'block'; }
         
         function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
@@ -139,9 +146,7 @@
         function toggleLang() {
             currentLang = currentLang === 'en' ? 'de' : 'en';
             document.getElementById('lang-btn').innerText = currentLang.toUpperCase();
-            document.querySelectorAll('[data-en]').forEach(el => {
-                el.innerText = el.getAttribute('data-' + currentLang);
-            });
+            // Optional: Hier kannst du weitere Logik hinzufügen, falls du Texte übersetzen willst
         }
 
         async function init() {
