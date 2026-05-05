@@ -31,8 +31,8 @@ Willkommen im offiziellen **Strategic Command Interface** der Aegis Global Defen
 
 Das Operations Center wird via **GitHub Pages** gehostet.
 
-1.  **Repository:** `https://github.com/TakedaHayato/AGD-Website`
-2.  **Live-Uplink:** `https://takedahayato.github.io/AGD-Website/`
+1.  **Repository:** `https://github.com/TakedaHayato/AGD-Website`
+2.  **Live-Uplink:** `https://takedahayato.github.io/AGD-Website/`
 
 ---
 
@@ -44,4 +44,4 @@ Trete der **SPZN-Einheit** bei und werde Teil unserer wachsenden Gemeinschaft f�
 * **Server Tag:** `SPZN`
 
 ---
-> **SYSTEM STATUS:** v2.3.6 - UPLINK STABLE // 2026                   
+> **SYSTEM STATUS:** v2.3.6 - UPLINK STABLE // 2026
