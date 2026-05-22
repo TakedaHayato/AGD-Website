@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AGD // OPERATIONS CENTER</title>
+    
     <link rel="icon" type="image/gif" href="https://i.imgur.com/W8he4kN.gif">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #05070a; --accent: #00f0ff; --panel: rgba(15, 20, 30, 0.95); --text: #e6edf3; --border: rgba(255, 255, 255, 0.1); }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; }
         
-        /* Hintergrund-GIF entfernt, CSS bereinigt */
-        #login-screen { position: fixed; inset: 0; z-index: 5000; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        
+        /* Login-Screen: Komplett sauberer, tiefschwarzer Hintergrund ohne GIF-Überreste */
+        #login-screen { 
+            position: fixed; 
+            inset: 0; 
+            z-index: 5000; 
+            background: #000000; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+        }
         .logo-login { width: 200px; margin-bottom: 20px; }
         .login-btn { padding: 15px 40px; background: transparent; border: 2px solid var(--accent); color: var(--accent); font-family: 'Orbitron'; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 20px; }
         .login-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
@@ -38,7 +48,12 @@
         button:hover { background: var(--accent); color: #000; }
         .profile-dropdown { position: absolute; top: 70px; right: 20px; background: var(--panel); border: 1px solid var(--border); display: none; width: 120px; padding: 10px; z-index: 4000; text-align: center; }
         .content-block { margin-top: 20px; }
-        .box-design { border: 1px solid var(--border); padding: 20px; border-radius: 10px; background: rgba(255,255,255,0.02); margin-top: 20px; }
+        
+        /* Listen-Styling angelehnt an das neue UI-Design */
+        .spec-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .spec-list li { font-size: 1.1rem; margin-bottom: 12px; color: #e6edf3; }
+        .spec-list strong { color: #fff; }
+        .box-design { border-top: 1px solid var(--border); padding-top: 25px; margin-top: 25px; }
     </style>
 </head>
 <body>
@@ -71,12 +86,14 @@
         <main>
             <div id="page-home" class="page" style="display:block;">
                 <div style="text-align: center;">
-                    <img src="https://i.imgur.com/W8he4kN.gif" style="width: 150px; margin-bottom: 20px;" alt="AGD Logo">
+                    <img src="https://i.imgur.com/W8he4kN.gif" style="width: 130px; margin-bottom: 15px;" alt="AGD Logo">
                     <h1 data-i18n="h_title">AGD OPERATIONAL STATUS</h1>
-                    <p style="color: var(--accent);">Uplink established. Communications online. Systems ready.</p>
+                    <p style="color: var(--accent); font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 1px;">UPLINK STABLE // SYSTEMS ONLINE</p>
                 </div>
+                
                 <div id="home-content" class="content-block"></div>
-                <div style="text-align: center; margin-top: 40px;">
+                
+                <div style="text-align: center; margin-top: 35px;">
                     <button onclick="window.open('https://discord.gg/mDZRkgxpGb', '_blank')" data-i18n="btn_join">JOIN US</button>
                 </div>
             </div>
@@ -91,20 +108,34 @@
     <script>
         const CLIENT_ID = '1292148049358884905'; 
         
+        // Lokalisierte Inhalte angepasst an das modernisierte Text-Layout (Screenshot 2)
         const content = {
             en: {
                 nav_home: "Home", nav_official: "Official", nav_history: "History", nav_credits: "Credits", nav_legal: "Legal",
-                h_title: "AGD OPERATIONAL STATUS", btn_join: "JOIN US ON DISCORD",
+                h_title: "AEGIS GLOBAL DEFENSE (AGD)", btn_join: "JOIN THE FUN TODAY!",
                 home_html: `
-                    <div style="margin-top:20px;">
-                        <h2 style="color:var(--accent)">✨ AEGIS GLOBAL DEFENSE!</h2>
-                        <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We’re all about keeping it chill, but still making things exciting. So come on in, the future of teamwork, tactics, and community starts here.</p>
-                        <h3>Why join AGD?</h3>
-                        <p>🎉・Very Unique <strong>GIVEAWAYS</strong><br>🤝・<strong>Active</strong> community<br>🤗・Friendly & Supportive<br>⚡・<strong>Fast-Paced</strong> & Exciting<br>🌈・<strong>LGBTQ</strong> Friendly<br>💎・<strong>Boosters</strong> We are Actively looking for Boosters<br>🤝・<strong>Partnerships</strong><br>🎮・<strong>Games / Anime</strong></p>
-                    </div>
-                    <div class="box-design" style="text-align:center;">
-                        <h3>📝 Requirements:</h3>
-                        <p>☑️・Follow the Discord ToS and our Server Rules<br>☑️・Show respect, discipline & logic<br>☑️・Speak decent English or German</p>
+                    <p>Looking for a friendly space to <strong>CONNECT</strong> with <strong>LIKE-MINDED</strong> people? Look no further! We're all about keeping it chill, but still making things exciting. The future of teamwork, tactics, and community starts here.</p>
+                    
+                    <h3>🛡️ Why join AGD?</h3>
+                    <ul class="spec-list">
+                        <li>🎉・<strong>Unique Giveaways</strong> — Regular and exciting rewards for our members.</li>
+                        <li>🤝・<strong>Active Community</strong> — There is always someone to chat or hang out with.</li>
+                        <li>🤗・<strong>Friendly & Supportive</strong> — A respectful environment where everyone feels welcome.</li>
+                        <li>⚡・<strong>Fast-Paced & Exciting</strong> — Boredom? Not on our watch!</li>
+                        <li>🌈・<strong>LGBTQ+ Friendly</strong> — A safe, inclusive space for everyone.</li>
+                        <li>💎・<strong>Server Boosters</strong> — We are actively looking for boosters (with exclusive perks)!</li>
+                        <li>🤝・<strong>Partnerships</strong> — We are open to partnering up with other communities.</li>
+                        <li>🎮・<strong>Games & Anime</strong> — Talk about your favorite shows and find your next gaming squad.</li>
+                    </ul>
+                    
+                    <div class="box-design">
+                        <h3>📝 Requirements</h3>
+                        <p style="font-size: 0.95rem; color: #8b949e; margin-bottom: 15px;">To keep our community safe and fun, we ask that you:</p>
+                        <ul class="spec-list">
+                            <li>✅・<strong>Discord ToS</strong> — Follow the official Discord Terms of Service and our server rules.</li>
+                            <li>✅・<strong>Mindset</strong> — Show respect, discipline, and common sense.</li>
+                            <li>✅・<strong>Languages</strong> — Speak decent English or German.</li>
+                        </ul>
                     </div>
                 `,
                 active: `<a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>Operating as AGD.</p></a><a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>`,
@@ -121,17 +152,30 @@
             },
             de: {
                 nav_home: "Startseite", nav_official: "Offiziell", nav_history: "Geschichte", nav_credits: "Credits", nav_legal: "Rechtliches",
-                h_title: "AGD OPERATIONAL STATUS", btn_join: "TRITT UNS BEI",
+                h_title: "AEGIS GLOBAL DEFENSE (AGD)", btn_join: "TRITT DER ALLIANZ BEI!",
                 home_html: `
-                    <div style="margin-top:20px;">
-                        <h2 style="color:var(--accent)">✨ AEGIS GLOBAL DEFENSE!</h2>
-                        <p>Suchst du einen freundlichen Ort, um dich mit <strong>GLEICHGESINNTEN</strong> zu <strong>VERBINDEN</strong>? Such nicht weiter! Wir halten es entspannt, aber spannend. Komm rein, die Zukunft der Teamarbeit, Taktik und Community beginnt hier.</p>
-                        <h3>Warum AGD beitreten?</h3>
-                        <p>🎉・Einzigartige <strong>GIVEAWAYS</strong><br>🤝・<strong>Aktive</strong> Community<br>🤗・Freundlich & Hilfsbereit<br>⚡・<strong>Schnelllebig</strong> & Aufregend<br>🌈・<strong>LGBTQ</strong>-freundlich<br>💎・<strong>Booster</strong> gesucht<br>🤝・<strong>Partnerschaften</strong><br>🎮・<strong>Spiele / Anime</strong></p>
-                    </div>
-                    <div class="box-design" style="text-align:center;">
-                        <h3>📝 Anforderungen:</h3>
-                        <p>☑️・Befolge die Discord AGB und Server Regeln<br>☑️・Zeige Respekt, Disziplin & Logik<br>☑️・Sprich ordentliches Englisch oder Deutsch</p>
+                    <p>Suchst du einen freundlichen Ort, um dich mit <strong>GLEICHGESINNTEN</strong> zu <strong>VERBINDEN</strong>? Such nicht weiter! Wir halten es entspannt, aber spannend. Die Zukunft von Teamarbeit, Taktik und Community beginnt hier.</p>
+                    
+                    <h3>🛡️ Warum AGD beitreten?</h3>
+                    <ul class="spec-list">
+                        <li>🎉・<strong>Einzigartige Giveaways</strong> — Regelmäßige und spannende Belohnungen für unsere Mitglieder.</li>
+                        <li>🤝・<strong>Aktive Community</strong> — Es ist immer jemand zum Chatten oder Abhängen da.</li>
+                        <li>🤗・<strong>Freundlich & Unterstützend</strong> — Eine respektvolle Umgebung, in der sich jeder willkommen fühlt.</li>
+                        <li>⚡・<strong>Schnelllebig & Aufregend</strong> — Langeweile? Nicht unter unserer Aufsicht!</li>
+                        <li>🌈・<strong>LGBTQ+ Freundlich</strong> — Ein sicherer, inklusiver Raum für alle.</li>
+                        <li>💎・<strong>Server Booster</strong> — Wir suchen aktiv nach Boostern (mit exklusiven Vorteilen)!</li>
+                        <li>🤝・<strong>Partnerschaften</strong> — Wir sind offen für Kooperationen mit anderen Communities.</li>
+                        <li>🎮・<strong>Spiele & Anime</strong> — Sprich über deine Lieblingsserien und finde dein nächstes Squad.</li>
+                    </ul>
+                    
+                    <div class="box-design">
+                        <h3>📝 Anforderungen</h3>
+                        <p style="font-size: 0.95rem; color: #8b949e; margin-bottom: 15px;">Um unsere Community sicher und unterhaltsam zu halten, bitten wir dich:</p>
+                        <ul class="spec-list">
+                            <li>✅・<strong>Discord ToS</strong> — Befolge die offiziellen Discord Nutzungsbedingungen und unsere Serverregeln.</li>
+                            <li>✅_<strong>Mindset</strong> — Zeige Respekt, Disziplin und gesunden Menschenverstand.</li>
+                            <li>✅・<strong>Sprachen</strong> — Sprich angemessenes Englisch oder Deutsch.</li>
+                        </ul>
                     </div>
                 `,
                 active: `<a href="https://www.roblox.com/games/4639625707/War-Tycoon" target="_blank" class="card"><h3>War Tycoon</h3><p>AGD Einsatzgebiet.</p></a><a href="https://warthunder.com/de/" target="_blank" class="card"><h3>War Thunder</h3><p>Sechenov’s Legion (SCNV).</p></a>`,
@@ -144,7 +188,7 @@
                     <p>Im Jahr 2026 musste AGD einen schweren Verlust hinnehmen. Der Gründer Tim (TimTheKeks) verließ die Gruppe. Doch anstatt auseinanderzubrechen, blieb AGD standhaft. Die verbleibenden Mitglieder trugen sein Erbe weiter. AGD ging es nie nur um die Gründer. Es ging um die Idee, die sie gemeinsam erschufen. <strong>Und diese Idee lebt weiter.</strong></p>
                 `,
                 credits: "<h3>Credits</h3><p><strong>Hauptarchitektur & Entwicklung:</strong> Hayato</p><p><strong>Administration & Strategie:</strong> AGD High Command</p><p><strong>Besonderer Dank:</strong> An jedes Mitglied, das half, diese Community aufzubauen.</p>",
-                legal: "<h3>Rechtliches & Datenschutz</h3><p>Dies ist ein nicht-kommerzielles Fan-Projekt. Aegis Global Defense (AGD) ist eine unabhängige Community-Gruppe und steht in keinerlei Verbindung zu der Roblox Corporation, Gaijin Entertainment oder anderen Spieleentwicklern. Bitte beachte jederzeit die Discord AGB sowie unsere internen Serverregeln.</p>"
+                legal: "<h3>Rechtliches & Datenschutz</h3><p>Dies ist ein nicht-kommerzielles Fan-Projekt. Aegis Global Defense (AGD) is eine unabhängige Community-Gruppe und steht in keinerlei Verbindung zu der Roblox Corporation, Gaijin Entertainment oder anderen Spieleentwicklern. Bitte beachte jederzeit die Discord AGB sowie unsere internen Serverregeln.</p>"
             }
         };
 
